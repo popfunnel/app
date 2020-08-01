@@ -1,0 +1,19 @@
+{
+  "name": "db-visuals",
+  "version": "1.0.0",
+  "description": "Visuals for SQL Queries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/curtislin7/db-visuals.git"
+  },
+  "author": "Curtis Lin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/curtislin7/db-visuals/issues"
+  },
+  "homepage": "https://github.com/curtislin7/db-visuals#readme"
+}
