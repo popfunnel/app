@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/curtislin7/db-visuals/issues"
   },
-  "homepage": "https://github.com/curtislin7/db-visuals#readme"
+  "homepage": "https://github.com/curtislin7/db-visuals#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
