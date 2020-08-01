@@ -11,6 +11,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+app.get('/templateroute', (req, res) => {
+    res.send('this route is set up correctly');
+});
+
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
