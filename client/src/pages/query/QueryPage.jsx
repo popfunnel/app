@@ -1,16 +1,16 @@
 import React from 'react';
-import QueryInput from '../../components/query/QueryInput';
+import { QueryInput } from '../../components/query/QueryInput';
+import { QueryDisplay } from '../../components/query/QueryDisplay';
 import { QueryStyles } from './QueryPageStyles';
-// import { makeStyles } from '@material-ui/core/styles';
 
-// const useStyles = makeStyles(QueryStyles)
 
 export const QueryPage = () => {
-    // const classes = useStyles();
     return (
-        <>
+        <div style={{display:'flex', flexDirection:'column'}}>
             <QueryInput/>
-        </>
+            <div style={{height:'50px'}}/>
+            <QueryDisplay/>
+        </div>
     );
 };
 

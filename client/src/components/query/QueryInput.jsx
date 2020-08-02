@@ -4,9 +4,9 @@ import TextField from '@material-ui/core/TextField';
 
 // const useStyles = makeStyles(QueryStyles)
 
-const QueryField = () => {
+export const QueryInput = () => {
     return (
-        <div style={{marginTop:'30px', maginLeft: '10px', width:'80vw'}}>
+        <div style={{marginTop:'30px', maginLeft: '10px', width:'100%'}}>
             <TextField
                 label="Query"
                 multiline
@@ -18,5 +18,3 @@ const QueryField = () => {
         </div>
     );
 };
-
-export default QueryField;

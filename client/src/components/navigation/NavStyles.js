@@ -59,6 +59,7 @@ export const NavStyles = (theme) => ({
     content: {
         display:'flex',
         flexDirection:'column',
-        width: ''
+        width:'100%',
+        marginRight:'20px'
     },
 });

@@ -18,6 +18,7 @@ export const NavBar = (props) => {
     const handleDrawerOpen = () => {
         setIsDrawerOpen(true);
     };
+
     const handleDrawerClose = () => {
         setIsDrawerOpen(false);
     };
@@ -43,7 +44,7 @@ export const NavBar = (props) => {
                             [classes.hide]: isDrawerOpen,
                         })}
                     >
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
                         db-visuals
