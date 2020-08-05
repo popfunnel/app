@@ -15,13 +15,13 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export const QueryDisplay = () => {
+export const QueryDisplay = ({queryResults}) => {
     const classes = useStyles();
 
     return (
         <div style={{height:'50vh', width:'100%'}}>
             <Paper className={classes.paper}>
-                Query table here
+                {queryResults}
             </Paper>
         </div>
     )

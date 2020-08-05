@@ -5,6 +5,7 @@ const router = new express.Router();
 
 router.post('/executeQuery', function(req, res, next) {
     console.log('request data', req.body);
+    const query = req.body.query;
     psql_pool.reserve(function(err, connObj) {
         if (connObj) {
             console.log("Using connection: " + connObj.uuid);
@@ -19,7 +20,7 @@ router.post('/executeQuery', function(req, res, next) {
                             if (err) {
                                 console.log(err);
                             } else {
-                                statement.executeQuery("SELECT * FROM actor;",
+                                statement.executeQuery(query,
                                 function(err, resultset) {
                                     if (err) {
                                         console.log(err)
