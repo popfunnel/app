@@ -14,7 +14,6 @@ if (!jinst.isJvmCreated()) {
 
 const queries = require('./routes/queries');
 
-
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
