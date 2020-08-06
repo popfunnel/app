@@ -14,6 +14,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import { NavStyles } from './NavStyles'
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles(NavStyles);
 
@@ -46,7 +47,7 @@ export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
             {/* TODO: add unique  keys to this drawer */}
             <List>
                 {['Dashboard', 'Query Tool', 'Dashboards', 'Preferences'].map((text, index) => (
-                    <ListItem button key={text}>
+                    <ListItem button key={uuidv4()}>
                     <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                     <ListItemText primary={text} />
                     </ListItem>
@@ -55,7 +56,7 @@ export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
             <Divider />
             <List>
                 {['Placeholder', 'Placeholder', 'Placeholder'].map((text, index) => (
-                    <ListItem button key={text}>
+                    <ListItem button key={uuidv4()}>
                     <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                     <ListItemText primary={text} />
                     </ListItem>

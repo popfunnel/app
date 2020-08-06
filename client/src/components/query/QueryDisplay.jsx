@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -24,12 +25,12 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-export const QueryDisplay = ({queryResults}) => {
+export const QueryDisplay = React.memo(({queryResults}) => {
     const classes = useStyles();
     if (!Array.isArray(queryResults)) {
         return (
             <div style={{height:'100vh', width:'100%'}}>
-                <Paper>
+                <Paper className={classes.paper}>
                     Your query results will be shown here.
                 </Paper>
             </div>
@@ -41,7 +42,7 @@ export const QueryDisplay = ({queryResults}) => {
         <TableHead>
             <TableRow>
                 {attributes.map(header => (
-                    <TableCell>{header}</TableCell>
+                    <TableCell key={uuidv4()}>{header}</TableCell>
                 ))}
             </TableRow>
         </TableHead>
@@ -49,25 +50,25 @@ export const QueryDisplay = ({queryResults}) => {
 
     let tableBodyRows = (
         <TableBody>
-          {queryResults.map((row) => (
-            <TableRow key={row.name}>
-                {attributes.map(col => <TableCell>{row[col]}</TableCell>)}
+        {queryResults.map((row) => (
+            <TableRow key={uuidv4()}>
+                {attributes.map(col => <TableCell key={uuidv4()}>{row[col]}</TableCell>)}
             </TableRow>
-          ))}
+        ))}
         </TableBody>
     );
 
     return (
         <div style={{height:'50vh', width:'100%'}}>
             <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="simple table">
+            <Table className={classes.table}  size="small" aria-label="query results">
                 {tableBodyHeader}
                 {tableBodyRows}
             </Table>
             </TableContainer>
         </div>
     )
-}
+});
 
 
 //   function createData(name, calories, fat, carbs, protein) {

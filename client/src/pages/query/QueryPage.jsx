@@ -4,7 +4,7 @@ import { QueryDisplay } from '../../components/query/QueryDisplay';
 // import { QueryStyles } from './QueryPageStyles';
 
 export const QueryPage = () => {
-    let [queryInput, setQueryInput] = React.useState('SELECT * FROM actor');
+    let [queryInput, setQueryInput] = React.useState('SELECT * FROM actor LIMIT 10');
     let [queryResults, setQueryResults] = React.useState('');
     
     let queryUserDB = () => {
@@ -22,14 +22,13 @@ export const QueryPage = () => {
         })
         .then(response => response.json())
         .then(data => {
-            setQueryResults(JSON.stringify(data));
+            setQueryResults(data);
         })
-    }
+    };
 
     return (
         <div style={{display:'flex', flexDirection:'column'}}>
             <QueryInput queryInput={queryInput} setQueryInput={setQueryInput} queryUserDB={queryUserDB}/>
-            <div style={{height:'50px'}}/>
             <QueryDisplay queryResults={queryResults}/>
         </div>
     );
