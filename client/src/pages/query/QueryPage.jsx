@@ -22,7 +22,6 @@ export const QueryPage = () => {
         })
         .then(response => response.json())
         .then(data => {
-            
             setQueryResults(JSON.stringify(data));
         })
     }

@@ -13,22 +13,25 @@ router.post('/executeQuery', function(req, res, next) {
             conn.createStatement(
                 function(err, statement) {
                     if (err) {
-                    console.log(err);
+                        console.log(err);
+                        res.send(err);
                     } else {
                         statement.setFetchSize(100, 
                         function(err) {
                             if (err) {
                                 console.log(err);
+                                res.send(err);
                             } else {
                                 statement.executeQuery(query,
                                 function(err, resultset) {
                                     if (err) {
-                                        console.log(err)
+                                        console.log(err);
+                                        res.send(err);
                                     } else {
                                         resultset.toObjArray(
                                             function(err, results) {
-                                                res.send(JSON.stringify(results))
-                                                console.log('here are the results', results)
+                                                res.send(JSON.stringify(results));
+                                                console.log(results)
                                             }
                                         );
                                         
@@ -45,8 +48,7 @@ router.post('/executeQuery', function(req, res, next) {
             });
         };
     });
-   
-    // res.send('You hit the executeQuery route correctly')
+
 });
 
 
