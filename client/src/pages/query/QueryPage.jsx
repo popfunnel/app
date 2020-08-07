@@ -1,5 +1,5 @@
 import React from 'react';
-import { QueryInput } from '../../components/query/QueryInput';
+import { QueryInput } from '../../components/query/input/QueryInput';
 import { QueryDisplay } from '../../components/query/QueryDisplay';
 // import { QueryStyles } from './QueryPageStyles';
 
