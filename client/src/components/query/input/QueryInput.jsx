@@ -1,13 +1,8 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-
 import {Controlled as CodeMirror} from 'react-codemirror2'
-
-
-// import 'codemirror/lib/codemirror.css';
-import './codemirrorSettings.css';
+import './codemirror.css';
 import 'codemirror/theme/monokai.css';
 import 'codemirror/mode/sql/sql';
 // import { makeStyles } from '@material-ui/core/styles'
@@ -45,6 +40,3 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
         </Paper>
     );
 };
-
-
- 
