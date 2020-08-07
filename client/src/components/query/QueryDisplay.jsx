@@ -61,10 +61,10 @@ export const QueryDisplay = React.memo(({queryResults}) => {
     return (
         <div style={{height:'50vh', width:'100%'}}>
             <TableContainer component={Paper}>
-            <Table className={classes.table}  size="small" aria-label="query results">
-                {tableBodyHeader}
-                {tableBodyRows}
-            </Table>
+                <Table className={classes.table}  size="small" aria-label="query results">
+                    {tableBodyHeader}
+                    {tableBodyRows}
+                </Table>
             </TableContainer>
         </div>
     )
