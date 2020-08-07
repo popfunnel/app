@@ -47,7 +47,7 @@ export const NavBar = (props) => {
                         <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        db-visuals
+                        PopFunnel
                     </Typography>
                 </Toolbar>
             </AppBar>
