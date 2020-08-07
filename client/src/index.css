@@ -11,3 +11,8 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'FiraSans';
+  src: local('FiraSans'), url(./fonts/FiraSans-Regular.ttf) format('truetype');
+}
