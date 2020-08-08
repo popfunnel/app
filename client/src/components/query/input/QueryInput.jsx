@@ -4,6 +4,7 @@ import Paper from '@material-ui/core/Paper';
 import {Controlled as CodeMirror} from 'react-codemirror2'
 import './codemirror.css';
 import 'codemirror/theme/monokai.css';
+import 'codemirror/theme/yonce.css';
 import 'codemirror/mode/sql/sql';
 // import { makeStyles } from '@material-ui/core/styles'
 
@@ -12,12 +13,12 @@ import 'codemirror/mode/sql/sql';
 
 export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
     return (
-        <Paper style={{marginTop:'30px', maginLeft: '10px', width:'100%'}}>
+        <Paper style={{marginTop:'5px', maginLeft: '10px', width:'100%'}}>
             <CodeMirror
                 value={queryInput}
                 options={{
                     mode: 'sql',
-                    theme: 'monokai',
+                    theme: 'yonce',
                     tabSize: 4,
                     lineNumbers: true
                 }}

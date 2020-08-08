@@ -60,6 +60,5 @@ export const NavStyles = (theme) => ({
         display:'flex',
         flexDirection:'column',
         width:'100%',
-        marginRight:'20px'
     },
 });
