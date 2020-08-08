@@ -1,6 +1,7 @@
 import React from 'react';
 import { QueryInput } from '../../components/query/input/QueryInput';
 import { QueryDisplay } from '../../components/query/QueryDisplay';
+import { QueryActions } from '../../components/query/actions/QueryActions';
 // import { QueryStyles } from './QueryPageStyles';
 
 export const QueryPage = () => {
@@ -26,10 +27,16 @@ export const QueryPage = () => {
         })
     };
 
+    // TODO: figure out how to make width less than past drawer
     return (
-        <div style={{display:'flex', flexDirection:'column'}}>
-            <QueryInput queryInput={queryInput} setQueryInput={setQueryInput} queryUserDB={queryUserDB}/>
-            <QueryDisplay queryResults={queryResults}/>
+        <div style={{display:'flex', flexDirection:'row', width: '100%'}}>
+            <div style={{display:'flex', flexDirection:'column', width: '100%'}}>
+                <QueryInput queryInput={queryInput} setQueryInput={setQueryInput} queryUserDB={queryUserDB}/>
+                <QueryDisplay queryResults={queryResults}/>
+            </div>
+            <div style={{height: '100vh', width:'30vw'}}>
+                <QueryActions/>
+            </div>
         </div>
     );
 };
