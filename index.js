@@ -13,6 +13,7 @@ if (!jinst.isJvmCreated()) {
 }
 
 const queries = require('./routes/queries');
+const server = require('./server/routes');
 
 const app = express();
 app.use(bodyParser.json());
@@ -22,6 +23,13 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/queries', queries);
 app.use('/', queries);
+
+app.use('/users', server);
+app.use('/users/create', server);
+
+app.get('/users', (req, res) => {
+    res.status(200).send({message: "asked for users"});
+});
 
 app.get('/templateroute', (req, res) => {
     res.send('this route is set up correctly');
@@ -40,4 +48,4 @@ app.use(function(req, res, next) {
 const port = process.env.PORT || 5000;
 app.listen(port)
 
-
+// module.exports = app;

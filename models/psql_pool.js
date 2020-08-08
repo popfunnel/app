@@ -4,12 +4,12 @@ dotenv.config();
 
 const config = {
     // Required
-    url: 'jdbc:postgresql://localhost/db-visuals-pg',
+    url: 'jdbc:postgresql://localhost/popfunnel_development',
     // Optional
     drivername: 'org.postgresql.Driver',
     minpoolsize: 10,
     maxpoolsize: 100,
-    user: 'Curtis',
+    user: 'root',
     password: '',
     properties: {}
 };
