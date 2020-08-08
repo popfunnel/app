@@ -5,5 +5,5 @@ module.exports = (app) => {
       message: 'Welcome to the Users List!',
     }));
   
-    app.post('/users/create', todosController.create);
+    app.post('/users/create', usersController.create);
   };
