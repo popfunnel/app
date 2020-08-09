@@ -45,4 +45,8 @@ to run migrations:
 sequelize db:migrate
 ```
 
+to rollback a migration:
 
+```
+sequelize db:migrate:undo
+```
