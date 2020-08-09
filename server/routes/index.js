@@ -1,9 +1,12 @@
+const express = require('express');
 const usersController = require('../controllers').users;
 
-module.exports = (app) => {
-  app.get('/users', (req, res) => res.status(200).send({
-    message: 'Welcome to the Users List!',
-  }));
+const router = new express.Router();
 
-  app.post('/users/create', usersController.create);
-};
+router.get('/', (req, res) => res.status(200).send({
+  message: 'Welcome to the Users List!',
+}));
+
+router.post('/create', usersController.create);
+
+module.exports = router;
