@@ -25,12 +25,10 @@ fs
     (file !== basename) &&
     (file.slice(-3) === '.js'))
   .forEach(file => {
-    // const model = sequelize.import(path.join(__dirname, file));
-    // const model = require(path.join(__dirname, file)).default(sequelize, Sequelize);
-    // const model = sequelize['import'](path.join(__dirname, file));
     const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes)
-    db[model.modelName] = model;
-  });
+    // db[model.modelName] = model;
+    db[model.name] = model;
+});
 
 Object.keys(db).forEach(modelName => {
   if (db[modelName].associate) {
