@@ -13,7 +13,7 @@ export const QueryPage = () => {
             query: queryInput
         };
         
-        fetch('/executeQuery', {
+        fetch('/queries/executeQuery', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
