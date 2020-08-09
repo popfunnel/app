@@ -8,26 +8,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      emailAddress: {
+      email: {
+        type: Sequelize.STRING
+      },
+      created_at: {
         allowNull: false,
-        type: Sequelize.TEXT,
-        field: 'email_address'
+        type: Sequelize.DATE
       },
-      createdAt: {
+      updated_at: {
         allowNull: false,
-        defaultValue: Sequelize.fn('NOW'),
-        type: Sequelize.DATE,
-        field: 'created_at'
+        type: Sequelize.DATE
       },
-      deletedAt: {
+      deleted_at: {
         allowNull: true,
-        type: Sequelize.DATE,
-        field: 'deleted_at'
-      },
-      updatedAt: {
-        allowNull: true,
-        type: Sequelize.DATE,
-        field: 'updated_at'
+        type: Sequelize.DATE
       }
     });
   },

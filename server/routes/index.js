@@ -1,6 +1,5 @@
 const express = require('express');
 const usersController = require('../controllers').users;
-
 const router = new express.Router();
 
 router.get('/', (req, res) => res.status(200).send({
