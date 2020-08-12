@@ -27,14 +27,13 @@ export const QueryPage = () => {
         })
     };
 
-    // TODO: figure out how to make width less than past drawer
     return (
         <div style={{display:'flex', flexDirection:'row', width: '100%'}}>
             <div style={{display:'flex', flexDirection:'column', width: '100%'}}>
                 <QueryInput queryInput={queryInput} setQueryInput={setQueryInput} queryUserDB={queryUserDB}/>
                 <QueryDisplay queryResults={queryResults}/>
             </div>
-            <div style={{height: '100vh', width:'30vw'}}>
+            <div style={{height: '100vh', width:'20vw'}}>
                 <QueryActions/>
             </div>
         </div>

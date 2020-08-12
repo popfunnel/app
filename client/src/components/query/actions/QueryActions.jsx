@@ -1,11 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { SeriesSettings } from './settings/SeriesSettings'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import HistoryIcon from '@material-ui/icons/History';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import SettingsIcon from '@material-ui/icons/Settings';
-import { withStyles } from '@material-ui/core/styles';
+
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     tabContainer: {
@@ -28,8 +29,8 @@ export const QueryActions = () => {
     const getTabContent = () => {
         if (value === 0) {
             return (
-                <div> 
-                    chart component
+                <div style={{width:'100%', paddingLeft: '15px', paddingRight: '15px'}}> 
+                    <SeriesSettings/>
                 </div>
             );
         } else if (value === 1) {
