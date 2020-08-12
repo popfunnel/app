@@ -33,7 +33,7 @@ export const QueryPage = () => {
                 <QueryInput queryInput={queryInput} setQueryInput={setQueryInput} queryUserDB={queryUserDB}/>
                 <QueryDisplay queryResults={queryResults}/>
             </div>
-            <div style={{height: '100vh', width:'20vw'}}>
+            <div style={{height: '100vh', width:'30vw'}}>
                 <QueryActions/>
             </div>
         </div>
