@@ -13,6 +13,14 @@ import 'codemirror/mode/sql/sql';
 // const useStyles = makeStyles(QueryStyles)
 
 export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
+    let formatHelper = function(cm) {
+        let selection = cm.getSelection()
+        if (selection) {
+            cm.replaceSelection(sqlFormatter.format(selection))
+        } else {
+            cm.setValue(sqlFormatter.format(cm.getValue()))
+        }
+    }
     return (
         <Paper style={{marginTop:'5px', maginLeft: '10px', width:'100%'}}>
             <CodeMirror
@@ -31,17 +39,8 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
                         "Ctrl-Enter": function(cm) {
                             queryUserDB(undefined, cm.getSelection())
                         },
-                        "Shift-Cmd-L": function(cm) {
-                            // TODO
-                            // let selection = cm.getSelection()
-                            // if (selection !== undefined && selection !== "") {
-                            //     console.log(selection)
-                            //     console.log(sqlFormatter.format(selection))    
-                            //     cm.setSelection(sqlFormatter.format(selection))
-                            // } else {
-
-                            // }
-                        },
+                        "Shift-Cmd-L": formatHelper,
+                        "Shift-Ctrl-L": formatHelper,
                     },
                 }}
                 onBeforeChange={(editor, data, value) => {
