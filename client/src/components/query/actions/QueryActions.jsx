@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const QueryActions = () => {
+export const QueryActions = ({seriesType, setSeriesType}) => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -30,7 +30,7 @@ export const QueryActions = () => {
         if (value === 0) {
             return (
                 <div style={{width:'100%', paddingLeft: '15px', paddingRight: '15px'}}> 
-                    <SeriesSettings/>
+                    <SeriesSettings seriesType={seriesType} setSeriesType={setSeriesType}/>
                 </div>
             );
         } else if (value === 1) {

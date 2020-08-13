@@ -20,8 +20,8 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const SeriesSettings = () => {
-    const [chartType, setChartType] = React.useState('table')
+export const SeriesSettings = ({seriesType, setSeriesType}) => {
+    // const [chartType, setChartType] = React.useState('table')
     const classes = useStyles();
 
     // TODO: Extract each section here into subcomponents?
@@ -36,15 +36,14 @@ export const SeriesSettings = () => {
             <>
                 <Select
                     className={classes.chartSelect}
-                    value={chartType}
+                    value={seriesType}
                     onChange={(e) => {
-                        setChartType(e.target.value)}}
+                        setSeriesType(e.target.value)}}
                     inputProps={{ 'aria-label': 'Without label' }}
                 >
-                    <MenuItem className={classes.chartSelectItem} value={'table'}>Table</MenuItem>
-                    <MenuItem className={classes.chartSelectItem} value={'chart'}>Chart</MenuItem>
-                    <MenuItem className={classes.chartSelectItem} value={'bar'}>Bar</MenuItem>
-                    <MenuItem className={classes.chartSelectItem} value={'pie'}>Pie</MenuItem>
+                    <MenuItem className={classes.chartSelectItem} value={'Table'}>Table</MenuItem>
+                    <MenuItem className={classes.chartSelectItem} value={'Bar'}>Bar</MenuItem>
+                    <MenuItem className={classes.chartSelectItem} value={'Pie'}>Pie</MenuItem>
                 </Select>
             </>
             <div style={{display:'flex', height: '100px', alignItems: 'center'}}>
