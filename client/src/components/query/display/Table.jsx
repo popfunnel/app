@@ -21,7 +21,6 @@ export const ResultsTable = ({queryResults}) => {
     let attributes = queryResults.length ? Object.keys(queryResults[0]) : [];
 
     let TableBodyHeader = () => {
-        let attributes = Object.keys(queryResults[0]);
         return(
             <TableHead>
                 <TableRow>

@@ -5,7 +5,7 @@ import { QueryActions } from '../../components/query/actions/QueryActions';
 
 // TODO wrap in redux!!!!
 export const QueryPage = () => {
-    let [queryInput, setQueryInput] = React.useState('SELECT * FROM actor LIMIT 10');
+    let [queryInput, setQueryInput] = React.useState('SELECT category_id, Count(category_id) FROM film_category GROUP BY category_id ORDER BY count DESC LIMIT 10');
     let [queryResults, setQueryResults] = React.useState('');
     let [seriesType, setSeriesType] = React.useState('Table');
     
