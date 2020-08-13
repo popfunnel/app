@@ -5,7 +5,12 @@ import { QueryActions } from '../../components/query/actions/QueryActions';
 
 // TODO wrap in redux!!!!
 export const QueryPage = () => {
-    let [queryInput, setQueryInput] = React.useState('SELECT category_id, Count(category_id) FROM film_category GROUP BY category_id ORDER BY count DESC LIMIT 10');
+    let exampleQuery = `SELECT name, count(1)
+FROM film_category join category on category.category_id = film_category.category_id 
+GROUP BY name 
+ORDER BY count DESC 
+LIMIT 10`
+    let [queryInput, setQueryInput] = React.useState(exampleQuery);
     let [queryResults, setQueryResults] = React.useState('');
     let [seriesType, setSeriesType] = React.useState('Table');
     
