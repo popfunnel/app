@@ -29,12 +29,12 @@ export const QueryPage = () => {
     };
 
     return (
-        <div style={{display:'flex', flexDirection:'row', width: '100%'}}>
-            <div style={{display:'flex', flexDirection:'column', width: '100%'}}>
+        <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh-64px)'}}>
+            <div style={{display:'flex', flexDirection:'column', width: '100%' }}>
                 <QueryInput queryInput={queryInput} setQueryInput={setQueryInput} queryUserDB={queryUserDB}/>
                 <QueryDisplay queryResults={queryResults} seriesType={seriesType}/>
             </div>
-            <div style={{height: '100vh', width:'30vw'}}>
+            <div style={{width:'30vw'}}>
                 <QueryActions seriesType={seriesType} setSeriesType={setSeriesType}/>
             </div>
         </div>

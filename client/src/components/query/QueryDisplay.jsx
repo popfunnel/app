@@ -8,12 +8,11 @@ import { PieChart } from './display/Pie'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
+
+// TODO: fix height 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-    },
     paper: {
-      height: 400,
+      height: 300,
       width: '100%',
     },
     control: {
@@ -41,7 +40,6 @@ export const QueryDisplay = React.memo(({queryResults, seriesType}) => {
         );
     }
 
-    // TODO:create object storing jsx?
     const getDisplay = () => {
         if (!Array.isArray(queryResults)) {
             return <NoResults/>

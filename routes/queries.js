@@ -8,7 +8,6 @@ router.post('/executeQuery', function(req, res, next) {
     const query = req.body.query;
     psql_pool.reserve(function(err, connObj) {
         if (connObj) {
-            console.log("Using connection: " + connObj.uuid);
             var conn = connObj.conn;
             conn.createStatement(
                 function(err, statement) {

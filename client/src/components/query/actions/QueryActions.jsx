@@ -14,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'flex-end',
         width: '100%',
-        height: '100vh'
     },
     tabs: {
         borderLeft: `1px solid ${theme.palette.divider}`,
@@ -58,7 +57,7 @@ export const QueryActions = ({seriesType, setSeriesType}) => {
   }))(Tab);
   
   return (
-    <div>
+    <div style={{height: 'calc(100vh - 64px)'}}>
         <div className={classes.tabContainer}>
             {getTabContent()}
             <Tabs
