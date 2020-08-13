@@ -26,10 +26,10 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
                     lineNumbers: true,
                     extraKeys: {
                         "Cmd-Enter": function(cm) {
-                            queryUserDB(cm.getSelection())
+                            queryUserDB(undefined, cm.getSelection())
                         },
                         "Ctrl-Enter": function(cm) {
-                            queryUserDB(cm.getSelection())
+                            queryUserDB(undefined, cm.getSelection())
                         },
                         "Shift-Cmd-L": function(cm) {
                             // TODO
