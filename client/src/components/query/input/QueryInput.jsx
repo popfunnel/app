@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import {Controlled as CodeMirror} from 'react-codemirror2'
+import sqlFormatter from "sql-formatter";
 import './codemirror.css';
 import 'codemirror/theme/monokai.css';
 import 'codemirror/theme/yonce.css';
@@ -20,7 +21,28 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
                     mode: 'sql',
                     theme: 'yonce',
                     tabSize: 4,
-                    lineNumbers: true
+                    autofocus: true,
+                    lineWrapping: true,
+                    lineNumbers: true,
+                    extraKeys: {
+                        "Cmd-Enter": function(cm) {
+                            queryUserDB(cm.getSelection())
+                        },
+                        "Ctrl-Enter": function(cm) {
+                            queryUserDB(cm.getSelection())
+                        },
+                        "Shift-Cmd-L": function(cm) {
+                            // TODO
+                            // let selection = cm.getSelection()
+                            // if (selection !== undefined && selection !== "") {
+                            //     console.log(selection)
+                            //     console.log(sqlFormatter.format(selection))    
+                            //     cm.setSelection(sqlFormatter.format(selection))
+                            // } else {
+
+                            // }
+                        },
+                    },
                 }}
                 onBeforeChange={(editor, data, value) => {
                     setQueryInput(value)
