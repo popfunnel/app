@@ -11,6 +11,7 @@ export const BarChart = ({queryResults}) => {
     let attributes = queryResults.length ? Object.keys(queryResults[0]) : [];
     let xValue = queryResults.map(item => item[attributes[0]]);
     let yValue = queryResults.map(item => item[attributes[1]]);
+
     return (
         <div style={{display:'flex', justifyContent:'center'}}>
             <Plot

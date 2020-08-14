@@ -14,8 +14,9 @@ LIMIT 10`
     let [queryResults, setQueryResults] = React.useState('');
     let [seriesType, setSeriesType] = React.useState('Table');
     
-    let queryUserDB = (event, selection) => {
-        let queryText = (selection === undefined || selection === "") ? queryInput : selection
+    let queryUserDB = (selection) => {
+        let queryText = !selection ? queryInput : selection;
+
         const data = {
             query: queryText
         };

@@ -13,7 +13,7 @@ import 'codemirror/mode/sql/sql';
 // const useStyles = makeStyles(QueryStyles)
 
 export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
-    let formatHelper = function(cm) {
+    let formatHelper = (cm) => {
         let selection = cm.getSelection()
         if (selection) {
             cm.replaceSelection(sqlFormatter.format(selection))
@@ -21,6 +21,7 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
             cm.setValue(sqlFormatter.format(cm.getValue()))
         }
     }
+
     return (
         <Paper style={{marginTop:'5px', maginLeft: '10px', width:'100%'}}>
             <CodeMirror
@@ -34,10 +35,10 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
                     lineNumbers: true,
                     extraKeys: {
                         "Cmd-Enter": function(cm) {
-                            queryUserDB(undefined, cm.getSelection())
+                            queryUserDB(cm.getSelection())
                         },
                         "Ctrl-Enter": function(cm) {
-                            queryUserDB(undefined, cm.getSelection())
+                            queryUserDB(cm.getSelection())
                         },
                         "Shift-Cmd-L": formatHelper,
                         "Shift-Ctrl-L": formatHelper,
@@ -53,7 +54,7 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
                 <div>
                         <Button
                             color='secondary'
-                            onClick={queryUserDB}
+                            onClick={() => queryUserDB()}
                         >
                             Run Sql
                         </Button>
