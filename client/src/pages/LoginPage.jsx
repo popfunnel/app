@@ -54,6 +54,7 @@ export const LoginPage = () => {
     const history = useHistory();
 
     let handleLogin = (context) => {
+        console.log(context.email, context)
         fetch('/login', {
             method: 'post',
             headers: {

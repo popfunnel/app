@@ -4,8 +4,8 @@ module.exports = {
   create(req, res) {
     return User
       .create({
-        // emailAddress: req.body.emailAddress,
-        email: 'blah'
+        email: req.body.email,
+        passwordHash: req.body.password,
       })
       .then(user => {
         console.log('user', user)
