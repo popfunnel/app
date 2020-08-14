@@ -1,4 +1,5 @@
 import React from 'react';
+<<<<<<< HEAD
 import { useHistory } from "react-router-dom";
 
 import Avatar from '@material-ui/core/Avatar';
@@ -140,4 +141,13 @@ export const LoginPage = () => {
         </Box>
         </Container>
     );
+=======
+
+export const LoginPage = () => {
+    return (
+        <div>
+           Login to the website.
+        </div>
+    )
+>>>>>>> 0328ed8... sketch routing for login (#4)
 }
