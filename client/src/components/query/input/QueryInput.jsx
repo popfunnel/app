@@ -13,6 +13,7 @@ import 'codemirror/mode/sql/sql';
 // const useStyles = makeStyles(QueryStyles)
 
 export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
+    const commentToken = '--' // for non-postgres this might be something else
     let formatHelper = (cm) => {
         let selection = cm.getSelection()
         if (selection) {
@@ -21,7 +22,24 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
             cm.setValue(sqlFormatter.format(cm.getValue()))
         }
     }
-
+    let commentHelper = function(cm) {
+        let selection = cm.getSelection()
+        if (selection) {
+            // Change the selected lines, but not the ensuing line.
+            let commentedText = commentToken + " " + selection.trim().replace(/\n/g, '\n' + commentToken + ' ')
+            cm.replaceSelection(commentedText)
+        } else {
+            // Change only the line the cursor is on.
+            let currentLine = cm.getCursor().line  
+            let lineText = cm.getLine(currentLine)               
+            if (lineText.startsWith(commentToken)) {
+                lineText = '\n' + lineText.substr(commentToken.length).trim()
+            } else {
+                lineText = '\n' + commentToken + ' ' + lineText
+            }
+            cm.replaceRange(lineText, {line: currentLine-1, anchor: 0}, {line: currentLine, anchor: 0})
+        }
+    }
     return (
         <Paper style={{marginTop:'5px', maginLeft: '10px', width:'100%'}}>
             <CodeMirror
@@ -42,6 +60,8 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
                         },
                         "Shift-Cmd-L": formatHelper,
                         "Shift-Ctrl-L": formatHelper,
+                        "Cmd-/": commentHelper,
+                        "Ctrl-/": commentHelper,
                     },
                 }}
                 onBeforeChange={(editor, data, value) => {
