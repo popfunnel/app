@@ -1,6 +1,6 @@
 import React from 'react';
 import { QueryInput } from '../../components/query/input/QueryInput';
-import { QueryDisplay } from '../../components/query/QueryDisplay';
+import { QueryDisplay } from '../../components/query/display/DisplayContainer';
 import { QueryActions } from '../../components/query/actions/QueryActions';
 
 // TODO wrap in redux!!!!

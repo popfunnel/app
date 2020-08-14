@@ -1,9 +1,8 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
 // TODO create index.js file to import all these guys
-import { ResultsTable } from './display/Table'
-import { BarChart } from './display/Bar'
-import { PieChart } from './display/Pie'
+import { ResultsTable } from './Table'
+import { Chart } from './Chart'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -45,13 +44,8 @@ export const QueryDisplay = React.memo(({queryResults, seriesType}) => {
             return <NoResults/>
         } else if (seriesType === 'Table') {
             return <ResultsTable queryResults={queryResults}/>
-        } else if (seriesType === 'Bar') {
-            return <BarChart queryResults={queryResults}/>
-        } else if (seriesType === 'Pie') {
-            return <PieChart queryResults={queryResults}/>
-        }
-        else {
-            return <NoResults/>
+        } else {
+            return <Chart queryResults={queryResults} seriesType={seriesType}/>
         }
     }
 
