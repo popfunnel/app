@@ -1,7 +1,10 @@
 const express = require('express');
+const loginController = require('../server/controllers').login;
 const psql_pool = require('../models/psql_pool');
 
 const router = new express.Router();
+
+router.post('/login', loginController.post)
 
 router.post('/executeQuery', function(req, res, next) {
     console.log('request data', req.body);
