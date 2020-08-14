@@ -44,7 +44,6 @@ export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
                 </IconButton>
             </div>
             <Divider />
-            {/* TODO: add unique  keys to this drawer */}
             <List>
                 {['Dashboard', 'Query Tool', 'Dashboards', 'Preferences'].map((text, index) => (
                     <ListItem button key={uuidv4()}>
