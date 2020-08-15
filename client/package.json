@@ -11,13 +11,12 @@
     "@testing-library/user-event": "^7.2.1",
     "clsx": "^1.1.1",
     "codemirror": "^5.56.0",
-    "plotly.js": "^1.54.7",
     "react": "^16.13.1",
     "react-codemirror2": "^7.2.1",
     "react-dom": "^16.13.1",
-    "react-plotly.js": "^2.4.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-vis": "^1.11.7",
     "sql-formatter": "^2.3.3"
   },
   "scripts": {

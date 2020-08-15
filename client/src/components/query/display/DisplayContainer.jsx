@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 // TODO: fix height 
 const useStyles = makeStyles((theme) => ({
     paper: {
-      height: 300,
+      height: '100%',
       width: '100%',
     },
     control: {
@@ -25,13 +25,15 @@ export const QueryDisplay = React.memo(({queryResults, seriesType}) => {
     
     const SeriesTitle = () => {
         return (
-            <Typography variant="h6" display="block" gutterBottom>{seriesType}</Typography>
+            <div style={{marginLeft: '10px'}}>
+                <Typography variant="h6" display="block">{seriesType}</Typography>
+            </div>
         );
     }
 
     const NoResults = () => {
         return (
-            <div style={{height:'100%', width:'100%'}}>
+            <div style={{height:'80%', width:'100%'}}>
                 <Paper className={classes.paper}>
                     Your query results will be shown here.
                 </Paper>

@@ -1,68 +1,47 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Plot from 'react-plotly.js';
+import {FlexibleXYPlot, XYPlot, XAxis, YAxis, HorizontalGridLines, VerticalBarSeries} from 'react-vis';
+import Paper from '@material-ui/core/Paper';
 
-// const useStyles = makeStyles((theme) => ({
-
-// }));
+const useStyles = makeStyles((theme) => ({
+    paper: {
+      height: '100%',
+      width: '100%',
+    },
+    control: {
+      padding: theme.spacing(2),
+    }
+}));
 
 export const Chart = ({queryResults, seriesType}) => {
-
+    const classes = useStyles();
     let attributes = queryResults.length ? Object.keys(queryResults[0]) : [];
-    let xValue = queryResults.map(item => item[attributes[0]]);
-    let yValue = queryResults.map(item => item[attributes[1]]);
-
-    let lowerCaseSeriesType = seriesType.toLowerCase();
+    let data = queryResults.map(item => {
+        return {
+            x: item[attributes[0]],
+            y: item[attributes[1]]
+        }
+    })
 
     return (
-        <div style={{display:'flex', justifyContent:'center'}}>
-            <Plot
-                data={[
-                    {
-                        x: xValue,
-                        y: yValue,
-                        type: lowerCaseSeriesType,
-                        marker: {
-                            color: 'rgb(158,202,225)',
-                            opacity: 0.6,
-                            line: {
-                                color: 'rgb(8,48,107)',
-                                width: 1.5
-                            }
-                        }
-                    }
-                ]}
-                layout={{width: "100%", height: '100%'}}
-            />
-        </div>
+            <div style={{display:'flex', justifyContent:'center', height:'85%', width:'100%'}}>
+                <Paper style={{height:'300px', width:'300px'}}>
+                    <FlexibleXYPlot xType={'ordinal'}>
+                        <HorizontalGridLines/>
+                        <XAxis
+                            style={{
+                                fontSize:'12px'
+                            }}
+                        />
+                        <YAxis
+                            
+                        />
+                        <VerticalBarSeries
+                            data={data}
+                            color={'blue'}
+                        />
+                    </FlexibleXYPlot>
+                </Paper> 
+            </div>
     );
 };
-
-
-// import React from 'react';
-// import { makeStyles } from '@material-ui/core/styles';
-// import Plot from 'react-plotly.js';
-
-// // const useStyles = makeStyles((theme) => ({
-
-// // }));
-
-// export const PieChart = ({queryResults}) => {
-
-//     let attributes = queryResults.length ? Object.keys(queryResults[0]) : [];
-//     let xValue = queryResults.map(item => item[attributes[0]]);
-//     let yValue = queryResults.map(item => item[attributes[1]]);
-
-//     return (
-//         <div style={{display:'flex', justifyContent:'center'}}>
-//             <Plot
-//                 data={[{
-//                         labels: xValue,
-//                         values: yValue,
-//                         type: 'pie',
-//                     }]}
-//                 layout={{width: "100%", height: '100%'}}
-//             />
-//         </div>
-//     );
-// };
