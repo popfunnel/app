@@ -6,6 +6,7 @@ import { BarChart } from './BarChart'
 import { LineChart } from './LineChart'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const QueryDisplay = React.memo(({queryResults, seriesType}) => {
+const DisplayContainer = React.memo(({queryResults, seriesType}) => {
 
     const classes = useStyles();
     
@@ -58,3 +59,13 @@ export const QueryDisplay = React.memo(({queryResults, seriesType}) => {
         </div>
     )
 });
+
+const mapStateToProps = (state) => {
+    return {
+        queryResults: state.query.rawResults
+    }
+}
+
+const mapDispatchToProps = {};
+
+export const ConnectedDisplayContainer = connect(mapStateToProps, mapDispatchToProps)(DisplayContainer);
