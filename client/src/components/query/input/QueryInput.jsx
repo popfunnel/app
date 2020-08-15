@@ -7,12 +7,18 @@ import './codemirror.css';
 import 'codemirror/theme/monokai.css';
 import 'codemirror/theme/yonce.css';
 import 'codemirror/mode/sql/sql';
-// import { makeStyles } from '@material-ui/core/styles'
+import { connect } from 'react-redux'
+import { setUserQuery, queryDatabase } from '../../../actions/queryTool';
 
-// import { QueryInputStyles } from './QueryInputStyles'
-// const useStyles = makeStyles(QueryStyles)
+const QueryInput = ({queryDatabase}) => {
+    let exampleQuery = `SELECT name, count(1)
+    FROM film_category join category on category.category_id = film_category.category_id 
+    GROUP BY name 
+    ORDER BY count DESC 
+    LIMIT 10`
 
-export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
+    let [queryInput, setQueryInput] = React.useState(exampleQuery);
+
     const commentToken = '--' // for non-postgres this might be something else
     let formatHelper = (cm) => {
         let selection = cm.getSelection()
@@ -53,10 +59,12 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
                     lineNumbers: true,
                     extraKeys: {
                         "Cmd-Enter": function(cm) {
-                            queryUserDB(cm.getSelection())
+                            let queryText = cm.getSelection() || queryInput;
+                            queryDatabase(queryText);
                         },
                         "Ctrl-Enter": function(cm) {
-                            queryUserDB(cm.getSelection())
+                            let queryText = cm.getSelection() || queryInput;
+                            queryDatabase(queryText);
                         },
                         "Shift-Cmd-L": formatHelper,
                         "Shift-Ctrl-L": formatHelper,
@@ -67,20 +75,30 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
                 onBeforeChange={(editor, data, value) => {
                     setQueryInput(value)
                 }}
-                onChange={(editor, data, value) => {
-                }}
             />
             <div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
                 <div>
-                        <Button
-                            color='secondary'
-                            onClick={() => queryUserDB()}
-                            disableRipple
-                        >
-                            Run Sql
-                        </Button>
-                    </div>
+                    <Button
+                        color='secondary'
+                        onClick={() => queryDatabase(queryInput)}
+                        disableRipple
+                    >
+                        Run Sql
+                    </Button>
+                </div>
             </div>
         </Paper>
     );
 };
+
+const mapStateToProps = (state) => {
+    return {
+        userInput: state.query.userInput
+    }
+}
+
+const mapDispatchToProps = {
+    queryDatabase
+};
+
+export const ConnectedQueryInput = connect(mapStateToProps, mapDispatchToProps)(QueryInput);
