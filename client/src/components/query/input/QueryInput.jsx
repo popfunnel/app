@@ -91,14 +91,12 @@ const QueryInput = ({queryDatabase}) => {
     );
 };
 
-const mapStateToProps = (state) => {
-    return {
-        userInput: state.query.userInput
-    }
-}
+// const mapStateToProps = (state) => {
+
+// }
 
 const mapDispatchToProps = {
     queryDatabase
 };
 
-export const ConnectedQueryInput = connect(mapStateToProps, mapDispatchToProps)(QueryInput);
+export const ConnectedQueryInput = connect(undefined, mapDispatchToProps)(QueryInput);

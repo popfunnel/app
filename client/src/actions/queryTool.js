@@ -15,9 +15,8 @@ export const setUserQuery = (queryInput) => {
 }
 
 export const queryDatabase = queryInput => (dispatch, getState) => {
-    // let queryText = !selection ? queryInput : selection;
-    // dispatch(setUserQuery(queryInput));
-
+    // TODO:Check for any latency issues this might cause
+    dispatch(setUserQuery(queryInput));
     const data = {
         query: queryInput
     };
