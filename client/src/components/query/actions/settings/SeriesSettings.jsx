@@ -7,7 +7,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { ColumnSelections } from './ColumnSelections';
+import { ColumnSelector } from './ColumnSelections';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -46,7 +46,7 @@ const SeriesSettings = ({seriesType, setSeriesType}) => {
                 </Select>
             </>
             <div style={{display:'flex', justifyContent:'center'}}>
-                <ColumnSelections/>
+                <ColumnSelector/>
             </div>
             <div>
                 <Accordion>

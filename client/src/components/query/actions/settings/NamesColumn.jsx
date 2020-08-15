@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const NamesColumn = ({queryResults}) => {
+const NamesColumn = ({columnNames}) => {
     const classes = useStyles();
 
     return (
@@ -29,11 +30,22 @@ export const NamesColumn = ({queryResults}) => {
             <FormControl component="fieldset" className={classes.formControl}>
                 <div><FormLabel className={classes.formLabelHeader} component="legend">Names</FormLabel></div>
                 <FormGroup>
-                    <FormLabel className={classes.formLabel}>Cat</FormLabel>
-                    <FormLabel className={classes.formLabel}>Dog</FormLabel>
-                    <FormLabel className={classes.formLabel}>Bear</FormLabel>
+                    {columnNames.map(columnName => {
+                        return <FormLabel key={columnName} className={classes.formLabel}>{columnName}</FormLabel>
+                    })}
                 </FormGroup>
             </FormControl>
         </div>
     );
 };
+
+const mapStateToProps = (state) => {
+    let selections = state.chart.columnSelections;
+    return {
+        columnNames: selections.columnNames
+    }
+}
+
+const mapDispatchToProps = {};
+
+export const ConnectedNamesColumn = connect(mapStateToProps, mapDispatchToProps)(NamesColumn);

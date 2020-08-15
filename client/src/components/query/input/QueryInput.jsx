@@ -13,8 +13,8 @@ import { queryDatabase } from '../../../actions/queryTool';
 const QueryInput = ({queryDatabase}) => {
     let exampleQuery = `SELECT
     Count(*) AS total,
-    category.NAME AS category,
-    Date_trunc('day', rental_date) AS rental_date
+    Date_trunc('day', rental_date) AS rental_date,
+    category.NAME AS category
   FROM
     rental
     JOIN inventory ON rental.inventory_id = inventory.inventory_id
@@ -29,8 +29,10 @@ const QueryInput = ({queryDatabase}) => {
       OR category.NAME = 'Foreign'
     )
   GROUP BY
-    (Date_trunc('day', rental_date)),
-    category.NAME`
+    Date_trunc('day', rental_date),
+    category.NAME
+  ORDER BY
+    Date_trunc('day', rental_date)`
 
     let [queryInput, setQueryInput] = React.useState(exampleQuery);
 

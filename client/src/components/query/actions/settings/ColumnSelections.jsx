@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Xselection } from './Xselection';
-import { Yselection } from './Yselection';
-import { SeriesSelection } from './SeriesSelection';
-import { NamesColumn } from './NamesColumn';
+import { ConnectedXSelection } from './XSelection';
+import { ConnectedYSelections } from './YSelections';
+import { ConnectedSeriesSelections } from './SeriesSelections';
+import { ConnectedNamesColumn } from './NamesColumn';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -12,14 +12,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const ColumnSelections = ({queryResults}) => {
+export const ColumnSelector = ({queryResults}) => {
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <NamesColumn/>
-            <Xselection/>
-            <Yselection/>
-            <SeriesSelection/>
+            <ConnectedNamesColumn/>
+            <ConnectedXSelection/>
+            <ConnectedYSelections/>
+            <ConnectedSeriesSelections/>
         </div>
     )
 };

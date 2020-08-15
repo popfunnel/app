@@ -4,6 +4,8 @@ import FormLabel from '@material-ui/core/FormLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
+import { connect } from 'react-redux'
+import { updateXSelection } from '../../../../actions/queryTool';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -22,14 +24,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
-
-export const Xselection = ({queryResults}) => {
+const XSelection = ({updateXSelection, columnNames, xSelection}) => {
     const classes = useStyles();
-    const [xSelection, setXSelection] = React.useState('bear');
+    // const [xSelections, setXSelections] = React.useState('bear');
 
     const handleChange = (event) => {
-        setXSelection(event.target.value)
+        updateXSelection(event.target.value, 'xAxis');
     };
 
     return (
@@ -37,11 +37,30 @@ export const Xselection = ({queryResults}) => {
             <FormControl required component="fieldset" className={classes.formControl}>
                 <div><FormLabel className={classes.formLabelHeader} component="legend">X Axis</FormLabel></div>
                 <RadioGroup aria-label="gender" name="gender1" value={xSelection} onChange={handleChange}>
-                    <Radio value="cat" />
-                    <Radio value="dog" />
-                    <Radio value="bear" />
+                    {columnNames.map(name => {
+                        return <Radio key={name} value={name} />
+                    })}
                 </RadioGroup>
             </FormControl>
         </div>
     );
 };
+
+const mapStateToProps = (state) => {
+    let selections = state.chart.columnSelections;
+    let xSelection = selections.columnNames.filter(name => {
+        return selections.byColumnName[name].xAxis === true
+    })
+    xSelection = xSelection.length ? xSelection[0] : '';
+
+    return {
+        columnNames: selections.columnNames,
+        xSelection
+    }
+}
+
+const mapDispatchToProps = {
+    updateXSelection
+};
+
+export const ConnectedXSelection = connect(mapStateToProps, mapDispatchToProps)(XSelection);

@@ -22,11 +22,30 @@ export const setSeriesType = (seriesType) => {
     };
 };
 
-export const SET_COLUMN_NAMES = 'SET_COLUMN_NAMES';
-export const setColumnNames = (columnNames) => {
+export const CREATE_COLUMN_SELECTIONS = 'CREATE_COLUMN_SELECTIONS';
+export const createColumnSelections = (columnNames) => {
     return {
-        type: SET_COLUMN_NAMES,
+        type: CREATE_COLUMN_SELECTIONS,
         columnNames
+    };
+};
+
+export const UPDATE_COLUMN_SELECTIONS = 'UPDATE_COLUMN_SELECTIONS';
+export const updateColumnSelections = (column, selection, value) => {
+    return {
+        type: UPDATE_COLUMN_SELECTIONS,
+        column,
+        selection,
+        value
+    };
+};
+
+export const UPDATE_X_SELECTION = 'UPDATE_X_SELECTION';
+export const updateXSelection = (column, selection) => {
+    return {
+        type: UPDATE_X_SELECTION,
+        column,
+        selection
     };
 };
 
@@ -51,6 +70,6 @@ export const queryDatabase = queryInput => (dispatch, getState) => {
     })
     .then(data => {
         let attributes = data.length ? Object.keys(data[0]) : [];
-        dispatch(setColumnNames(attributes));
+        dispatch(createColumnSelections(attributes));
     });
 };
