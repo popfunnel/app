@@ -1,5 +1,5 @@
 import React from 'react';
-import { SeriesSettings } from './settings/SeriesSettings'
+import { ConnectedSeriesSettings } from './settings/SeriesSettings'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import HistoryIcon from '@material-ui/icons/History';
@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const QueryActions = ({seriesType, setSeriesType}) => {
+export const QueryActions = () => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -29,7 +29,7 @@ export const QueryActions = ({seriesType, setSeriesType}) => {
         if (value === 0) {
             return (
                 <div style={{width:'100%', paddingLeft: '15px', paddingRight: '15px'}}> 
-                    <SeriesSettings seriesType={seriesType} setSeriesType={setSeriesType}/>
+                    <ConnectedSeriesSettings/>
                 </div>
             );
         } else if (value === 1) {

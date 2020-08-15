@@ -41,7 +41,7 @@ const DisplayContainer = React.memo(({queryResults, seriesType}) => {
     }
 
     const getDisplay = () => {
-        if (!Array.isArray(queryResults)) {
+        if (!queryResults.length) {
             return <NoResults/>
         } else if (seriesType === 'Table') {
             return <ResultsTable queryResults={queryResults}/>
@@ -62,7 +62,8 @@ const DisplayContainer = React.memo(({queryResults, seriesType}) => {
 
 const mapStateToProps = (state) => {
     return {
-        queryResults: state.query.rawResults
+        queryResults: state.query.rawResults,
+        seriesType: state.chart.seriesType
     }
 }
 

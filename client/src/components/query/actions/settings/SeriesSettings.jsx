@@ -11,6 +11,9 @@ import { ColumnSelections } from './ColumnSelections';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { setSeriesType } from '../../../../actions/queryTool';
+import { connect } from 'react-redux'
+
 const useStyles = makeStyles((theme) => ({
     chartSelect: {
         width: '100%',
@@ -21,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const SeriesSettings = ({seriesType, setSeriesType}) => {
+const SeriesSettings = ({seriesType, setSeriesType}) => {
     // const [chartType, setChartType] = React.useState('table')
     const classes = useStyles();
 
@@ -76,3 +79,16 @@ export const SeriesSettings = ({seriesType, setSeriesType}) => {
         </div>
     );
 }
+
+
+const mapStateToProps = state => {
+    return {
+        seriesType: state.chart.seriesType
+    };
+}
+
+const mapDispatchToProps = {
+    setSeriesType
+};
+
+export const ConnectedSeriesSettings = connect(mapStateToProps, mapDispatchToProps)(SeriesSettings);

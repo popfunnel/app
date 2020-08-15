@@ -8,7 +8,7 @@ import 'codemirror/theme/monokai.css';
 import 'codemirror/theme/yonce.css';
 import 'codemirror/mode/sql/sql';
 import { connect } from 'react-redux'
-import { setUserQuery, queryDatabase } from '../../../actions/queryTool';
+import { queryDatabase } from '../../../actions/queryTool';
 
 const QueryInput = ({queryDatabase}) => {
     let exampleQuery = `SELECT name, count(1)
@@ -90,10 +90,6 @@ const QueryInput = ({queryDatabase}) => {
         </Paper>
     );
 };
-
-// const mapStateToProps = (state) => {
-
-// }
 
 const mapDispatchToProps = {
     queryDatabase

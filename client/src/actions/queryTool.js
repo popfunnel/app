@@ -14,8 +14,15 @@ export const setUserQuery = (queryInput) => {
     }
 }
 
+export const SET_SERIES_TYPE = 'SET_SERIES_TYPE';
+export const setSeriesType = (seriesType) => {
+    return {
+        type: SET_SERIES_TYPE,
+        seriesType
+    }
+}
+
 export const queryDatabase = queryInput => (dispatch, getState) => {
-    // TODO:Check for any latency issues this might cause
     dispatch(setUserQuery(queryInput));
     const data = {
         query: queryInput
