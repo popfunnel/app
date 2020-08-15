@@ -37,7 +37,7 @@ LIMIT 10`
 
     return (
         <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh-64px)'}}>
-            <div style={{display:'flex', flexDirection:'column', width: '100%' }}>
+            <div style={{display:'flex', flexDirection:'column', width: '100%'}}>
                 <QueryInput queryInput={queryInput} setQueryInput={setQueryInput} queryUserDB={queryUserDB}/>
                 <QueryDisplay queryResults={queryResults} seriesType={seriesType}/>
             </div>
