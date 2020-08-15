@@ -1,37 +1,29 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { ResponsiveBar } from '@nivo/bar'
-
 import Paper from '@material-ui/core/Paper';
+import { ResponsiveLine } from '@nivo/line'
 
-// const useStyles = makeStyles((theme) => ({
-//     paper: {
-//       height: '100%',
-//       width: '100%',
-//     },
-//     control: {
-//       padding: theme.spacing(2),
-//     }
-// }));
-
-export const BarChart = ({queryResults, seriesType}) => {
-    // const classes = useStyles();
+export const LineChart = ({queryResults, seriesType}) => {
     let attributes = queryResults.length ? Object.keys(queryResults[0]) : [];
+
     let data = queryResults.map(item => {
         return {
             x: item[attributes[0]],
             y: item[attributes[1]]
         }
-    })
+    });
 
     return (
             <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
                 <Paper style={{height:'80%', width:'80%'}}>
-                    <ResponsiveBar
+                    <ResponsiveLine
                         indexBy={'name'}
                         keys={['count']}
-                        data={queryResults}
-                        colors={{ scheme: 'category10' }}
+                        data={[{
+                            "id": "genres",
+                            "color": "hsl(106, 70%, 50%)",
+                            "data": data
+                        }]}
+                        colors={{scheme: 'accent'}}
                         margin={{
                             "top": 50,
                             "right": 60,
@@ -42,7 +34,7 @@ export const BarChart = ({queryResults, seriesType}) => {
                             tickSize: 5,
                             tickPadding: 5,
                             tickRotation: 0,
-                            legend: 'Genre',
+                            legend: attributes[0],
                             legendPosition: 'middle',
                             legendOffset: 32
                         }}
@@ -50,7 +42,7 @@ export const BarChart = ({queryResults, seriesType}) => {
                             tickSize: 5,
                             tickPadding: 5,
                             tickRotation: 0,
-                            legend: 'food',
+                            legend: attributes[1],
                             legendPosition: 'middle',
                             legendOffset: -40
                         }}

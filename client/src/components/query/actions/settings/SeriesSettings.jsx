@@ -43,7 +43,7 @@ export const SeriesSettings = ({seriesType, setSeriesType}) => {
                 >
                     <MenuItem className={classes.chartSelectItem} value={'Table'}>Table</MenuItem>
                     <MenuItem className={classes.chartSelectItem} value={'Bar'}>Bar</MenuItem>
-                    <MenuItem className={classes.chartSelectItem} value={'line'}>Line</MenuItem>
+                    <MenuItem className={classes.chartSelectItem} value={'Line'}>Line</MenuItem>
                 </Select>
             </>
             <div style={{display:'flex', height: '100px', alignItems: 'center'}}>
