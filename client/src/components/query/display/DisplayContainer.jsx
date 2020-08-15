@@ -39,7 +39,6 @@ export const QueryDisplay = React.memo(({queryResults, seriesType}) => {
         );
     }
 
-    console.log('here is the series type', seriesType)
     const getDisplay = () => {
         if (!Array.isArray(queryResults)) {
             return <NoResults/>

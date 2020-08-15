@@ -53,7 +53,7 @@ export const SeriesSettings = ({seriesType, setSeriesType}) => {
                     >
                         Theme
                     </AccordionSummary>
-                    <AccordionDetails>blah</AccordionDetails>
+                    <AccordionDetails>Theme options</AccordionDetails>
                 </Accordion>
                 <Accordion>
                     <AccordionSummary
