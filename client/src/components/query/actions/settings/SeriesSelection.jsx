@@ -48,7 +48,7 @@ export const SeriesSelection = ({queryResults}) => {
     return (
         <div>
             <FormControl required component="fieldset" className={classes.formControl}>
-                <div><FormLabel className={classes.formLabelHeader} component="legend">Y Axis</FormLabel></div>
+                <div><FormLabel className={classes.formLabelHeader} component="legend">Series</FormLabel></div>
                 <FormGroup>
                     <Checkbox checked={gilad} onChange={handleChange} name="gilad" />
                     <Checkbox checked={jason} onChange={handleChange} name="jason" />

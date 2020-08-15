@@ -11,11 +11,26 @@ import { connect } from 'react-redux'
 import { queryDatabase } from '../../../actions/queryTool';
 
 const QueryInput = ({queryDatabase}) => {
-    let exampleQuery = `SELECT name, count(1)
-    FROM film_category join category on category.category_id = film_category.category_id 
-    GROUP BY name 
-    ORDER BY count DESC 
-    LIMIT 10`
+    let exampleQuery = `SELECT
+    Count(*) AS total,
+    category.NAME AS category,
+    Date_trunc('day', rental_date) AS rental_date
+  FROM
+    rental
+    JOIN inventory ON rental.inventory_id = inventory.inventory_id
+    JOIN film ON inventory.inventory_id = film.film_id
+    JOIN film_category ON film.film_id = film_category.film_id
+    JOIN category ON film_category.category_id = category.category_id
+  WHERE
+    rental_date BETWEEN '2005-07-08'
+    AND '2005-07-31'
+    AND (
+      category.NAME = 'Sports'
+      OR category.NAME = 'Foreign'
+    )
+  GROUP BY
+    (Date_trunc('day', rental_date)),
+    category.NAME`
 
     let [queryInput, setQueryInput] = React.useState(exampleQuery);
 

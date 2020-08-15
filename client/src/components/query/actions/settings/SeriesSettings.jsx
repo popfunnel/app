@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SeriesSettings = ({seriesType, setSeriesType}) => {
-    // const [chartType, setChartType] = React.useState('table')
     const classes = useStyles();
 
     return (
@@ -66,14 +65,6 @@ const SeriesSettings = ({seriesType, setSeriesType}) => {
                     </AccordionSummary>
                     <AccordionDetails>Series options</AccordionDetails>
                 </Accordion>
-                {/* <Accordion>
-                    <AccordionSummary
-                        expandIcon={<ExpandMoreIcon />}
-                    >
-                        blah
-                    </AccordionSummary>
-                    <AccordionDetails>Series options</AccordionDetails>
-                </Accordion> */}
             </div>
 
         </div>
