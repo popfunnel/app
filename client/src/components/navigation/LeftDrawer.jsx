@@ -61,7 +61,7 @@ export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
             <List>
                 <ListItem button key={uuidv4()} onClick={() => {history.push('/about')}}>
                     <ListItemIcon><InfoIcon/></ListItemIcon>
-                    <ListItemText primary={'About the team'} />
+                    <ListItemText primary={'About'} />
                 </ListItem>
             </List>
         </Drawer>

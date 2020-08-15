@@ -7,6 +7,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { ColumnSelections } from './ColumnSelections';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -23,10 +24,6 @@ const useStyles = makeStyles((theme) => ({
 export const SeriesSettings = ({seriesType, setSeriesType}) => {
     // const [chartType, setChartType] = React.useState('table')
     const classes = useStyles();
-
-    // TODO: Extract each section here into subcomponents?
-    // TODO: add formcontrol for everything applicable...
-    // TODO: use mui makestyles function for all inline styles
 
     return (
         <div styles={{display:'flex', flexDirection: 'column', width:'100%'}}>
@@ -46,11 +43,10 @@ export const SeriesSettings = ({seriesType, setSeriesType}) => {
                     <MenuItem className={classes.chartSelectItem} value={'Line'}>Line</MenuItem>
                 </Select>
             </>
-            <div style={{display:'flex', height: '100px', alignItems: 'center'}}>
-                <div>This will be where the options live.</div>
+            <div style={{display:'flex', justifyContent:'center'}}>
+                <ColumnSelections/>
             </div>
             <div>
-
                 <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
@@ -67,14 +63,14 @@ export const SeriesSettings = ({seriesType, setSeriesType}) => {
                     </AccordionSummary>
                     <AccordionDetails>Series options</AccordionDetails>
                 </Accordion>
-                <Accordion>
+                {/* <Accordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                     >
                         blah
                     </AccordionSummary>
                     <AccordionDetails>Series options</AccordionDetails>
-                </Accordion>
+                </Accordion> */}
             </div>
 
         </div>

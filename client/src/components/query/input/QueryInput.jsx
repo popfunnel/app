@@ -75,6 +75,7 @@ export const QueryInput = ({queryInput, setQueryInput, queryUserDB}) => {
                         <Button
                             color='secondary'
                             onClick={() => queryUserDB()}
+                            disableRipple
                         >
                             Run Sql
                         </Button>
