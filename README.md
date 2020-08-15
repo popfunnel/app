@@ -52,3 +52,7 @@ to rollback a migration:
 ```
 sequelize db:migrate:undo
 ```
+
+### nivo
+
+Reference: https://nivo.rocks/
