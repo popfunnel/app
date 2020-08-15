@@ -4,7 +4,6 @@ import { ConnectedDisplayContainer } from '../../components/query/display/Displa
 import { QueryActions } from '../../components/query/actions/QueryActions';
 
 export const QueryPage = () => {
-    // let [seriesType, setSeriesType] = React.useState('Table');
     return (
         <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh-64px)'}}>
             <div style={{display:'flex', flexDirection:'column', width: '100%'}}>
