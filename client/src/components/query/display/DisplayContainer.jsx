@@ -2,13 +2,11 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 // TODO create index.js file to import all these guys
 import { ResultsTable } from './Table'
-import { BarChart } from './Chart'
-
+import { BarChart } from './BarChart'
+import { LineChart } from './LineChart'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
-
-// TODO: fix height 
 const useStyles = makeStyles((theme) => ({
     paper: {
       height: '100%',
@@ -41,13 +39,16 @@ export const QueryDisplay = React.memo(({queryResults, seriesType}) => {
         );
     }
 
+    console.log('here is the series type', seriesType)
     const getDisplay = () => {
         if (!Array.isArray(queryResults)) {
             return <NoResults/>
         } else if (seriesType === 'Table') {
             return <ResultsTable queryResults={queryResults}/>
-        } else {
-            return <BarChart queryResults={queryResults} seriesType={seriesType}/>
+        } else if (seriesType === 'Bar') {
+            return <BarChart queryResults={queryResults}/>
+        } else if (seriesType === 'Line') {
+            return <LineChart queryResults={queryResults}/>
         }
     }
 

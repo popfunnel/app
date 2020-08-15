@@ -11,16 +11,19 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import { NavStyles } from './NavStyles'
 import { v4 as uuidv4 } from 'uuid';
+import { useHistory } from "react-router-dom";
+import InfoIcon from '@material-ui/icons/Info';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
+import StorageIcon from '@material-ui/icons/Storage';
 
 const useStyles = makeStyles(NavStyles);
 
 export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
     const classes = useStyles();
     const theme = useTheme();
+    let history = useHistory();
 
     return (
         <div className={classes.root}>
@@ -43,23 +46,23 @@ export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
                     {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                 </IconButton>
             </div>
-            <Divider />
+            <Divider/>
             <List>
-                {['Dashboard', 'Query Tool', 'Dashboards', 'Preferences'].map((text, index) => (
-                    <ListItem button key={uuidv4()}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItem button key={uuidv4()} onClick={() => {history.push('/')}}>
+                    <ListItemIcon><EqualizerIcon/></ListItemIcon>
+                    <ListItemText primary={'Query Tools'} />
+                </ListItem>
+                <ListItem button key={uuidv4()} onClick={() => {history.push('/')}}>
+                    <ListItemIcon><StorageIcon/></ListItemIcon>
+                    <ListItemText primary={'Schemas'} />
+                </ListItem>
             </List>
-            <Divider />
+            <Divider/>
             <List>
-                {['Placeholder', 'Placeholder', 'Placeholder'].map((text, index) => (
-                    <ListItem button key={uuidv4()}>
-                    <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                    <ListItemText primary={text} />
-                    </ListItem>
-                ))}
+                <ListItem button key={uuidv4()} onClick={() => {history.push('/about')}}>
+                    <ListItemIcon><InfoIcon/></ListItemIcon>
+                    <ListItemText primary={'About the team'} />
+                </ListItem>
             </List>
         </Drawer>
         </div>
