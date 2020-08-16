@@ -39,7 +39,7 @@ export const BarChart = ({compiledSettings, chartConfig}) => {
                         tickSize: 5,
                         tickPadding: 5,
                         tickRotation: -25,
-                        legend: xAxis,
+                        legend: '',
                         legendPosition: 'middle',
                         legendOffset: 32
                     }}
@@ -47,7 +47,7 @@ export const BarChart = ({compiledSettings, chartConfig}) => {
                         tickSize: 5,
                         tickPadding: 5,
                         tickRotation: 0,
-                        legend: yAxis[0],
+                        legend:'',
                         legendPosition: 'middle',
                         legendOffset: -40
                     }}
