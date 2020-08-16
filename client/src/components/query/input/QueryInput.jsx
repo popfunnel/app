@@ -23,10 +23,11 @@ const QueryInput = ({queryDatabase}) => {
     JOIN category ON film_category.category_id = category.category_id
   WHERE
     rental_date BETWEEN '2005-07-08'
-    AND '2005-07-31'
+    AND '2005-10-31'
     AND (
-      category.NAME = 'Sports'
+      category.NAME = 'Action'
       OR category.NAME = 'Foreign'
+      OR category.NAME = 'Sports'
     )
   GROUP BY
     Date_trunc('day', rental_date),

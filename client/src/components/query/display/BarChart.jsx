@@ -18,45 +18,46 @@ export const BarChart = ({compiledSettings, chartConfig}) => {
     } = compiledSettings;
 
     return (
-            <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
-                <Paper style={{height:'100%', width:'100%'}}>
-                    <ResponsiveBar
-                     groupMode="grouped"
-                        data={data}
-                    // index by is x axis
-                        indexBy={indexBy}
-                    // series selections
-                        keys={keys}
-                        
-                        colors={{ scheme: 'accent' }}
-                        margin={{
-                            "top": 50,
-                            "right": 60,
-                            "bottom": 50,
-                            "left": 60
-                        }}
-                        axisBottom={{
-                            tickSize: 5,
-                            tickPadding: 5,
-                            tickRotation: -25,
-                            legend: xAxis,
-                            legendPosition: 'middle',
-                            legendOffset: 32
-                        }}
-                        axisLeft={{
-                            tickSize: 5,
-                            tickPadding: 5,
-                            tickRotation: 0,
-                            legend: yAxis[0],
-                            legendPosition: 'middle',
-                            legendOffset: -40
-                        }}
-                    />
-                </Paper> 
-            </div>
+        <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
+            <Paper style={{height:'100%', width:'100%'}}>
+                <ResponsiveBar
+                    groupMode="grouped"
+                    data={data}
+                // index by is x axis
+                    indexBy={indexBy}
+                // series selections
+                    keys={keys}
+                    
+                    colors={{ scheme: 'accent' }}
+                    margin={{
+                        "top": 50,
+                        "right": 60,
+                        "bottom": 50,
+                        "left": 60
+                    }}
+                    axisBottom={{
+                        tickSize: 5,
+                        tickPadding: 5,
+                        tickRotation: -25,
+                        legend: xAxis,
+                        legendPosition: 'middle',
+                        legendOffset: 32
+                    }}
+                    axisLeft={{
+                        tickSize: 5,
+                        tickPadding: 5,
+                        tickRotation: 0,
+                        legend: yAxis[0],
+                        legendPosition: 'middle',
+                        legendOffset: -40
+                    }}
+                />
+            </Paper> 
+        </div>
     );
 };
 
+// TODO: place this work as redux action
 const getChartConfig = (queryResults, settings) => { 
     let{
         xAxis,
