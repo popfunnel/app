@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 // TODO create index.js file to import all these guys
 import { ResultsTable } from './Table'
-import { BarChart } from './BarChart'
+import { ConnectedBarChart } from './BarChart'
 import { LineChart } from './LineChart'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -46,7 +46,7 @@ const DisplayContainer = React.memo(({queryResults, seriesType}) => {
         } else if (seriesType === 'Table') {
             return <ResultsTable queryResults={queryResults}/>
         } else if (seriesType === 'Bar') {
-            return <BarChart queryResults={queryResults}/>
+            return <ConnectedBarChart/>
         } else if (seriesType === 'Line') {
             return <LineChart queryResults={queryResults}/>
         }

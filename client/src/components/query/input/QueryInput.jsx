@@ -12,8 +12,8 @@ import { queryDatabase } from '../../../actions/queryTool';
 
 const QueryInput = ({queryDatabase}) => {
     let exampleQuery = `SELECT
+    date(Date_trunc('day', rental_date)) AS rental_date,
     Count(*) AS total,
-    Date_trunc('day', rental_date) AS rental_date,
     category.NAME AS category
   FROM
     rental

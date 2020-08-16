@@ -1,23 +1,33 @@
 import React from 'react';
 import { ResponsiveBar } from '@nivo/bar'
 import Paper from '@material-ui/core/Paper';
+import { connect } from 'react-redux'
+import { compileSettings } from '../../../reducers/chart';
 
-export const BarChart = ({queryResults, seriesType}) => {
-    let attributes = queryResults.length ? Object.keys(queryResults[0]) : [];
-    let data = queryResults.map(item => {
-        return {
-            name: item.name,
-            count: parseFloat(item.count)
-        };
-    })
-    
+
+export const BarChart = ({compiledSettings, chartConfig}) => {
+    let {
+        indexBy,
+        keys,
+        data
+    } = chartConfig;
+
+    let {
+        xAxis,
+        yAxis
+    } = compiledSettings;
+
     return (
             <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
-                <Paper style={{height:'80%', width:'80%'}}>
+                <Paper style={{height:'100%', width:'100%'}}>
                     <ResponsiveBar
-                        indexBy={'name'}
-                        keys={['count']}
+                     groupMode="grouped"
                         data={data}
+                    // index by is x axis
+                        indexBy={indexBy}
+                    // series selections
+                        keys={keys}
+                        
                         colors={{ scheme: 'accent' }}
                         margin={{
                             "top": 50,
@@ -28,8 +38,8 @@ export const BarChart = ({queryResults, seriesType}) => {
                         axisBottom={{
                             tickSize: 5,
                             tickPadding: 5,
-                            tickRotation: 0,
-                            legend: attributes[0],
+                            tickRotation: -25,
+                            legend: xAxis,
                             legendPosition: 'middle',
                             legendOffset: 32
                         }}
@@ -37,7 +47,7 @@ export const BarChart = ({queryResults, seriesType}) => {
                             tickSize: 5,
                             tickPadding: 5,
                             tickRotation: 0,
-                            legend: attributes[1],
+                            legend: yAxis[0],
                             legendPosition: 'middle',
                             legendOffset: -40
                         }}
@@ -46,3 +56,59 @@ export const BarChart = ({queryResults, seriesType}) => {
             </div>
     );
 };
+
+const getChartConfig = (queryResults, settings) => { 
+    let{
+        xAxis,
+        yAxis,
+        series
+    } = settings;
+
+    let keys = new Set();
+    let indices = new Set();
+
+    queryResults.forEach(row => {
+        keys.add(row[series[0]])
+        indices.add(row[xAxis]);
+    });
+    // TODO: data processing needs to be revisited
+    // (i.e.) multiple selections?
+    let chartConfig = {
+        indexBy: xAxis,
+        keys: [...keys]
+    }
+
+    let dataByIndex = {};
+    queryResults.forEach(row => {
+        if (!dataByIndex[row[xAxis]]) {
+            dataByIndex[row[xAxis]] = {
+                [xAxis]: row[xAxis],
+                [row[series[0]]]: parseInt(row[yAxis[0]])
+            };
+        } else {
+            dataByIndex[row[xAxis]] = {
+                ...dataByIndex[row[xAxis]],
+                [row[series[0]]]: parseInt(row[yAxis[0]])
+            };
+        }
+    });
+
+    let formattedData = [...indices].map(index => dataByIndex[index]);
+    chartConfig.data = formattedData;
+
+    return chartConfig;
+};
+
+const mapStateToProps = (state) => {
+    let compiledSettings = compileSettings(state.chart);
+    let chartConfig = getChartConfig(state.query.rawResults, compiledSettings);
+
+    return {
+        compiledSettings,
+        chartConfig
+    };
+}
+
+const mapDispatchToProps = {};
+
+export const ConnectedBarChart = connect(mapStateToProps, mapDispatchToProps)(BarChart);

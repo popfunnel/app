@@ -80,6 +80,28 @@ function updateYSelection(state, column, selection) {
     };
 };
 
+export function compileSettings(state) {
+    let selections = state.columnSelections;
+    let compiledSettings = {
+        xAxis: '',
+        yAxis: [],
+        series: []
+    };
+
+    selections.columnNames.forEach(name => {
+        let {
+            xAxis,
+            yAxis,
+            series
+        } = selections.byColumnName[name];
+        if (xAxis) compiledSettings.xAxis = name; 
+        if (yAxis) compiledSettings.yAxis.push(name);
+        if (series) compiledSettings.series.push(name);
+    });
+
+    return compiledSettings;
+};
+
 function updateSeriesSelection(state, column, selection) {
     let selections = {...state.columnSelections};
     selections.byColumnName = {
