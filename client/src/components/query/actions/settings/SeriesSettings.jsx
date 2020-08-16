@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const SeriesSettings = ({seriesType, setSeriesType}) => {
+const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
     const classes = useStyles();
 
     return (
@@ -46,7 +46,8 @@ const SeriesSettings = ({seriesType, setSeriesType}) => {
                 </Select>
             </>
             <div style={{display:'flex', justifyContent:'center'}}>
-                <ColumnSelector/>
+                {(queryResults.length > 0 && seriesType !== 'Table') &&
+                <ColumnSelector/>}
             </div>
             <div>
                 <Accordion>
@@ -71,10 +72,10 @@ const SeriesSettings = ({seriesType, setSeriesType}) => {
     );
 }
 
-
 const mapStateToProps = state => {
     return {
-        seriesType: state.chart.seriesType
+        seriesType: state.chart.seriesType,
+        queryResults: state.query.rawResults
     };
 }
 

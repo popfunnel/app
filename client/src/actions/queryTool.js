@@ -41,9 +41,26 @@ export const updateColumnSelections = (column, selection, value) => {
 };
 
 export const UPDATE_X_SELECTION = 'UPDATE_X_SELECTION';
-export const updateXSelection = (column, selection) => {
+export const updateXSelection = (column) => {
     return {
         type: UPDATE_X_SELECTION,
+        column
+    };
+};
+
+export const UPDATE_Y_SELECTION = 'UPDATE_Y_SELECTION';
+export const updateYSelection = (column, selection) => {
+    return {
+        type: UPDATE_Y_SELECTION,
+        column,
+        selection
+    };
+};
+
+export const UPDATE_SERIES_SELECTION = 'UPDATE_SERIES_SELECTION';
+export const updateSeriesSelection = (column, selection) => {
+    return {
+        type: UPDATE_SERIES_SELECTION,
         column,
         selection
     };

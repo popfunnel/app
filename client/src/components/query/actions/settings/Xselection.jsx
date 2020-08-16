@@ -24,19 +24,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const XSelection = ({updateXSelection, columnNames, xSelection}) => {
+const XSelection = ({columnNames, xSelection, updateXSelection}) => {
     const classes = useStyles();
-    // const [xSelections, setXSelections] = React.useState('bear');
 
     const handleChange = (event) => {
-        updateXSelection(event.target.value, 'xAxis');
+        updateXSelection(event.target.value);
     };
 
     return (
         <div>
             <FormControl required component="fieldset" className={classes.formControl}>
                 <div><FormLabel className={classes.formLabelHeader} component="legend">X Axis</FormLabel></div>
-                <RadioGroup aria-label="gender" name="gender1" value={xSelection} onChange={handleChange}>
+                <RadioGroup aria-label="column_name" value={xSelection} onChange={handleChange}>
                     {columnNames.map(name => {
                         return <Radio key={name} value={name} />
                     })}

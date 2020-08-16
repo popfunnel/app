@@ -2,11 +2,7 @@ import * as actions from '../actions/queryTool';
 
 const initialState = {
     rawResults: [],
-    userInput: `SELECT name, count(1)
-    FROM film_category join category on category.category_id = film_category.category_id 
-    GROUP BY name 
-    ORDER BY count DESC 
-    LIMIT 10`,
+    userInput: ''
 }
 
 function setRawResults(state, rawResults) {
@@ -17,7 +13,6 @@ function setRawResults(state, rawResults) {
 };
 
 function setUserInput(state, userInput) {
-    console.log('here is userInput', userInput)
     return {
         ...state,
         userInput

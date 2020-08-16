@@ -5,6 +5,8 @@ import FormControl from '@material-ui/core/FormControl';
 import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from 'react-redux'
+import { updateSeriesSelection } from '../../../../actions/queryTool';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -27,33 +29,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const SeriesSelections = ({queryResults}) => {
+const SeriesSelections = ({columnNames, columnSelections, updateSeriesSelection}) => {
     const classes = useStyles();
-    const [seriesSelections, setSeriesSelections] = React.useState({
-        gilad: true,
-        jason: false,
-        antoine: false,
-    });
 
     const handleChange = (event) => {
-        setSeriesSelections(prevState => {
-            return {
-                ...prevState,
-                [event.target.name] : event.target.checked
-            }
-        });
+        updateSeriesSelection(event.target.name, event.target.checked);
     };
-
-    const { gilad, jason, antoine } = seriesSelections;
 
     return (
         <div>
             <FormControl required component="fieldset" className={classes.formControl}>
                 <div><FormLabel className={classes.formLabelHeader} component="legend">Series</FormLabel></div>
                 <FormGroup>
-                    <Checkbox checked={gilad} onChange={handleChange} name="gilad" />
-                    <Checkbox checked={jason} onChange={handleChange} name="jason" />
-                    <Checkbox checked={antoine} onChange={handleChange} name="antoine" />
+                    {columnNames.map(name => {
+                        let checked = columnSelections.byColumnName[name].series;
+                        return <Checkbox key={name} checked={checked} onChange={handleChange} name={name} />
+                    })}
                 </FormGroup>
             </FormControl>
         </div>
@@ -61,12 +52,16 @@ const SeriesSelections = ({queryResults}) => {
 };
 
 const mapStateToProps = (state) => {
+    let columnSelections = state.chart.columnSelections;
+
     return {
-        queryResults: state.query.rawResults,
-        columnNames: state.chart.columnNames
+        columnNames: columnSelections.columnNames,
+        columnSelections
     }
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    updateSeriesSelection
+};
 
 export const ConnectedSeriesSelections = connect(mapStateToProps, mapDispatchToProps)(SeriesSelections);

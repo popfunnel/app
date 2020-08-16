@@ -27,7 +27,6 @@ function createColumnSelections(state, columnNames) {
                 yAxis: false,
                 series: false,
             }
-            console.log('columnselections is now', columnSelections)
         });
 
         if (columnNames.length === 3) {
@@ -43,20 +42,18 @@ function createColumnSelections(state, columnNames) {
     };
 };
 
-function updateXSelection(state, column, selection) {
-    
+function updateXSelection(state, column) {
     let selections = {...state.columnSelections};
-
     selections.columnNames.forEach(name => {
         if (name === column) {
             selections.byColumnName[name] = {
                 ...selections.byColumnName[name],
-                [selection]: true
+                xAxis: true
             }
         } else {
             selections.byColumnName[name] = {
                 ...selections.byColumnName[name],
-                [selection]: false
+                xAxis: false
             }
         }
     });
@@ -67,6 +64,39 @@ function updateXSelection(state, column, selection) {
     };
 };
 
+function updateYSelection(state, column, selection) {
+    let selections = {...state.columnSelections};
+    selections.byColumnName = {
+        ...selections.byColumnName,
+        [column]: {
+            ...selections.byColumnName[column],
+            yAxis: selection
+        }
+    }
+
+    return {
+        ...state,
+        columnSelections: selections
+    };
+};
+
+function updateSeriesSelection(state, column, selection) {
+    let selections = {...state.columnSelections};
+    selections.byColumnName = {
+        ...selections.byColumnName,
+        [column]: {
+            ...selections.byColumnName[column],
+            series: selection
+        }
+    }
+
+    return {
+        ...state,
+        columnSelections: selections
+    };
+};
+
+
 export default function chart(state = initialState, action) {
     switch (action.type) {
         case actions.SET_SERIES_TYPE:
@@ -74,7 +104,11 @@ export default function chart(state = initialState, action) {
         case actions.CREATE_COLUMN_SELECTIONS:
             return createColumnSelections(state, action.columnNames);
         case actions.UPDATE_X_SELECTION:
-            return updateXSelection(state, action.column, action.selection, action.value);
+            return updateXSelection(state, action.column);
+        case actions.UPDATE_Y_SELECTION:
+            return updateYSelection(state, action.column, action.selection);
+        case actions.UPDATE_SERIES_SELECTION:
+            return updateSeriesSelection(state, action.column, action.selection);
         default:
             return state
     }

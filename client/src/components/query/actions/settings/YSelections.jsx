@@ -6,6 +6,9 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from 'react-redux'
 
+import { updateYSelection } from '../../../../actions/queryTool';
+
+
 const useStyles = makeStyles((theme) => ({
     formControl: {
         margin: theme.spacing(2),
@@ -23,33 +26,22 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const YSelections = ({queryResults}) => {
+const YSelections = ({columnNames, columnSelections, updateYSelection}) => {
     const classes = useStyles();
-    const [ySelections, setYSelections] = React.useState({
-        gilad: true,
-        jason: false,
-        antoine: false,
-    });
 
     const handleChange = (event) => {
-        setYSelections(prevState => {
-            return {
-                ...prevState,
-                [event.target.name] : event.target.checked
-            }
-        });
+        updateYSelection(event.target.name, event.target.checked);
     };
-
-    const { gilad, jason, antoine } = ySelections;
-
+    
     return (
         <div>
             <FormControl required component="fieldset" className={classes.formControl}>
                 <div><FormLabel className={classes.formLabelHeader} component="legend">Y Axis</FormLabel></div>
                 <FormGroup>
-                    <Checkbox checked={gilad} onChange={handleChange} name="gilad" />
-                    <Checkbox checked={jason} onChange={handleChange} name="jason" />
-                    <Checkbox checked={antoine} onChange={handleChange} name="antoine" />
+                    {columnNames.map(name => {
+                        let checked = columnSelections.byColumnName[name].yAxis;
+                        return <Checkbox key={name} checked={checked} onChange={handleChange} name={name} />
+                    })}
                 </FormGroup>
             </FormControl>
         </div>
@@ -57,12 +49,16 @@ const YSelections = ({queryResults}) => {
 };
 
 const mapStateToProps = (state) => {
+    let columnSelections = state.chart.columnSelections;
+
     return {
-        queryResults: state.query.rawResults,
-        columnNames: state.chart.columnNames
+        columnNames: columnSelections.columnNames,
+        columnSelections
     }
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    updateYSelection
+};
 
 export const ConnectedYSelections = connect(mapStateToProps, mapDispatchToProps)(YSelections);
