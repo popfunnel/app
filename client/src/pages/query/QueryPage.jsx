@@ -3,6 +3,8 @@ import { ConnectedQueryInput } from '../../components/query/input/QueryInput';
 import { ConnectedDisplayContainer } from '../../components/query/display/DisplayContainer';
 import { QueryActions } from '../../components/query/actions/QueryActions';
 
+// TODO: fix width of components...first inner div should not be 100%
+// TODO: fix query actions width - should not resize 
 export const QueryPage = () => {
     return (
         <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh-64px)'}}>

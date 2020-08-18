@@ -19,7 +19,7 @@ export const BarChart = ({compiledSettings, chartConfig}) => {
 
     return (
         <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
-            <Paper style={{height:'100%', width:'100%'}}>
+            <Paper style={{height:'100%', width:'85%'}}>
                 <ResponsiveBar
                     groupMode="grouped"
                     data={data}
