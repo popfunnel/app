@@ -28,7 +28,7 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
     const classes = useStyles();
 
     return (
-        <div styles={{display:'flex', flexDirection: 'column', width:'100%'}}>
+        <div style={{display:'flex', flexDirection: 'column', flex: 1}}>
             <Typography variant="overline" display="block" gutterBottom>
                 Series Settings
             </Typography>

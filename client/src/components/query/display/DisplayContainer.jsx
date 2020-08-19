@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     paper: {
+        margin: 'auto',
       height: '100%',
       width: '100%',
     },
@@ -24,7 +25,7 @@ const DisplayContainer = React.memo(({queryResults, seriesType}) => {
     
     const SeriesTitle = () => {
         return (
-            <div style={{marginLeft: '10px'}}>
+            <div style={{paddingLeft: '10px'}}>
                 <Typography variant="h6" display="block">{seriesType}</Typography>
             </div>
         );
@@ -32,7 +33,7 @@ const DisplayContainer = React.memo(({queryResults, seriesType}) => {
 
     const NoResults = () => {
         return (
-            <div style={{height:'80%', width:'100%'}}>
+            <div style={{height:'85%'}}>
                 <Paper className={classes.paper}>
                     Your query results will be shown here.
                 </Paper>
@@ -53,7 +54,7 @@ const DisplayContainer = React.memo(({queryResults, seriesType}) => {
     }
 
     return (
-        <div style={{height:'100%', width:'100%'}}>
+        <div style={{flex: 1}}>
             <SeriesTitle/>
             {getDisplay()}
         </div>

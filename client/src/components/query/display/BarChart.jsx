@@ -12,11 +12,6 @@ export const BarChart = ({compiledSettings, chartConfig}) => {
         data
     } = chartConfig;
 
-    let {
-        xAxis,
-        yAxis
-    } = compiledSettings;
-
     return (
         <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
             <Paper style={{height:'100%', width:'85%'}}>

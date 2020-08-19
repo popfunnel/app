@@ -10,10 +10,10 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     tabContainer: {
-        flexGrow: 1,
         display: 'flex',
+        flexGrow: 1,
         justifyContent: 'flex-end',
-        width: '100%',
+        height: '100%'
     },
     tabs: {
         borderLeft: `1px solid ${theme.palette.divider}`,
@@ -50,6 +50,7 @@ export const QueryActions = () => {
   const StyledTab = withStyles((theme) => ({
     root: {
         maxWidth: 60,
+        width: 45,
         [theme.breakpoints.up('sm')]: {
             minWidth: 40,
         },
@@ -60,18 +61,20 @@ export const QueryActions = () => {
     <div style={{height: 'calc(100vh - 64px)'}}>
         <div className={classes.tabContainer}>
             {getTabContent()}
-            <Tabs
-                orientation="vertical"
-                variant="scrollable"
-                value={value}
-                onChange={(event, newValue) => {setValue(newValue)}}
-                aria-label="Query Actions"
-                className={classes.tabs}
-            >
-                <StyledTab icon={<BarChartIcon/>}/>
-                <StyledTab icon={<SettingsIcon/>}/>
-                <StyledTab icon={<HistoryIcon/>}/>
-            </Tabs>
+            <div style={{height: '100%'}}>
+                <Tabs
+                    orientation="vertical"
+                    variant="scrollable"
+                    value={value}
+                    onChange={(event, newValue) => setValue(newValue)}
+                    aria-label="Query Actions"
+                    className={classes.tabs}
+                >
+                    <StyledTab icon={<BarChartIcon/>}/>
+                    <StyledTab icon={<SettingsIcon/>}/>
+                    <StyledTab icon={<HistoryIcon/>}/>
+                </Tabs>
+            </div>
         </div>
     </div>
   );
