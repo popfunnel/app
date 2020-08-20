@@ -11,8 +11,8 @@ import { connect } from 'react-redux'
 const useStyles = makeStyles((theme) => ({
     paper: {
         margin: 'auto',
-      height: '100%',
-      width: '100%',
+        height: '100%',
+        width: '100%',
     },
     control: {
       padding: theme.spacing(2),
