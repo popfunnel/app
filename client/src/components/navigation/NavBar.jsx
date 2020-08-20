@@ -10,7 +10,8 @@ import { LeftDrawer } from './LeftDrawer';
 import { NavStyles } from './NavStyles';
 
 const useStyles = makeStyles(NavStyles);
-  
+
+// TODO: put isDrawer open in store, connect navbar to state
 export const NavBar = (props) => {
     const classes = useStyles();
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);

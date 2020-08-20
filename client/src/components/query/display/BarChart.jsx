@@ -23,7 +23,7 @@ export const BarChart = ({compiledSettings, chartConfig}) => {
                 // series selections
                     keys={keys}
                     
-                    colors={{ scheme: 'accent' }}
+                    colors={{ scheme: 'set2' }}
                     margin={{
                         "top": 50,
                         "right": 60,

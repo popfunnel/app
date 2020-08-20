@@ -33,7 +33,9 @@ const QueryInput = ({queryDatabase}) => {
     Date_trunc('day', rental_date),
     category.NAME
   ORDER BY
-    Date_trunc('day', rental_date)`
+    Date_trunc('day', rental_date)
+  LIMIT
+    25`
 
     let [queryInput, setQueryInput] = React.useState(exampleQuery);
 
