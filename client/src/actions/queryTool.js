@@ -66,6 +66,18 @@ export const updateSeriesSelection = (column, selection) => {
     };
 };
 
+export const RESET_USER_QUERY = 'RESET_USER_QUERY';
+export const resetUserQuery = () => {
+    return {
+        type: RESET_USER_QUERY
+    }
+}
+
+export const resetForm = () => (dispatch, getState) => {
+    dispatch(resetUserQuery())
+    dispatch(setSeriesType('Table'));
+}
+
 export const queryDatabase = queryInput => (dispatch, getState) => {
     dispatch(setUserQuery(queryInput));
     const data = {

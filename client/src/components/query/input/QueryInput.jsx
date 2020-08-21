@@ -8,9 +8,9 @@ import 'codemirror/theme/monokai.css';
 import 'codemirror/theme/yonce.css';
 import 'codemirror/mode/sql/sql';
 import { connect } from 'react-redux'
-import { queryDatabase } from '../../../actions/queryTool';
+import { queryDatabase, resetForm } from '../../../actions/queryTool';
 
-const QueryInput = ({queryDatabase}) => {
+const QueryInput = ({queryDatabase, resetForm}) => {
     let exampleQuery = `SELECT
     date(Date_trunc('day', rental_date)) AS rental_date,
     Count(*) AS total,
@@ -96,7 +96,19 @@ const QueryInput = ({queryDatabase}) => {
                     setQueryInput(value)
                 }}
             />
-            <div style={{display:'flex', justifyContent:'flex-end', width:'100%'}}>
+            <div style={{display:'flex', justifyContent:'flex-end', width:'100%', paddingRight:'10px'}}>
+                <div>
+                    <Button
+                        color='secondary'
+                        onClick={() => {
+                            setQueryInput('')
+                            resetForm()}
+                        }
+                        disableRipple
+                    >
+                        Reset
+                    </Button>
+                </div>
                 <div>
                     <Button
                         color='secondary'
@@ -112,7 +124,8 @@ const QueryInput = ({queryDatabase}) => {
 };
 
 const mapDispatchToProps = {
-    queryDatabase
+    queryDatabase,
+    resetForm
 };
 
 export const ConnectedQueryInput = connect(undefined, mapDispatchToProps)(QueryInput);
