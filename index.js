@@ -12,6 +12,7 @@ if (!jinst.isJvmCreated()) {
 
 const bodyParser = require('body-parser');
 const queries = require('./routes/queries');
+const data = require('./routes/data')
 const server = require('./server/routes');
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/queries', queries);
+app.use('/data', data);
 app.use('/users', server);
 
 app.get('*', (req, res) => {

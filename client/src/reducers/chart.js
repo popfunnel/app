@@ -1,13 +1,13 @@
 import * as actions from '../actions/queryTool';
 
-// TODO: y axis and series might be better stored as objects
 const initialState = {
     seriesType: 'Table',
     columnNames: [],
     columnSelections: {
         byColumnName: {},
         columnNames: []
-    }
+    },
+    formattedData: {}
 }
 
 function setSeriesType(state, seriesType) {
@@ -80,6 +80,22 @@ function updateYSelection(state, column, selection) {
     };
 };
 
+function updateSeriesSelection(state, column, selection) {
+    let selections = {...state.columnSelections};
+    selections.byColumnName = {
+        ...selections.byColumnName,
+        [column]: {
+            ...selections.byColumnName[column],
+            series: selection
+        }
+    }
+
+    return {
+        ...state,
+        columnSelections: selections
+    };
+};
+
 export function compileSettings(state) {
     let selections = state.columnSelections;
     let compiledSettings = {
@@ -102,22 +118,71 @@ export function compileSettings(state) {
     return compiledSettings;
 };
 
-function updateSeriesSelection(state, column, selection) {
-    let selections = {...state.columnSelections};
-    selections.byColumnName = {
-        ...selections.byColumnName,
-        [column]: {
-            ...selections.byColumnName[column],
-            series: selection
-        }
-    }
+export function formatData(state, rawResults) {
+    let compiledSettings = compileSettings(state);
+    let{
+        xAxis,
+        yAxis,
+        series
+    } = compiledSettings;
 
+    let keys = new Set();
+    let indices = new Set();
+
+    rawResults.forEach(row => {
+        keys.add(row[series[0]]);
+        indices.add(row[xAxis]);
+    });
+
+    let chartConfig = {
+        indexBy: xAxis,
+        keys: [...keys]
+    };
+
+    /* 
+    Object with indices as key i.e. 
+    {
+        2005-07-11: { 
+            rental_date: '2005-07-11'
+        } 
+    }
+    */
+    let dataByIndex = {};
+    rawResults.forEach(row => {
+        dataByIndex[row[xAxis]] = {
+            [xAxis]: row[xAxis]
+        }
+    });
+
+    function sanitizeData(rawData) {
+        if (isNaN(rawData)) {
+            return rawData;
+        } else {
+            return parseFloat(rawData)
+        }
+    };
+
+    /*
+        TODO: This is O(series*rows). Not sure if there's
+        a great way around this yet.
+    */
+    // TODO: Figure out what it means to have multiple y selections
+    rawResults.forEach(row => {
+        series.forEach(chosen_series => {
+            let yValue = sanitizeData(row[yAxis[0]])
+            dataByIndex[row[xAxis]] = {
+                ...dataByIndex[row[xAxis]],
+                [row[chosen_series]]: yValue
+            };
+        });
+    });
+
+    let formattedData = [...indices].map(index => dataByIndex[index]);
     return {
         ...state,
-        columnSelections: selections
-    };
-};
-
+        formattedData
+    }
+}
 
 export default function chart(state = initialState, action) {
     switch (action.type) {
@@ -131,6 +196,8 @@ export default function chart(state = initialState, action) {
             return updateYSelection(state, action.column, action.selection);
         case actions.UPDATE_SERIES_SELECTION:
             return updateSeriesSelection(state, action.column, action.selection);
+        case actions.FORMAT_DATA:
+            return formatData(state, action.rawResults);
         default:
             return state
     }

@@ -4,7 +4,6 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux'
 import { compileSettings } from '../../../reducers/chart';
 
-
 export const BarChart = ({compiledSettings, chartConfig}) => {
     let {
         indexBy,
@@ -98,7 +97,7 @@ const getChartConfig = (queryResults, settings) => {
 const mapStateToProps = (state) => {
     let compiledSettings = compileSettings(state.chart);
     let chartConfig = getChartConfig(state.query.rawResults, compiledSettings);
-
+    
     return {
         compiledSettings,
         chartConfig

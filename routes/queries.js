@@ -4,7 +4,8 @@ const psql_pool = require('../models/psql_pool');
 const router = new express.Router();
 
 router.post('/executeQuery', function(req, res, next) {
-    console.log('request data', req.body);
+    console.log('--------REQUEST DATA--------');
+    console.log(req.body);
     const query = req.body.query;
     psql_pool.reserve(function(err, connObj) {
         if (connObj) {
@@ -47,7 +48,6 @@ router.post('/executeQuery', function(req, res, next) {
             });
         };
     });
-
 });
 
 
