@@ -1,25 +1,18 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper';
+import { connect } from 'react-redux'
+
 import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
   } from 'recharts';
 
-export const CustomLineChart = ({queryResults, seriesType}) => {
-    let attributes = queryResults.length ? Object.keys(queryResults[0]) : [];
-
-    let data = queryResults.map(item => {
-        return {
-            x: item[attributes[0]],
-            y: item[attributes[1]]
-        }
-    });
-
+const CustomLineChart = ({config}) => {
     return (
         <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
             <Paper style={{height:'80%', width:'80%'}}>
                 <ResponsiveContainer>
                     <LineChart
-                        data={data}
+                        data={config.data}
                         margin={{
                         top: 5, right: 30, left: 20, bottom: 5,
                         }}
@@ -38,3 +31,13 @@ export const CustomLineChart = ({queryResults, seriesType}) => {
         </div>
     );
 };
+
+const mapStateToProps = (state) => {
+    return {
+        config: state.chart.config
+    }
+}
+
+const mapDispatchToProps = {};
+
+export const ConnectedCustomLineChart = connect(mapStateToProps, mapDispatchToProps)(CustomLineChart);

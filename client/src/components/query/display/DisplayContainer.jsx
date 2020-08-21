@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 // TODO create index.js file to import all these guys
 import { ResultsTable } from './Table'
 import { ConnectedCustomBarChart } from './Bar'
-import { CustomLineChart } from './Line'
+import { ConnectedCustomLineChart } from './Line'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
@@ -49,7 +49,7 @@ const DisplayContainer = ({queryResults, seriesType}) => {
         } else if (seriesType === 'Bar') {
             return <ConnectedCustomBarChart/>
         } else if (seriesType === 'Line') {
-            return <CustomLineChart queryResults={queryResults}/>
+            return <ConnectedCustomLineChart/>
         }
     }
 
