@@ -11,11 +11,11 @@ import { updateYSelection } from '../../../../actions/queryTool';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        margin: theme.spacing(2),
+        margin: '5px',
     },
     formLabelHeader: {
         fontSize: '12px',
-        minHeight:'30px'
+        minHeight: '20px'
     },
     formLabel: {
         display: 'flex',
@@ -32,7 +32,7 @@ const YSelections = ({columnNames, columnSelections, updateYSelection}) => {
     const handleChange = (event) => {
         updateYSelection(event.target.name, event.target.checked);
     };
-    
+
     return (
         <div>
             <FormControl required component="fieldset" className={classes.formControl}>

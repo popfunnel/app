@@ -9,11 +9,11 @@ import { updateXSelection } from '../../../../actions/queryTool';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        margin: theme.spacing(2),
+        margin: '5px',
     },
     formLabelHeader: {
         fontSize: '12px',
-        minHeight:'30px'
+        minHeight: '20px'
     },
     formLabel: {
         display: 'flex',

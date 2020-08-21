@@ -47,7 +47,9 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
             </>
             <div style={{display:'flex', justifyContent:'center'}}>
                 {(queryResults.length > 0 && seriesType !== 'Table') &&
-                <ColumnSelector/>}
+                <div style={{padding:'20px'}}>
+                    <ColumnSelector/>
+                </div> }
             </div>
             <div>
                 <Accordion>

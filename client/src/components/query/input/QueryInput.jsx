@@ -67,7 +67,7 @@ const QueryInput = ({queryDatabase}) => {
         }
     }
     return (
-        <Paper style={{marginTop:'5px', maginLeft: '10px', width:'100%'}}>
+        <Paper style={{marginTop:'5px', width:'100%'}}>
             <CodeMirror
                 value={queryInput}
                 options={{

@@ -10,7 +10,7 @@ export const QueryPage = () => {
                 <ConnectedQueryInput/>
                 <ConnectedDisplayContainer/>
             </div>
-            <div style={{width:'30vw'}}>
+            <div style={{minWidth:'20vw'}}>
                 <QueryActions/>
             </div>
         </div>
