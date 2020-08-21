@@ -130,16 +130,7 @@ export function setChartConfig(state, rawResults) {
     let keys = new Set();
     let indices = new Set();
 
-    let config = {
-        indexBy: xAxis,
-        keys: [...keys]
-    }
-
-    rawResults.forEach(row => {
-        keys.add(row[series[0]]);
-        indices.add(row[xAxis]);
-    });
-
+    
     /* 
     Object with indices as key i.e. 
     {
@@ -169,18 +160,25 @@ export function setChartConfig(state, rawResults) {
     */
     // TODO: Figure out what it means to have multiple y selections
     rawResults.forEach(row => {
-        series.forEach(chosen_series => {
+        series.forEach(chosen_series => {    
             let yValue = sanitizeData(row[yAxis[0]])
             dataByIndex[row[xAxis]] = {
                 ...dataByIndex[row[xAxis]],
                 [row[chosen_series]]: yValue
             };
+            keys.add(row[chosen_series]);
         });
+        indices.add(row[xAxis]);
     });
 
     let formattedData = [...indices].map(index => dataByIndex[index]);
 
-    config.data = formattedData;
+    let config = {
+        dataKey: xAxis,
+        keys: [...keys],
+        data: formattedData
+    }
+
     return {
         ...state,
         settings,

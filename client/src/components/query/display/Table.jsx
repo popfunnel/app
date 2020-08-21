@@ -7,7 +7,9 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import { connect } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
+
 
 const useStyles = makeStyles((theme) => ({
     table: {
@@ -15,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const ResultsTable = ({queryResults}) => {
+const ResultsTable = ({queryResults}) => {
     const classes = useStyles();
 
     let attributes = queryResults.length ? Object.keys(queryResults[0]) : [];
@@ -53,3 +55,14 @@ export const ResultsTable = ({queryResults}) => {
         </TableContainer>
     );
 };
+
+
+const mapStateToProps = (state) => {
+    return {
+        queryResults: state.query.rawResults
+    };
+}
+
+const mapDispatchToProps = {};
+
+export const ConnectedResultsTable = connect(mapStateToProps, mapDispatchToProps)(ResultsTable);

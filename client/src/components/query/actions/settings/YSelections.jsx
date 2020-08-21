@@ -6,7 +6,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import Checkbox from '@material-ui/core/Checkbox';
 import { connect } from 'react-redux'
 
-import { updateYSelection } from '../../../../actions/queryTool';
+import { updateYAndChartConfig } from '../../../../actions/queryTool';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,11 +26,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const YSelections = ({columnNames, columnSelections, updateYSelection}) => {
+const YSelections = ({columnNames, columnSelections, updateYAndChartConfig}) => {
     const classes = useStyles();
 
     const handleChange = (event) => {
-        updateYSelection(event.target.name, event.target.checked);
+        updateYAndChartConfig(event.target.name, event.target.checked);
     };
 
     return (
@@ -58,7 +58,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    updateYSelection
+    updateYAndChartConfig
 };
 
 export const ConnectedYSelections = connect(mapStateToProps, mapDispatchToProps)(YSelections);

@@ -38,6 +38,11 @@ export const updateXSelection = (column) => {
     };
 };
 
+export const updateXAndChartConfig = (column) => (dispatch, getState) => {
+    dispatch(updateXSelection(column));
+    dispatch(setChartConfig(getState().query.rawResults));
+}
+
 export const UPDATE_Y_SELECTION = 'UPDATE_Y_SELECTION';
 export const updateYSelection = (column, selection) => {
     return {
@@ -46,6 +51,12 @@ export const updateYSelection = (column, selection) => {
         selection
     };
 };
+
+export const updateYAndChartConfig = (column, selection) => (dispatch, getState) => {
+    dispatch(updateYSelection(column, selection));
+    dispatch(setChartConfig(getState().query.rawResults));
+}
+
 
 export const UPDATE_SERIES_SELECTION = 'UPDATE_SERIES_SELECTION';
 export const updateSeriesSelection = (column, selection) => {
@@ -56,10 +67,23 @@ export const updateSeriesSelection = (column, selection) => {
     };
 };
 
+export const updateSeriesAndChartConfig = (column, selection) => (dispatch, getState) => {
+    dispatch(updateSeriesSelection(column, selection));
+    dispatch(setChartConfig(getState().query.rawResults));
+}
+
 export const RESET_USER_QUERY = 'RESET_USER_QUERY';
 export const resetUserQuery = () => {
     return {
         type: RESET_USER_QUERY
+    }
+}
+
+export const SET_CHART_CONFIG = 'SET_CHART_CONFIG';
+export const setChartConfig = (rawResults) => {
+    return {
+        type: SET_CHART_CONFIG,
+        rawResults
     }
 }
 
@@ -97,10 +121,3 @@ export const queryDatabase = queryInput => (dispatch, getState) => {
     });
 };
 
-export const SET_CHART_CONFIG = 'SET_CHART_CONFIG';
-export const setChartConfig = (rawResults) => {
-    return {
-        type: SET_CHART_CONFIG,
-        rawResults
-    }
-}

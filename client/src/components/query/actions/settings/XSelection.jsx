@@ -5,7 +5,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import { connect } from 'react-redux'
-import { updateXSelection } from '../../../../actions/queryTool';
+import { updateXAndChartConfig } from '../../../../actions/queryTool';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -24,11 +24,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const XSelection = ({columnNames, xSelection, updateXSelection}) => {
+const XSelection = ({columnNames, xSelection, updateXAndChartConfig}) => {
     const classes = useStyles();
 
     const handleChange = (event) => {
-        updateXSelection(event.target.value);
+        updateXAndChartConfig(event.target.value);
     };
 
     return (
@@ -59,7 +59,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-    updateXSelection
+    updateXAndChartConfig
 };
 
 export const ConnectedXSelection = connect(mapStateToProps, mapDispatchToProps)(XSelection);
