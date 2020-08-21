@@ -2,8 +2,8 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 // TODO create index.js file to import all these guys
 import { ResultsTable } from './Table'
-import { ConnectedBarChart } from './BarChart'
-import { LineChart } from './LineChart'
+import { ConnectedCustomBarChart } from './Bar'
+import { CustomLineChart } from './Line'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const DisplayContainer = React.memo(({queryResults, seriesType}) => {
+const DisplayContainer = ({queryResults, seriesType}) => {
 
     const classes = useStyles();
     
@@ -47,9 +47,9 @@ const DisplayContainer = React.memo(({queryResults, seriesType}) => {
         } else if (seriesType === 'Table') {
             return <ResultsTable queryResults={queryResults}/>
         } else if (seriesType === 'Bar') {
-            return <ConnectedBarChart/>
+            return <ConnectedCustomBarChart/>
         } else if (seriesType === 'Line') {
-            return <LineChart queryResults={queryResults}/>
+            return <CustomLineChart queryResults={queryResults}/>
         }
     }
 
@@ -59,7 +59,7 @@ const DisplayContainer = React.memo(({queryResults, seriesType}) => {
             {getDisplay()}
         </div>
     )
-});
+};
 
 const mapStateToProps = (state) => {
     return {

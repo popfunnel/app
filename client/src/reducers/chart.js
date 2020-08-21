@@ -7,7 +7,8 @@ const initialState = {
         byColumnName: {},
         columnNames: []
     },
-    formattedData: {}
+    settings: {},
+    config: {}
 }
 
 function setSeriesType(state, seriesType) {
@@ -118,26 +119,26 @@ export function compileSettings(state) {
     return compiledSettings;
 };
 
-export function formatData(state, rawResults) {
-    let compiledSettings = compileSettings(state);
+export function setChartConfig(state, rawResults) {
+    let settings = compileSettings(state);
     let{
         xAxis,
         yAxis,
         series
-    } = compiledSettings;
+    } = settings;
 
     let keys = new Set();
     let indices = new Set();
+
+    let config = {
+        indexBy: xAxis,
+        keys: [...keys]
+    }
 
     rawResults.forEach(row => {
         keys.add(row[series[0]]);
         indices.add(row[xAxis]);
     });
-
-    let chartConfig = {
-        indexBy: xAxis,
-        keys: [...keys]
-    };
 
     /* 
     Object with indices as key i.e. 
@@ -178,9 +179,12 @@ export function formatData(state, rawResults) {
     });
 
     let formattedData = [...indices].map(index => dataByIndex[index]);
+
+    config.data = formattedData;
     return {
         ...state,
-        formattedData
+        settings,
+        config
     }
 }
 
@@ -196,8 +200,8 @@ export default function chart(state = initialState, action) {
             return updateYSelection(state, action.column, action.selection);
         case actions.UPDATE_SERIES_SELECTION:
             return updateSeriesSelection(state, action.column, action.selection);
-        case actions.FORMAT_DATA:
-            return formatData(state, action.rawResults);
+        case actions.SET_CHART_CONFIG:
+            return setChartConfig(state, action.rawResults);
         default:
             return state
     }
