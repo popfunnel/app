@@ -4,7 +4,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import { QueryPage } from './pages/query/QueryPage'
 import { AboutPage } from './pages/AboutPage'
 import { LoginPage } from './pages/LoginPage'
-import { NavBar } from './components/navigation/NavBar'
+import { ConnectedNavBar } from './components/navigation/NavBar'
 import { theme } from './AppTheme';
 
 function App() {
@@ -12,10 +12,10 @@ function App() {
     <ThemeProvider theme={theme}>
         <Switch>
             <Route path="/login" component={LoginPage}/>
-            <NavBar>
+            <ConnectedNavBar>
                 <Route exact path="/" component={QueryPage}/>
                 <Route path="/about" component={AboutPage}/>
-            </NavBar>
+            </ConnectedNavBar>
         </Switch>
     </ThemeProvider>
   )

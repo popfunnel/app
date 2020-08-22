@@ -8,20 +8,22 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { LeftDrawer } from './LeftDrawer';
 import { NavStyles } from './NavStyles';
+import { connect } from 'react-redux'
+import { setDrawerOpenStatus } from '../../actions/nav';
 
 const useStyles = makeStyles(NavStyles);
 
 // TODO: put isDrawer open in store, connect navbar to state
-export const NavBar = (props) => {
+export const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
     const classes = useStyles();
-    const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+    // const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
     const handleDrawerOpen = () => {
-        setIsDrawerOpen(true);
+        setDrawerOpenStatus(true);
     };
 
     const handleDrawerClose = () => {
-        setIsDrawerOpen(false);
+        setDrawerOpenStatus(false);
     };
 
     return (
@@ -59,9 +61,22 @@ export const NavBar = (props) => {
             <div className={classes.content}>
                 <div style={{minHeight:'64px'}}/>
                 <div style={{flexGrow:1}}>
-                    {props.children}
+                    {children}
                 </div>
             </div>
         </div>
     );
 }
+
+const mapStateToProps = state => {
+    return {
+        isDrawerOpen: state.nav.isDrawerOpen
+    }
+};
+
+
+const mapDispatchToProps = {
+    setDrawerOpenStatus
+};
+
+export const ConnectedNavBar = connect(mapStateToProps, mapDispatchToProps)(NavBar);
