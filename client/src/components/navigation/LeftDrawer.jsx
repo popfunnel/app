@@ -78,11 +78,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                     {isSchemaDropdownOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItem button>
-                            <SchemaTreeView/>
-                        </ListItem>
-                    </List>
+                    <SchemaTreeView/>
                 </Collapse>
             </List>
             <Divider/>
