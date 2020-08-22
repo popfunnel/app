@@ -24,6 +24,8 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import { SchemaTreeView } from './SchemaTreeView';
 import { setSchemaDropdownStatus } from '../../actions/nav';
+import SettingsIcon from '@material-ui/icons/Settings';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
 const useStyles = makeStyles(NavStyles);
 
@@ -60,12 +62,13 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
             </div>
             <Divider/>
             <List>
-                <ListItem button key={uuidv4()} onClick={() => {history.push('/')}}>
+                <ListItem key={uuidv4()} button disableRipple  onClick={() => {history.push('/')}}>
                     <ListItemIcon><EqualizerIcon/></ListItemIcon>
                     <ListItemText primary={'Query Tools'} />
                 </ListItem>
                 <ListItem
-                    button 
+                    button
+                    disableRipple
                     onClick={() => {
                         setDrawerOpenStatus(true);
                         setSchemaDropdownStatus(!isSchemaDropdownOpen);
@@ -80,10 +83,18 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                 <Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
                     <SchemaTreeView/>
                 </Collapse>
+                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/about')}}>
+                    <ListItemIcon><DashboardIcon/></ListItemIcon>
+                    <ListItemText primary={'Settings'} />
+                </ListItem>
             </List>
             <Divider/>
             <List>
-                <ListItem button key={uuidv4()} onClick={() => {history.push('/about')}}>
+                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/about')}}>
+                    <ListItemIcon><SettingsIcon/></ListItemIcon>
+                    <ListItemText primary={'Settings'} />
+                </ListItem>
+                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/about')}}>
                     <ListItemIcon><InfoIcon/></ListItemIcon>
                     <ListItemText primary={'About'} />
                 </ListItem>

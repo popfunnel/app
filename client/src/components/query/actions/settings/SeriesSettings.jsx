@@ -9,7 +9,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ColumnSelector } from './ColumnSelections';
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import { setSeriesType } from '../../../../actions/queryTool';
 import { connect } from 'react-redux'
@@ -26,6 +26,25 @@ const useStyles = makeStyles((theme) => ({
 
 const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
     const classes = useStyles();
+
+    const StyledAccordion = withStyles({
+        root: {
+            backgroundColor:'inherit',
+            border: 'none',
+            boxShadow: 'none',
+            '&:not(:last-child)': {
+                borderBottom: 0,
+            },
+            '&:before': {
+                display: 'none',
+            },
+            '&$expanded': {
+                margin: 'auto',
+            },
+        },
+        expanded: {},
+      })(Accordion);
+    
 
     return (
         <div style={{display:'flex', flexDirection: 'column', flex: 1}}>
@@ -52,22 +71,22 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
                 </div> }
             </div>
             <div>
-                <Accordion>
+                <StyledAccordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                     >
                         Theme
                     </AccordionSummary>
                     <AccordionDetails>Theme options</AccordionDetails>
-                </Accordion>
-                <Accordion>
+                </StyledAccordion>
+                <StyledAccordion>
                     <AccordionSummary
                         expandIcon={<ExpandMoreIcon />}
                     >
                         Series
                     </AccordionSummary>
                     <AccordionDetails>Series options</AccordionDetails>
-                </Accordion>
+                </StyledAccordion>
             </div>
 
         </div>

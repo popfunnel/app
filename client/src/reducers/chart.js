@@ -8,7 +8,11 @@ const initialState = {
         columnNames: []
     },
     settings: {},
-    config: {}
+    config: {
+        dataKey: '',
+        keys: [],
+        data: []
+    }
 }
 
 function setSeriesType(state, seriesType) {
@@ -130,7 +134,6 @@ export function setChartConfig(state, rawResults) {
     let keys = new Set();
     let indices = new Set();
 
-    
     /* 
     Object with indices as key i.e. 
     {

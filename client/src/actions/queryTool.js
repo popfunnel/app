@@ -109,15 +109,11 @@ export const queryDatabase = queryInput => (dispatch, getState) => {
     .then(response => response.json())
     .then(data => {
         dispatch(setRawResults(data));
-        return data;
-    })
-    .then(data => {
+
         let attributes = data.length ? Object.keys(data[0]) : [];
         dispatch(createColumnSelections(attributes));
-        return data;
-    })
-    .then(data => {
         dispatch(setChartConfig(data));
+        return data;
     });
 };
 
