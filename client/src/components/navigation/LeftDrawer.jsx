@@ -17,10 +17,17 @@ import { useHistory } from "react-router-dom";
 import InfoIcon from '@material-ui/icons/Info';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
 import StorageIcon from '@material-ui/icons/Storage';
+import { connect } from 'react-redux'
+import { setDrawerOpenStatus } from '../../actions/nav';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import { SchemaTreeView } from './SchemaTreeView';
+import { setSchemaDropdownStatus } from '../../actions/nav';
 
 const useStyles = makeStyles(NavStyles);
 
-export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
+export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownOpen, setSchemaDropdownStatus}) => {
     const classes = useStyles();
     const theme = useTheme();
     let history = useHistory();
@@ -42,7 +49,12 @@ export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
             }}
         >
             <div className={classes.toolbar}>
-                <IconButton onClick={handleDrawerClose}>
+                <IconButton
+                    onClick={() => {
+                        setSchemaDropdownStatus(false);
+                        setDrawerOpenStatus(false);
+                    }}
+                >
                     {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
                 </IconButton>
             </div>
@@ -52,10 +64,26 @@ export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
                     <ListItemIcon><EqualizerIcon/></ListItemIcon>
                     <ListItemText primary={'Query Tools'} />
                 </ListItem>
-                <ListItem button key={uuidv4()} onClick={() => {history.push('/')}}>
-                    <ListItemIcon><StorageIcon/></ListItemIcon>
-                    <ListItemText primary={'Schemas'} />
+                <ListItem
+                    button 
+                    onClick={() => {
+                        setDrawerOpenStatus(true);
+                        setSchemaDropdownStatus(!isSchemaDropdownOpen);
+                    }}
+                >
+                    <ListItemIcon>
+                        <StorageIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Schemas" />
+                    {isSchemaDropdownOpen ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
+                <Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItem button>
+                            <SchemaTreeView/>
+                        </ListItem>
+                    </List>
+                </Collapse>
             </List>
             <Divider/>
             <List>
@@ -67,4 +95,19 @@ export const LeftDrawer = ({handleDrawerClose, isDrawerOpen}) => {
         </Drawer>
         </div>
     );
-}
+};
+
+const mapStateToProps = state => {
+    return {
+        isDrawerOpen: state.nav.isDrawerOpen,
+        isSchemaDropdownOpen: state.nav.isSchemaDropdownOpen
+    }
+};
+
+
+const mapDispatchToProps = {
+    setDrawerOpenStatus,
+    setSchemaDropdownStatus
+};
+
+export const ConnectedLeftDrawer = connect(mapStateToProps, mapDispatchToProps)(LeftDrawer);

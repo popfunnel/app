@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import { LeftDrawer } from './LeftDrawer';
+import { ConnectedLeftDrawer } from './LeftDrawer';
 import { NavStyles } from './NavStyles';
 import { connect } from 'react-redux'
 import { setDrawerOpenStatus } from '../../actions/nav';
@@ -14,18 +14,9 @@ import { setDrawerOpenStatus } from '../../actions/nav';
 const useStyles = makeStyles(NavStyles);
 
 // TODO: put isDrawer open in store, connect navbar to state
-export const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
+const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
     const classes = useStyles();
-    // const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
-
-    const handleDrawerOpen = () => {
-        setDrawerOpenStatus(true);
-    };
-
-    const handleDrawerClose = () => {
-        setDrawerOpenStatus(false);
-    };
-
+    
     return (
         <div className={classes.root}>
             <AppBar
@@ -41,7 +32,7 @@ export const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
-                        onClick={handleDrawerOpen}
+                        onClick={() => setDrawerOpenStatus(true)}
                         edge="start"
                         className={clsx(classes.menuButton, {
                             [classes.hide]: isDrawerOpen,
@@ -54,10 +45,7 @@ export const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <LeftDrawer
-                isDrawerOpen= {isDrawerOpen}
-                handleDrawerClose={handleDrawerClose}
-            />
+            <ConnectedLeftDrawer/>
             <div className={classes.content}>
                 <div style={{minHeight:'64px'}}/>
                 <div style={{flexGrow:1}}>

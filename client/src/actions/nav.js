@@ -5,3 +5,11 @@ export const setDrawerOpenStatus = (status) => {
         status
     }
 }
+
+export const SET_SCHEMA_DROPDOWN_STATUS = 'SET_SCHEMA_DROPDOWN_STATUS';
+export const setSchemaDropdownStatus = (status) => {
+    return {
+        type: SET_SCHEMA_DROPDOWN_STATUS,
+        status
+    }
+}
