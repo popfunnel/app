@@ -18,7 +18,6 @@ const CustomBarChart = ({config}) => {
         keys,
         data
     } = config;
-
     // let testData = [{
     //     "rental_date": "2005-07-08",
     //     "Action": 10,

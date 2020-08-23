@@ -162,9 +162,7 @@ export function setChartConfig(state, rawResults) {
     /*
         TODO: This is O(series*rows). Not sure if there's
         a great way around this yet.
-    */
-    // TODO: Figure out what it means to have multiple y selections
-    
+    */    
 
     if (!series.length) {
         rawResults.forEach(row => {

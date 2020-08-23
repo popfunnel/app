@@ -83,9 +83,9 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                 <Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
                     <SchemaTreeView/>
                 </Collapse>
-                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/about')}}>
+                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/dashboard')}}>
                     <ListItemIcon><DashboardIcon/></ListItemIcon>
-                    <ListItemText primary={'Settings'} />
+                    <ListItemText primary={'Dashboards'} />
                 </ListItem>
             </List>
             <Divider/>
