@@ -13,7 +13,7 @@ const initialState = {
         keys: [],
         data: []
     }
-}
+};
 
 function setSeriesType(state, seriesType) {
     return {

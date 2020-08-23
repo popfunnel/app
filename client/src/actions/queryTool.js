@@ -87,6 +87,14 @@ export const setChartConfig = (rawResults) => {
     }
 }
 
+export const SAVE_CHART_CONFIG = 'SAVE_CHART_CONFIG';
+export const saveChartConfig = (chartConfig) => {
+    return {
+        type: SAVE_CHART_CONFIG,
+        chartConfig
+    }
+}
+
 export const resetForm = () => (dispatch, getState) => {
     dispatch(resetUserQuery());
     dispatch(setSeriesType('Table'));
@@ -132,4 +140,6 @@ export const queryDatabase = queryInput => (dispatch, getState) => {
         return data;
     });
 };
+
+
 

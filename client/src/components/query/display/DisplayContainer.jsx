@@ -57,7 +57,7 @@ const DisplayContainer = ({queryResults, seriesType, config}) => {
             return (
                 <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
                     <div style={{height:'80%', width:'80%'}}>
-                    {getChart()}
+                        {getChart()}
                     </div>
                 </div>
             );
@@ -73,7 +73,6 @@ const DisplayContainer = ({queryResults, seriesType, config}) => {
 };
 
 const mapStateToProps = (state) => {
-    console.log(JSON.stringify(state.chart.config));
     return {
         queryResults: state.query.rawResults,
         seriesType: state.chart.seriesType,

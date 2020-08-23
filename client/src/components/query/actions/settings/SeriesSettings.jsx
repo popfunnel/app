@@ -11,7 +11,7 @@ import { ColumnSelector } from './ColumnSelections';
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
-import { setSeriesType } from '../../../../actions/queryTool';
+import { setSeriesType, saveChartConfig } from '../../../../actions/queryTool';
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
 
@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
+const SeriesSettings = ({seriesType, setSeriesType, queryResults, config, saveChartConfig}) => {
     const classes = useStyles();
 
     const StyledAccordion = withStyles({
@@ -93,7 +93,13 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
             <div style={{display:'flex', justifyContent:'center'}}>   
                 <Button
                     color='secondary'
-                    onClick={() => alert('clicked')}
+                    onClick={() => {
+                        let chartConfig = {
+                            ...config,
+                            type: seriesType
+                        };
+                        saveChartConfig(chartConfig);
+                    }}
                     disableRipple
                 >
                 Save Config
@@ -107,12 +113,14 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
 const mapStateToProps = state => {
     return {
         seriesType: state.chart.seriesType,
-        queryResults: state.query.rawResults
+        queryResults: state.query.rawResults,
+        config: state.chart.config
     };
 }
 
 const mapDispatchToProps = {
-    setSeriesType
+    setSeriesType,
+    saveChartConfig
 };
 
 export const ConnectedSeriesSettings = connect(mapStateToProps, mapDispatchToProps)(SeriesSettings);
