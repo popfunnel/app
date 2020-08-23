@@ -14,6 +14,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { setSeriesType, saveChartConfig } from '../../../../actions/queryTool';
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     chartSelect: {
@@ -46,6 +47,7 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, config, saveCh
         expanded: {},
       })(Accordion);
     
+    let history = useHistory();
 
     return (
         <div style={{display:'flex', flexDirection: 'column', height: '100%'}}>
@@ -99,6 +101,7 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, config, saveCh
                             type: seriesType
                         };
                         saveChartConfig(chartConfig);
+                        history.push('/dashboard')
                     }}
                     disableRipple
                 >

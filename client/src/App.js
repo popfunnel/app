@@ -16,6 +16,7 @@ function App() {
             <Route path='/login' component={LoginPage}/>
             <ConnectedNavBar>
                 <Route exact path='/' component={QueryPage}/>
+                <Route exact path='/queryTool' component={QueryPage}/>
                 <Route path='/about' component={AboutPage}/>
                 <Route path='/dashboard' component={DashboardPage}/>
             </ConnectedNavBar>

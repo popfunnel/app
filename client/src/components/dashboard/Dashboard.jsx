@@ -102,38 +102,66 @@ const exampleConfigs = [{
 	}]
 }]
 
-const Dashboard = () => {
+const Dashboard = ({chartConfigs}) => {
     // const layout = [
     //           {i: 'a', x: 0, y: 0, w: 1, h: 2},
     //           {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
     //           {i: 'c', x: 4, y: 0, w: 1, h: 2}
     //         ];
-    // const getGridItems = () => {
-    //     return exampleConfigs.map(config => {
-
-    //     });
-    // }
     
+
+    // TODO: Add plus button
+    if (!chartConfigs.length) {
+        return (
+            <div>
+                Created charts will appear here.
+            </div>
+        )
+    }
+    const getGridItems = () => {
+        return chartConfigs.map((config, index) => {
+            if (config.type === 'Bar') {
+                // TODO: use better keys
+                return (
+                    <div key={`Bar-${index}`} data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><CustomBarChart config={config}/></div>
+                );
+            } else if (config.type === 'Line') {
+                // TODO: use better keys
+                return (
+                    <div key={`Line-${index}`} data-grid={{x: 0, y: 0, w: 3, h: 6, autoSize:true}}><CustomLineChart config={config}/></div>
+                );
+            };
+        });
+    }
+
+
+    // TODO: user should be able to select which dashboard they're on
+    // TODO: user should have 'add chart' button to add to dashboard
+    // TODO: user should be navigated back to dashboards after clicking save config button
 
     // TODO: use responsive layout
     // TODO: read more about autosize options
     // TODO: read more about react-grid-layout
     // https://github.com/STRML/react-grid-layout#grid-item-props
     // TODO: save saved configs in db/store
-    // TODO: add dashboards reducer
     // TODO: add multiple y axis series 
+    // return (
+    //     <GridLayout className="layout" cols={12} rowHeight={30} width={1800}>
+    //         <div key='line' data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><ConnectedCustomLineChart/></div>
+    //         <div key='bar' data-grid={{x: 5, y: 0, w: 3, h: 6, autoSize:true}}><ConnectedCustomBarChart/></div>
+    //     </GridLayout>
+    // );
     return (
         <GridLayout className="layout" cols={12} rowHeight={30} width={1800}>
-            <div key='line' data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><ConnectedCustomLineChart/></div>
-            <div key='bar' data-grid={{x: 5, y: 0, w: 3, h: 6, autoSize:true}}><ConnectedCustomBarChart/></div>
+            {getGridItems()}
         </GridLayout>
-    );
+    )
 }
 
 
 const mapStateToProps = state => {
     return {
-        config: state.chart.config
+        chartConfigs: state.dashboard.dashboardChartConfigs
     }
 }
 
