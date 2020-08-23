@@ -89,7 +89,6 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
                     <AccordionDetails>Series options</AccordionDetails>
                 </StyledAccordion>
             </div>
-            {/* <div style={{flex:1}}>hey</div> */}
             {(queryResults.length > 0 && seriesType !== 'Table') &&
             <div style={{display:'flex', justifyContent:'center'}}>   
                 <Button
