@@ -13,6 +13,7 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import { setSeriesType } from '../../../../actions/queryTool';
 import { connect } from 'react-redux'
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     chartSelect: {
@@ -47,7 +48,7 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
     
 
     return (
-        <div style={{display:'flex', flexDirection: 'column', flex: 1}}>
+        <div style={{display:'flex', flexDirection: 'column', height: '100%'}}>
             <Typography variant="overline" display="block" gutterBottom>
                 Series Settings
             </Typography>
@@ -88,7 +89,18 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults}) => {
                     <AccordionDetails>Series options</AccordionDetails>
                 </StyledAccordion>
             </div>
-
+            {/* <div style={{flex:1}}>hey</div> */}
+            {(queryResults.length > 0 && seriesType !== 'Table') &&
+            <div style={{display:'flex', justifyContent:'center'}}>   
+                <Button
+                    color='secondary'
+                    onClick={() => alert('clicked')}
+                    disableRipple
+                >
+                Save Config
+                </Button>
+            </div>}
+            
         </div>
     );
 }

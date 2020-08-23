@@ -2,8 +2,8 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 // TODO create index.js file to import all these guys
 import { ConnectedResultsTable } from './Table'
-import { ConnectedCustomBarChart, CustomBarChart } from './Bar'
-import { ConnectedCustomLineChart } from './Line'
+import { CustomBarChart } from './Bar'
+import { CustomLineChart } from './Line'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
@@ -42,22 +42,13 @@ const DisplayContainer = ({queryResults, seriesType, config}) => {
 
     const getChart = () => {
         if (seriesType === 'Bar') {
-            return <ConnectedCustomBarChart/>
+            return <CustomBarChart config={config}/>
         } else if (seriesType === 'Line') {
-            return <ConnectedCustomLineChart/>
+            return <CustomLineChart config={config}/>
         }
     }
 
     const getDisplay = () => {
-        // if (!queryResults.length) {
-        //     return <NoResults/>
-        // } else if (seriesType === 'Table') {
-        //     return <ConnectedResultsTable/>
-        // } else if (seriesType === 'Bar') {
-        //     return <ConnectedCustomBarChart/>
-        // } else if (seriesType === 'Line') {
-        //     return <ConnectedCustomLineChart/>
-        // }
         if (!queryResults.length) {
             return <NoResults/>
         } else if (seriesType === 'Table') {
@@ -82,6 +73,7 @@ const DisplayContainer = ({queryResults, seriesType, config}) => {
 };
 
 const mapStateToProps = (state) => {
+    console.log(JSON.stringify(state.chart.config));
     return {
         queryResults: state.query.rawResults,
         seriesType: state.chart.seriesType,

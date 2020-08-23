@@ -11,7 +11,6 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     tabContainer: {
         display: 'flex',
-        flexGrow: 1,
         justifyContent: 'flex-end',
         height: '100%'
     },
