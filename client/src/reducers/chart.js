@@ -142,11 +142,13 @@ export function setChartConfig(state, rawResults) {
         } 
     }
     */
+
     let dataByIndex = {};
     rawResults.forEach(row => {
         dataByIndex[row[xAxis]] = {
             [xAxis]: row[xAxis]
         }
+        indices.add(row[xAxis]);
     });
 
     function sanitizeData(rawData) {
@@ -162,17 +164,48 @@ export function setChartConfig(state, rawResults) {
         a great way around this yet.
     */
     // TODO: Figure out what it means to have multiple y selections
-    rawResults.forEach(row => {
-        series.forEach(chosen_series => {    
-            let yValue = sanitizeData(row[yAxis[0]])
-            dataByIndex[row[xAxis]] = {
-                ...dataByIndex[row[xAxis]],
-                [row[chosen_series]]: yValue
-            };
-            keys.add(row[chosen_series]);
+    
+
+    if (!series.length) {
+        rawResults.forEach(row => {
+            yAxis.forEach(chosen_y => {
+                let yValue = sanitizeData(row[chosen_y]);
+                if (dataByIndex[row[xAxis]][chosen_y]) {
+                    dataByIndex[row[xAxis]] = {
+                        ...dataByIndex[row[xAxis]],
+                        [chosen_y]: dataByIndex[row[xAxis]][chosen_y] + yValue
+                    };
+                } else {
+                    dataByIndex[row[xAxis]] = {
+                        ...dataByIndex[row[xAxis]],
+                        [chosen_y]: yValue
+                    };
+                }
+                keys.add(chosen_y);
+            })
+        })
+    } else {
+        rawResults.forEach(row => {
+            series.forEach(chosen_series => {    
+                let yValue = sanitizeData(row[yAxis[0]])
+                console.log(dataByIndex[row[xAxis]][row[chosen_series]]);
+
+                if (dataByIndex[row[xAxis]][row[chosen_series]]) {
+                    dataByIndex[row[xAxis]] = {
+                        ...dataByIndex[row[xAxis]],
+                        [row[chosen_series]]: dataByIndex[row[xAxis]][row[chosen_series]] + yValue
+                    }; 
+                } else {
+                    dataByIndex[row[xAxis]] = {
+                        ...dataByIndex[row[xAxis]],
+                        [row[chosen_series]]: yValue
+                    };
+                }
+                
+                keys.add(row[chosen_series]);
+            });
         });
-        indices.add(row[xAxis]);
-    });
+    }
 
     let formattedData = [...indices].map(index => dataByIndex[index]);
 

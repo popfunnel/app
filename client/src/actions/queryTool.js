@@ -108,6 +108,22 @@ export const queryDatabase = queryInput => (dispatch, getState) => {
     })
     .then(response => response.json())
     .then(data => {
+
+        // let testData = [
+        //     {
+        //         COLUMN_1: 'A',
+        //         COLUMN_2: '1',
+        //         COLUMN_3: '3',
+        //         COLUMN_4: '5',
+        //     },
+        //     {
+        //         COLUMN_1: 'B',
+        //         COLUMN_2: '2',
+        //         COLUMN_3: '4',
+        //         COLUMN_4: '6',
+        //     }
+        // ]
+
         dispatch(setRawResults(data));
 
         let attributes = data.length ? Object.keys(data[0]) : [];

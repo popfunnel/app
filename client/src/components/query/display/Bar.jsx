@@ -11,12 +11,35 @@ const CustomBarChart = ({config}) => {
     let defaultColors = ['#96ceb4', '#ffeead', '#ff6f69', '#ffcc5c', '#88d8b0']
     let colors = defaultColors;
 
+
+    // TODO: rename datakey to 'xaxis datakey'
     let {
         dataKey,
         keys,
         data
     } = config;
 
+    // let testData = [{
+    //     "rental_date": "2005-07-08",
+    //     "Action": 10,
+    //     "Foreign": 8,
+    //     "Sports": 8
+    // }, {
+    //     "rental_date": "2005-07-09",
+    //     "Action": 1,
+    //     "Foreign": 13,
+    //     "Sports": 7
+    // }, {
+    //     "rental_date": "2005-07-08",
+    //     "Action": 30,
+    //     "Foreign": 40,
+    //     "Sports": 50
+    // }, {
+    //     "rental_date": "2005-07-09",
+    //     "Action": 10,
+    //     "Foreign": 20,
+    //     "Sports": 50
+    // }];
 
     return (
         <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
