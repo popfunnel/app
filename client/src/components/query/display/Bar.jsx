@@ -5,7 +5,7 @@ import {BarChart, Bar, XAxis,
     YAxis, CartesianGrid, Tooltip,
     Legend, ResponsiveContainer} from 'recharts';
 
-const CustomBarChart = ({config}) => {
+export const CustomBarChart = ({config}) => {
     
     // TODO: Create color selector
     let defaultColors = ['#96ceb4', '#ffeead', '#ff6f69', '#ffcc5c', '#88d8b0']
@@ -41,8 +41,8 @@ const CustomBarChart = ({config}) => {
     // }];
 
     return (
-        <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
-            <Paper style={{height:'75%', width:'85%'}}>
+        // <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
+            <Paper style={{height:'100%', width:'100%'}}>
                 <ResponsiveContainer>
                     <BarChart
                         data={data}
@@ -62,7 +62,7 @@ const CustomBarChart = ({config}) => {
                     </BarChart>
                 </ResponsiveContainer>
             </Paper>
-        </div>
+        // </div>
     );
 };
 

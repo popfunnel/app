@@ -6,29 +6,27 @@ import {
     LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
   } from 'recharts';
 
-const CustomLineChart = ({config}) => {
+export const CustomLineChart = ({config}) => {
     return (
-        <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
-            <Paper style={{height:'80%', width:'80%'}}>
-                <ResponsiveContainer>
-                    <LineChart
-                        data={config.data}
-                        margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Line type="monotone" dataKey="Action" stroke="#8884d8" />
-                        <Line type="monotone" dataKey="Foreign" stroke="#82ca9d" />
-                        <Line type="monotone" dataKey="Sports" stroke="#FD6A02" />
-                    </LineChart>
-                </ResponsiveContainer>
-            </Paper> 
-        </div>
+        <Paper style={{height:'100%', width:'100%'}}>
+            <ResponsiveContainer>
+                <LineChart
+                    data={config.data}
+                    margin={{
+                    top: 5, right: 30, left: 20, bottom: 5,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="name" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="Action" stroke="#8884d8" />
+                    <Line type="monotone" dataKey="Foreign" stroke="#82ca9d" />
+                    <Line type="monotone" dataKey="Sports" stroke="#FD6A02" />
+                </LineChart>
+            </ResponsiveContainer>
+        </Paper>
     );
 };
 

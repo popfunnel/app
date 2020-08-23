@@ -6,4 +6,4 @@ export const AboutPage = () => {
             Built by the team of Curtis Lin and Austin Lin Gibbons.
         </div>
     )
-}
+};

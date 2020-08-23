@@ -2,7 +2,7 @@ import React from 'react';
 import Paper from '@material-ui/core/Paper';
 // TODO create index.js file to import all these guys
 import { ConnectedResultsTable } from './Table'
-import { ConnectedCustomBarChart } from './Bar'
+import { ConnectedCustomBarChart, CustomBarChart } from './Bar'
 import { ConnectedCustomLineChart } from './Line'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const DisplayContainer = ({queryResults, seriesType}) => {
+const DisplayContainer = ({queryResults, seriesType, config}) => {
     const classes = useStyles();
     
     const SeriesTitle = () => {
@@ -40,16 +40,37 @@ const DisplayContainer = ({queryResults, seriesType}) => {
         );
     }
 
-    const getDisplay = () => {
-        if (!queryResults.length) {
-            return <NoResults/>
-        } else if (seriesType === 'Table') {
-            return <ConnectedResultsTable/>
-        } else if (seriesType === 'Bar') {
+    const getChart = () => {
+        if (seriesType === 'Bar') {
             return <ConnectedCustomBarChart/>
         } else if (seriesType === 'Line') {
             return <ConnectedCustomLineChart/>
         }
+    }
+
+    const getDisplay = () => {
+        // if (!queryResults.length) {
+        //     return <NoResults/>
+        // } else if (seriesType === 'Table') {
+        //     return <ConnectedResultsTable/>
+        // } else if (seriesType === 'Bar') {
+        //     return <ConnectedCustomBarChart/>
+        // } else if (seriesType === 'Line') {
+        //     return <ConnectedCustomLineChart/>
+        // }
+        if (!queryResults.length) {
+            return <NoResults/>
+        } else if (seriesType === 'Table') {
+            return <ConnectedResultsTable/>    
+        } else {
+            return (
+                <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
+                    <div style={{height:'80%', width:'80%'}}>
+                    {getChart()}
+                    </div>
+                </div>
+            );
+        };
     }
 
     return (
@@ -63,7 +84,8 @@ const DisplayContainer = ({queryResults, seriesType}) => {
 const mapStateToProps = (state) => {
     return {
         queryResults: state.query.rawResults,
-        seriesType: state.chart.seriesType
+        seriesType: state.chart.seriesType,
+        config: state.chart.config
     }
 }
 

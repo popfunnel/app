@@ -13,7 +13,7 @@ import { setDrawerOpenStatus } from '../../actions/nav';
 
 const useStyles = makeStyles(NavStyles);
 
-// TODO: put isDrawer open in store, connect navbar to state
+// TODO: check sizing of children and root style from NavStyles
 const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
     const classes = useStyles();
     
@@ -48,7 +48,7 @@ const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
             <ConnectedLeftDrawer/>
             <div className={classes.content}>
                 <div style={{minHeight:'64px'}}/>
-                <div style={{flexGrow:1}}>
+                <div style={{flex:1}}>
                     {children}
                 </div>
             </div>

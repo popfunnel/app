@@ -13,14 +13,14 @@ const Dashboard = () => {
     //           {i: 'c', x: 4, y: 0, w: 1, h: 2}
     //         ];
 
+    // TODO: use responsive layout
     return (
-        <div style={{height:'100%'}}>
-            <GridLayout className="layout" cols={12} rowHeight={30} width={1200}>
-                <div key='bar' data-grid={{x: 1, y: 0, w: 5, h: 10}}><ConnectedCustomBarChart/></div>
-                <div key='line' data-grid={{x: 1, y: 0, w: 5, h: 10}}><ConnectedCustomLineChart/></div>
-            </GridLayout>
-        </div>
-    )
+        <GridLayout className="layout" cols={12} rowHeight={30} width={1800}>
+            <div key='bar' data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><ConnectedCustomBarChart/></div>
+            <div key='line' data-grid={{x: 5, y: 0, w: 5, h: 10, autoSize:true}}><ConnectedCustomLineChart/></div>
+            <div key='blah' data-grid={{x: 5, y: 0, w: 2, h: 3}}>blah</div>
+        </GridLayout>
+    );
 }
 
 
