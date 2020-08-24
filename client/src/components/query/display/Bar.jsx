@@ -41,28 +41,27 @@ export const CustomBarChart = ({config}) => {
     // }];
 
     return (
-        // <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
-            <Paper style={{height:'100%', width:'100%'}}>
-                <ResponsiveContainer>
-                    <BarChart
-                        data={data}
-                        margin={{
-                            top: 5, right: 30, left: 20, bottom: 5,
-                        }}
-                    >
-                        <CartesianGrid strokeDasharray="3 3"/>
-                        <XAxis dataKey={dataKey}/>
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        {keys.map((key, index) => {
-                            let colorIndex = index%5;
-                            return <Bar key={key} dataKey={key} fill={colors[colorIndex]}/>
-                        })}
-                    </BarChart>
-                </ResponsiveContainer>
-            </Paper>
-        // </div>
+        <Paper style={{height:'100%', width:'100%'}}>
+            <ResponsiveContainer>
+                <BarChart
+                    data={data}
+                    margin={{
+                        top: 5, right: 30, left: 20, bottom: 5,
+                    }}
+                >
+                    <CartesianGrid strokeDasharray="3 3"/>
+                    <XAxis dataKey={dataKey}/>
+                    {/* TODO: how should this be extracted? */}
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    {keys.map((key, index) => {
+                        let colorIndex = index%5;
+                        return <Bar key={key} dataKey={key} fill={colors[colorIndex]}/>
+                    })}
+                </BarChart>
+            </ResponsiveContainer>
+        </Paper>
     );
 };
 

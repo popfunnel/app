@@ -162,11 +162,12 @@ export function setChartConfig(state, rawResults) {
         TODO: This is O(series*rows). Not sure if there's
         a great way around this yet.
     */    
-
+    // TODO: make sure that non numerical stuff doesn't get added together
     if (!series.length) {
         rawResults.forEach(row => {
             yAxis.forEach(chosen_y => {
                 let yValue = sanitizeData(row[chosen_y]);
+                // TODO: if no series chosen and x axis is same as y axis, convert to num before add
                 if (dataByIndex[row[xAxis]][chosen_y]) {
                     dataByIndex[row[xAxis]] = {
                         ...dataByIndex[row[xAxis]],
@@ -181,12 +182,10 @@ export function setChartConfig(state, rawResults) {
                 keys.add(chosen_y);
             })
         })
-    } else {
+    } else if (yAxis.length === 1) {
         rawResults.forEach(row => {
             series.forEach(chosen_series => {    
                 let yValue = sanitizeData(row[yAxis[0]])
-                console.log(dataByIndex[row[xAxis]][row[chosen_series]]);
-
                 if (dataByIndex[row[xAxis]][row[chosen_series]]) {
                     dataByIndex[row[xAxis]] = {
                         ...dataByIndex[row[xAxis]],
@@ -198,11 +197,33 @@ export function setChartConfig(state, rawResults) {
                         [row[chosen_series]]: yValue
                     };
                 }
-                
                 keys.add(row[chosen_series]);
             });
         });
+    } else if (yAxis.length > 1) {
+        rawResults.forEach(row => {
+            series.forEach(chosen_series => {    
+                yAxis.forEach(chosen_y => {
+                    let yValue = sanitizeData(row[chosen_y])
+                    let seriesName = `${row[chosen_series]}-${chosen_y}`;
+                    if (dataByIndex[row[xAxis]][row[chosen_series]]) {
+                        dataByIndex[row[xAxis]] = {
+                            ...dataByIndex[row[xAxis]],
+                            [seriesName]: dataByIndex[row[xAxis]][row[chosen_series]] + yValue
+                        }; 
+                    } else {
+                        dataByIndex[row[xAxis]] = {
+                            ...dataByIndex[row[xAxis]],
+                            [seriesName]: yValue
+                        };
+                    }
+                    keys.add(seriesName);
+                })
+                
+            });
+        });
     }
+    // TODO: add final else case
 
     let formattedData = [...indices].map(index => dataByIndex[index]);
 
