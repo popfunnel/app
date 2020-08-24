@@ -155,6 +155,8 @@ const Dashboard = ({chartConfigs}) => {
     //         <div key='bar' data-grid={{x: 5, y: 0, w: 3, h: 6, autoSize:true}}><ConnectedCustomBarChart/></div>
     //     </GridLayout>
     // );
+
+    // TODO: perisist layouts using onLayoutChange callback
     return (
         <GridLayout className="layout" cols={12} rowHeight={30} width={1800}>
             {getGridItems()}
