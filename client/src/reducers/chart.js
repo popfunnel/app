@@ -2,7 +2,6 @@ import * as actions from '../actions/queryTool';
 
 const initialState = {
     seriesType: 'Table',
-    columnNames: [],
     columnSelections: {
         byColumnName: {},
         columnNames: []
@@ -34,7 +33,7 @@ function createColumnSelections(state, columnNames) {
             }
         });
 
-        if (columnNames.length === 3) {
+        if (columnNames.length >= 3) {
             columnSelections.byColumnName[columnNames[0]].xAxis = true;
             columnSelections.byColumnName[columnNames[1]].yAxis = true;
             columnSelections.byColumnName[columnNames[2]].series = true;
@@ -218,6 +217,23 @@ export function setChartConfig(state, rawResults) {
         settings,
         config
     }
+};
+
+
+function resetChart() {
+    return {
+        seriesType: 'Table',
+        columnSelections: {
+            byColumnName: {},
+            columnNames: []
+        },
+        settings: {},
+        config: {
+            dataKey: '',
+            keys: [],
+            data: []
+        }
+    }
 }
 
 export default function chart(state = initialState, action) {
@@ -234,6 +250,8 @@ export default function chart(state = initialState, action) {
             return updateSeriesSelection(state, action.column, action.selection);
         case actions.SET_CHART_CONFIG:
             return setChartConfig(state, action.rawResults);
+        case actions.RESET_CHART:
+            return resetChart();
         default:
             return state
     }

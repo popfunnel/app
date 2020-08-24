@@ -12,13 +12,12 @@ export const DashboardPage = () => {
     // TODO: add this to redux
     const [currentDashboard, setCurrentDashboard] = React.useState('example-dashboard')
     
+
+    // TODO: read about MUI component customization
+    // https://material-ui.com/customization/components/
     const StyledSelect = withStyles((theme) => ({
         root: {
-            fontSize: '12px',
-            // height:'10px'
-        },
-        selectMenu: {
-            minHeight: '10px'
+            fontSize: '15px',
         },
         outlined: {
             padding: '5px'
@@ -41,7 +40,7 @@ export const DashboardPage = () => {
                     // label="Age"
                     variant='outlined'
                 >
-                    <MenuItem value={'example-dashboard'}>Example Dashboard</MenuItem>
+                    <MenuItem value={'example-dashboard'}>Example</MenuItem>
                 </StyledSelect>
                 <Button
                     variant="contained"

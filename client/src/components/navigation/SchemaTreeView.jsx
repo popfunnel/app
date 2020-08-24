@@ -12,7 +12,7 @@ export const SchemaTreeView = () => {
         label: {
             fontSize: 14
         }
-      }))(TreeItem);
+    }))(TreeItem);
       
     return (
         <div style={{marginLeft:'15px'}}>

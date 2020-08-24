@@ -87,6 +87,13 @@ export const setChartConfig = (rawResults) => {
     }
 }
 
+export const RESET_CHART = 'RESET_CHART';
+export const resetChart = () => {
+    return {
+        type: RESET_CHART
+    }
+}
+
 export const SAVE_CHART_CONFIG = 'SAVE_CHART_CONFIG';
 export const saveChartConfig = (chartConfig) => {
     return {
@@ -95,9 +102,10 @@ export const saveChartConfig = (chartConfig) => {
     }
 }
 
+// TODO: reset should also reset chart config
 export const resetForm = () => (dispatch, getState) => {
     dispatch(resetUserQuery());
-    dispatch(setSeriesType('Table'));
+    dispatch(resetChart());
 }
 
 export const queryDatabase = queryInput => (dispatch, getState) => {
