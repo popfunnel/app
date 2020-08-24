@@ -124,7 +124,6 @@ export const queryDatabase = queryInput => (dispatch, getState) => {
     })
     .then(response => response.json())
     .then(data => {
-
         // let testData = [
         //     {
         //         COLUMN_1: 'A',
@@ -141,10 +140,11 @@ export const queryDatabase = queryInput => (dispatch, getState) => {
         // ]
 
         dispatch(setRawResults(data));
-
-        let attributes = data.length ? Object.keys(data[0]) : [];
-        dispatch(createColumnSelections(attributes));
-        dispatch(setChartConfig(data));
+        if (data.length) {
+            let attributes = data.length ? Object.keys(data[0]) : [];
+            dispatch(createColumnSelections(attributes));
+            dispatch(setChartConfig(data));
+        }
         return data;
     });
 };
