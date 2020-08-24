@@ -122,6 +122,7 @@ export function compileSettings(state) {
     return compiledSettings;
 };
 
+// TODO: move to logic folder
 export function setChartConfig(state, rawResults) {
     let settings = compileSettings(state);
     let{
