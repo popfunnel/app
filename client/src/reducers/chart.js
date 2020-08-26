@@ -143,14 +143,6 @@ export function setChartConfig(state, rawResults) {
     }
     */
 
-    let dataByIndex = {};
-    rawResults.forEach(row => {
-        dataByIndex[row[xAxis]] = {
-            [xAxis]: row[xAxis]
-        }
-        indices.add(row[xAxis]);
-    });
-
     function sanitizeData(rawData) {
         if (isNaN(rawData)) {
             return rawData;
@@ -158,6 +150,22 @@ export function setChartConfig(state, rawResults) {
             return parseFloat(rawData)
         }
     };
+
+    let dataByIndex = {};
+    rawResults.forEach(row => {
+        dataByIndex[row[xAxis]] = {
+            [xAxis]: sanitizeData(row[xAxis])
+        }
+        indices.add(row[xAxis]);
+    });
+
+    // function sanitizeData(rawData) {
+    //     if (isNaN(rawData)) {
+    //         return rawData;
+    //     } else {
+    //         return parseFloat(rawData)
+    //     }
+    // };
 
     /*
         TODO: This is O(series*rows). Not sure if there's
@@ -168,8 +176,9 @@ export function setChartConfig(state, rawResults) {
         rawResults.forEach(row => {
             yAxis.forEach(chosen_y => {
                 let yValue = sanitizeData(row[chosen_y]);
+                console.log('here is the yvalue', yValue)
                 // TODO: if no series chosen and x axis is same as y axis, convert to num before add
-                if (dataByIndex[row[xAxis]][chosen_y]) {
+                if (dataByIndex[row[xAxis]][chosen_y] && !isNaN(yValue)) {
                     dataByIndex[row[xAxis]] = {
                         ...dataByIndex[row[xAxis]],
                         [chosen_y]: dataByIndex[row[xAxis]][chosen_y] + yValue
@@ -187,7 +196,7 @@ export function setChartConfig(state, rawResults) {
         rawResults.forEach(row => {
             series.forEach(chosen_series => {    
                 let yValue = sanitizeData(row[yAxis[0]])
-                if (dataByIndex[row[xAxis]][row[chosen_series]]) {
+                if (dataByIndex[row[xAxis]][row[chosen_series]] && !isNaN(yValue)) {
                     dataByIndex[row[xAxis]] = {
                         ...dataByIndex[row[xAxis]],
                         [row[chosen_series]]: dataByIndex[row[xAxis]][row[chosen_series]] + yValue
@@ -207,7 +216,7 @@ export function setChartConfig(state, rawResults) {
                 yAxis.forEach(chosen_y => {
                     let yValue = sanitizeData(row[chosen_y])
                     let seriesName = `${row[chosen_series]}-${chosen_y}`;
-                    if (dataByIndex[row[xAxis]][row[chosen_series]]) {
+                    if (dataByIndex[row[xAxis]][row[chosen_series]] && !isNaN(yValue)) {
                         dataByIndex[row[xAxis]] = {
                             ...dataByIndex[row[xAxis]],
                             [seriesName]: dataByIndex[row[xAxis]][row[chosen_series]] + yValue
