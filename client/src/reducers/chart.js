@@ -159,19 +159,10 @@ export function setChartConfig(state, rawResults) {
         indices.add(row[xAxis]);
     });
 
-    // function sanitizeData(rawData) {
-    //     if (isNaN(rawData)) {
-    //         return rawData;
-    //     } else {
-    //         return parseFloat(rawData)
-    //     }
-    // };
-
     /*
         TODO: This is O(series*rows). Not sure if there's
         a great way around this yet.
     */    
-    // TODO: make sure that non numerical stuff doesn't get added together
     if (!series.length) {
         rawResults.forEach(row => {
             yAxis.forEach(chosen_y => {
