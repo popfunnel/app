@@ -156,9 +156,16 @@ const Dashboard = ({chartConfigs}) => {
     //     </GridLayout>
     // );
 
-    // TODO: perisist layouts using onLayoutChange callback
+    // TODO: persist layouts using onLayoutChange callback
+    // TODO: Force user to input names for the charts
     return (
-        <GridLayout className="layout" cols={12} rowHeight={30} width={1800}>
+        <GridLayout
+            className="layout"
+            cols={12}
+            rowHeight={30}
+            width={1800}
+            onLayoutChange={(layout) => console.log('layout', layout)}
+        >
             {getGridItems()}
         </GridLayout>
     )

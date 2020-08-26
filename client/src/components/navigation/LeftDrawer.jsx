@@ -88,6 +88,10 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                     <ListItemIcon><DashboardIcon/></ListItemIcon>
                     <ListItemText primary={'Dashboards'} />
                 </ListItem>
+                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/about')}}>
+                    <ListItemIcon><SlideshowIcon/></ListItemIcon>
+                    <ListItemText primary={'Slides'} />
+                </ListItem>
             </List>
             <Divider/>
             <List>

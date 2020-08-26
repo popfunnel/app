@@ -53,6 +53,8 @@ const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, conf
     // TODO: save button should be in a better location
     // TODO: snackbar after success or failure
     // TODO: add ability to render table inside dashboard page
+    // TODO: force user to enter name for chart and add to chart config
+        // TODO: maybe use this form dialog? https://material-ui.com/components/dialogs/
     return (
         <div style={{display:'flex', flexDirection: 'column', height: '100%'}}>
             <Typography variant="overline" display="block" gutterBottom>
