@@ -26,9 +26,10 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const SeriesSettings = ({seriesType, setSeriesType, queryResults, config, saveChartConfig}) => {
-    const classes = useStyles();
 
+const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, config, saveChartConfig}) => {
+    const classes = useStyles();
+    
     const StyledAccordion = withStyles({
         root: {
             backgroundColor:'inherit',
@@ -45,10 +46,13 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, config, saveCh
             },
         },
         expanded: {},
-      })(Accordion);
+    })(Accordion);
     
     let history = useHistory();
-
+    
+    // TODO: save button should be in a better location
+    // TODO: snackbar after success or failure
+    // TODO: add ability to render table inside dashboard page
     return (
         <div style={{display:'flex', flexDirection: 'column', height: '100%'}}>
             <Typography variant="overline" display="block" gutterBottom>
@@ -98,7 +102,8 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, config, saveCh
                     onClick={() => {
                         let chartConfig = {
                             ...config,
-                            type: seriesType
+                            type: seriesType,
+                            query: rawQuery
                         };
                         saveChartConfig(chartConfig);
                         history.push('/dashboard')
@@ -116,6 +121,7 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, config, saveCh
 const mapStateToProps = state => {
     return {
         seriesType: state.chart.seriesType,
+        rawQuery: state.query.userInput,
         queryResults: state.query.rawResults,
         config: state.chart.config
     };

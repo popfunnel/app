@@ -26,6 +26,7 @@ import { SchemaTreeView } from './SchemaTreeView';
 import { setSchemaDropdownStatus } from '../../actions/nav';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DashboardIcon from '@material-ui/icons/Dashboard';
+import SlideshowIcon from '@material-ui/icons/Slideshow';
 
 const useStyles = makeStyles(NavStyles);
 
