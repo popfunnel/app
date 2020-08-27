@@ -67,7 +67,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                     <ListItemIcon><EqualizerIcon/></ListItemIcon>
                     <ListItemText primary={'Query Tools'} />
                 </ListItem>
-                <ListItem
+                {/* <ListItem
                     button
                     disableRipple
                     onClick={() => {
@@ -83,7 +83,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                 </ListItem>
                 <Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
                     <SchemaTreeView/>
-                </Collapse>
+                </Collapse> */}
                 <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/dashboard')}}>
                     <ListItemIcon><DashboardIcon/></ListItemIcon>
                     <ListItemText primary={'Dashboards'} />

@@ -10,6 +10,7 @@ import { ConnectedLeftDrawer } from './LeftDrawer';
 import { NavStyles } from './NavStyles';
 import { connect } from 'react-redux'
 import { setDrawerOpenStatus } from '../../actions/nav';
+import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(NavStyles);
 
@@ -43,6 +44,14 @@ const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
                     <Typography variant="h6" className={classes.title}>
                         popfunnel
                     </Typography>
+                    <div style={{flex:1}}/>
+                    <Button
+                        color='secondary'
+                        disableRipple
+                        onClick={() => console.log('button click')}
+                    >
+                        Logout
+                    </Button>
                 </Toolbar>
             </AppBar>
             <ConnectedLeftDrawer/>
