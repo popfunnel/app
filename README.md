@@ -53,6 +53,10 @@ to rollback a migration:
 sequelize db:migrate:undo
 ```
 
-### nivo
+to create a model:
+```
+sequelize model:generate --name Dashboard --underscored --attributes created_by:integer,updated_by:integer,owned_by:integer,name:string,customer_id:integer,charts:array:integer
+```
+### recharts
 
-Reference: https://nivo.rocks/
+Reference: https://recharts.org/en-US/
