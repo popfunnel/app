@@ -55,7 +55,7 @@ sequelize db:migrate:undo
 
 to create a model:
 ```
-sequelize model:generate --name Dashboard --underscored --attributes created_by:integer,updated_by:integer,owned_by:integer,name:string,customer_id:integer,charts:array:integer
+sequelize model:generate --name dashboard --underscored --attributes created_by:integer,updated_by:integer,owned_by:integer,name:string,customer_id:integer,charts:array:integer
 ```
 ### recharts
 
