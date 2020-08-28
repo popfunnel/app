@@ -35,6 +35,8 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
     const theme = useTheme();
     let history = useHistory();
 
+    // TODO: add schema tree view in additional drawer expansion
+    // TODO: add profile button with
     return (
         <div className={classes.root}>
         <CssBaseline />
