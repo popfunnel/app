@@ -9,10 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({user, customer}) {
-      dashboard.hasMany(chart);
-      
-      // dashboard.belongsTo(user);
+    static associate({chart, user}) {
+      // dashboard.hasMany(chart);
       // dashboard.belongsTo(customer);
 
 

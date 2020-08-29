@@ -3,9 +3,7 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
-    static associate({customer, chart}) {
-      user.belongsTo(customer);
-      user.hasMany(chart);
+    static associate({customer, chart, dashboard}) {
     };
   };
   user.init({

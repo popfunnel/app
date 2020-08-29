@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate({user}) {
       // Default behavior for ondelete is 'onDelete: SET NULL | NO ACTION'
       // TODO: functional test to test behavior using seeds, but pretty sure nothing will happen'
-      customer.hasMany(user);
+      // customer.hasMany(chart);
     }
   };
   customer.init({
