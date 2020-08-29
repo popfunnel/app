@@ -22,7 +22,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/queries', queries);
-app.use('/data', data);
 app.use('/', sequelize);
 
 app.get('*', (req, res) => {
