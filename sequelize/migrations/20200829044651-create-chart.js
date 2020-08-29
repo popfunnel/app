@@ -20,12 +20,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      customer_id: {
-        type: Sequelize.INTEGER
-      },
-      dashboard_id: {
-        type: Sequelize.INTEGER
-      },
       config: {
         type: Sequelize.JSON
       },

@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     updated_by: DataTypes.INTEGER,
     owned_by: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    customer_id: DataTypes.INTEGER,
     charts: DataTypes.ARRAY(DataTypes.INTEGER)
   }, {
     sequelize,

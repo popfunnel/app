@@ -20,9 +20,6 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      customer_id: {
-        type: Sequelize.INTEGER
-      },
       charts: {
         type: Sequelize.ARRAY(Sequelize.INTEGER)
       },

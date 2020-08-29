@@ -18,8 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     updated_by: DataTypes.INTEGER,
     owned_by: DataTypes.INTEGER,
     name: DataTypes.STRING,
-    customer_id: DataTypes.INTEGER,
-    dashboard_id: DataTypes.INTEGER,
     config: DataTypes.JSON,
     configured_results: DataTypes.ARRAY(DataTypes.JSON),
     raw_results: DataTypes.ARRAY(DataTypes.JSON)
