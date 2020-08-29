@@ -12,7 +12,7 @@ if (!jinst.isJvmCreated()) {
 
 const bodyParser = require('body-parser');
 const queries = require('./routes/queries');
-const sequelize = require('./sequelize/routes');
+const user = require('./routes/user');
 
 const app = express();
 
@@ -22,7 +22,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/queries', queries);
-app.use('/', sequelize);
+
+// internal db routes
+app.use('/user', user);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));

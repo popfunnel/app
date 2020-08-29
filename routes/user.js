@@ -1,5 +1,5 @@
 const express = require('express');
-const usersController = require('../controllers').users;
+const usersController = require('../sequelize/controllers').users;
 const router = new express.Router();
 
 router.get('/', (req, res) => res.status(200).send({
@@ -7,5 +7,7 @@ router.get('/', (req, res) => res.status(200).send({
 }));
 
 router.post('/create', usersController.create);
+
+router.get('/test', (req, res) => res.status(200).send('hey'));
 
 module.exports = router;
