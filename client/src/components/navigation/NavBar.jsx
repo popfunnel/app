@@ -14,7 +14,8 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles(NavStyles);
 
-// TODO: check sizing of children and root style from NavStyles
+// TODO: https://developer.okta.com/blog/2019/05/31/simple-auth-express-fifteen-minutes
+
 const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
     const classes = useStyles();
     

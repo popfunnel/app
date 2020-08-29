@@ -12,8 +12,7 @@ if (!jinst.isJvmCreated()) {
 
 const bodyParser = require('body-parser');
 const queries = require('./routes/queries');
-const data = require('./routes/data')
-const server = require('./server/routes');
+const sequelize = require('./sequelize/routes');
 
 const app = express();
 
@@ -24,7 +23,7 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 app.use('/queries', queries);
 app.use('/data', data);
-app.use('/users', server);
+app.use('/', sequelize);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
@@ -33,3 +32,6 @@ app.get('*', (req, res) => {
 const port = process.env.PORT || 5000;
 app.listen(port);
 console.log(`App listening on port ${port}.`)
+
+// TODO: create express folder 
+// https://github.com/sequelize/express-example/blob/master/express-main-example/index.js
