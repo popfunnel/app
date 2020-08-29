@@ -4,16 +4,9 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class dashboard extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
-    static associate({chart, user}) {
-      // dashboard.hasMany(chart);
-      // dashboard.belongsTo(customer);
-
-
+    static associate({chart, customer}) {
+      dashboard.hasMany(chart);
+      dashboard.belongsTo(customer);
     }
   };
   dashboard.init({

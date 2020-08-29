@@ -4,10 +4,11 @@ const {
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class customer extends Model {
-    static associate({user}) {
+    static associate({chart, dashboard}) {
       // Default behavior for ondelete is 'onDelete: SET NULL | NO ACTION'
       // TODO: functional test to test behavior using seeds, but pretty sure nothing will happen'
-      // customer.hasMany(chart);
+      customer.hasMany(chart);
+      customer.hasMany(dashboard);
     }
   };
   customer.init({

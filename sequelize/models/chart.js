@@ -4,9 +4,9 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
 
   class chart extends Model {
-    static associate({user, dashboard, customer}) {
-      // chart.belongsTo(dashboard);
-      // chart.belongsTo(customer);
+    static associate({dashboard, customer}) {
+      chart.belongsTo(dashboard);
+      chart.belongsTo(customer);
     };
   };
 
