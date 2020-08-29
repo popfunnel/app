@@ -8,6 +8,4 @@ router.get('/', (req, res) => res.status(200).send({
 
 router.post('/create', usersController.create);
 
-router.get('/test', (req, res) => res.status(200).send('hey'));
-
 module.exports = router;
