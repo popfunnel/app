@@ -1,11 +1,16 @@
 'use strict';
 const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
+
   class chart extends Model {
-    static associate(models) {
-      // define association here
+    static associate({user, dashboard, customer}) {
+      // chart.belongsTo(user);
+      chart.belongsTo(dashboard);
+      // chart.belongsTo(customer);
     }
   };
+
   chart.init({
     created_by: DataTypes.INTEGER,
     updated_by: DataTypes.INTEGER,
@@ -20,5 +25,6 @@ module.exports = (sequelize, DataTypes) => {
     underscored: true,
     paranoid: true
   });
+
   return chart;
 };
