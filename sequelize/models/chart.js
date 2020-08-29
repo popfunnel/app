@@ -5,10 +5,10 @@ module.exports = (sequelize, DataTypes) => {
 
   class chart extends Model {
     static associate({user, dashboard, customer}) {
-      // chart.belongsTo(user);
+      chart.belongsTo(user);
       chart.belongsTo(dashboard);
       // chart.belongsTo(customer);
-    }
+    };
   };
 
   chart.init({

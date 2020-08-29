@@ -3,9 +3,10 @@ const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
-    static associate(models) {
-      user.belongsTo(models.customer);
-    }
+    static associate({customer, chart}) {
+      user.belongsTo(customer);
+      user.hasMany(chart);
+    };
   };
   user.init({
     email: DataTypes.STRING,
