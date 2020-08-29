@@ -1,0 +1,33 @@
+'use strict';
+
+module.exports = {
+  up: async (queryInterface, Sequelize) => {
+    /**
+     * Add altering commands here.
+     *
+     * Example:
+     * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
+     */
+    await queryInterface.addColumn(
+      'users', // name of Source model
+      'customer_id', // name of the key we're adding 
+      {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'customers',
+          key: 'id',
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+      }
+    );
+  },
+
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeColumn(
+      'users',
+      'customer_id'
+    );
+  }
+};

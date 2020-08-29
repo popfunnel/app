@@ -4,6 +4,8 @@ const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class user extends Model {
     static associate(models) {
+      console.log("enter user")
+      user.belongsTo(models.customer);
       // define association here
     }
   };
