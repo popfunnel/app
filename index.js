@@ -24,12 +24,18 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'client/build')));
 
 
+// internal routes 
+app.post('/login', (req, res) => {
+   res.send('I see you are trying to login.'); 
+});
+
+app.post('/register', (req, res) => {
+    res.send('I see you are trying to register')
+});
 
 app.use('/queries', queries);
 app.use('/user', user);
 app.use('/dashboard', dashboard);
-
-
 
 // Default index.html for no matching routes
 app.get('*', (req, res) => {
