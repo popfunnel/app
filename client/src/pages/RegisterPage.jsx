@@ -6,7 +6,6 @@ import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import { useHistory } from "react-router-dom";
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',

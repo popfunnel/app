@@ -10,6 +10,8 @@ if (!jinst.isJvmCreated()) {
 }
 
 const bodyParser = require('body-parser');
+const bcrypt = require('bcrypt');
+
 const queries = require('./routes/queries');
 const user = require('./routes/user');
 const dashboard = require('./routes/dashboard');
@@ -30,7 +32,22 @@ app.post('/login', (req, res) => {
     res.send(JSON.stringify('I see you are trying to login.')); 
 });
 
-app.post('/register', (req, res) => {
+// TODO: our database will take the place of users
+const users = [];
+app.post('/register', async (req, res) => {
+    try {
+        const hashedPassword = await bcrypt.hash(req.body.password, 10);
+        // TODO: store this password in db
+        users.push({
+            id: Date.now().toString(),
+            name: req.body.name,
+            email: req.body.email,
+            password: hashedPassword
+        })
+        res.redirect('/login');
+    } catch {
+        res.redirect('/register');
+    }
     res.send('I see you are trying to register')
 });
 
