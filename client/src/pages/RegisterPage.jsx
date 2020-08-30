@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Link from '@material-ui/core/Link';
+import { useHistory } from "react-router-dom";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -26,8 +28,9 @@ export const RegisterPage = () => {
     const [email, setEmail] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const history = useHistory();
 
-    const sendLoginInfo = () => {
+    const sendRegisterInfo = () => {
         const data = {
             email: email,
             username: username,
@@ -46,6 +49,10 @@ export const RegisterPage = () => {
         .then(data => 
             console.log('here is the data', data)
         );
+    };
+
+    const redirectToLoginPage = () => {
+        history.push('/login')
     }
 
     return (
@@ -63,12 +70,24 @@ export const RegisterPage = () => {
                             variant='contained'
                             color='primary'
                             onClick={() => {
+                                sendRegisterInfo();
                             }}
                             disableRipple
                         >
                             Register
                         </Button>
                     </div>
+                </div>
+                <div style={{marginTop:'20px'}}>
+                    <Link
+                        component="button"
+                        variant="body2"
+                        onClick={() => {
+                            redirectToLoginPage();
+                        }}
+                    >
+                        Back to Login
+                    </Link>
                 </div>
             </form>
         </div>
