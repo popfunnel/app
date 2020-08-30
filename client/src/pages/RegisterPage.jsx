@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { useHistory } from "react-router-dom";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         position: 'relative',
-        bottom:'50px'
+        bottom:'60px'
     },
     form: {
         display: 'flex',
@@ -21,20 +21,20 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export const LoginPage = () => {
+export const RegisterPage = () => {
     const classes = useStyles();
+    const [email, setEmail] = React.useState('');
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
 
-    const history = useHistory();
-
     const sendLoginInfo = () => {
         const data = {
+            email: email,
             username: username,
             password: password
         }
 
-        fetch('/login', {
+        fetch('/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
@@ -46,18 +46,15 @@ export const LoginPage = () => {
         .then(data => 
             console.log('here is the data', data)
         );
-    };
-
-    const redirectToRegisterPage = () => {
-        history.push('/register');
     }
 
     return (
         <div className={classes.root}>
             <form className={classes.form}>
                 <Typography variant="h6">
-                    popfunnel Login
+                    Register for popfunnel
                 </Typography>
+                <TextField id="standard-basic" label="Email" value={email} onChange={e => setEmail(e.target.value)}/>
                 <TextField id="standard-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)}/>
                 <TextField id="filled-basic" label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)}/>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop:'10px'}}>
@@ -66,19 +63,6 @@ export const LoginPage = () => {
                             variant='contained'
                             color='primary'
                             onClick={() => {
-                                sendLoginInfo()
-                            }}
-                            disableRipple
-                        >
-                            Login
-                        </Button>
-                    </div>
-                    <div>
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            onClick={() => {
-                                redirectToRegisterPage()
                             }}
                             disableRipple
                         >

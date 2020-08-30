@@ -5,6 +5,7 @@ import { QueryPage } from './pages/query/QueryPage';
 import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { AboutPage } from './pages/AboutPage';
 import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
 import { ConnectedNavBar } from './components/navigation/NavBar';
 import { theme } from './AppTheme';
 
@@ -14,9 +15,10 @@ function App() {
     <ThemeProvider theme={theme}>
         <Switch>
             <Route path='/login' component={LoginPage}/>
+            <Route path='/register' component={RegisterPage}/>
             <ConnectedNavBar>
                 <Route exact path='/' component={QueryPage}/>
-                <Route exact path='/queryTool' component={QueryPage}/>
+                <Route path='/queryTool' component={QueryPage}/>
                 <Route path='/about' component={AboutPage}/>
                 <Route path='/dashboard' component={DashboardPage}/>
             </ConnectedNavBar>
