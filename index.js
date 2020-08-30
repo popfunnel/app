@@ -13,6 +13,7 @@ if (!jinst.isJvmCreated()) {
 const bodyParser = require('body-parser');
 const queries = require('./routes/queries');
 const user = require('./routes/user');
+// const dashboard = require('./routes/user');
 
 const app = express();
 
