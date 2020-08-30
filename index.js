@@ -26,7 +26,8 @@ app.use(express.static(path.join(__dirname, 'client/build')));
 
 // internal routes 
 app.post('/login', (req, res) => {
-   res.send('I see you are trying to login.'); 
+    console.log('here is req.body', req.body)
+    res.send(JSON.stringify('I see you are trying to login.')); 
 });
 
 app.post('/register', (req, res) => {

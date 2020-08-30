@@ -19,27 +19,49 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'column',
         padding: '20px'
     },
-    // title: {
-    //     height:'20px'
-    // }
 }));
 
 export const LoginPage = () => {
     const classes = useStyles();
+    const [username, setUsername] = React.useState('');
+    const [password, setPassword] = React.useState('');
+
+
+    const sendLoginInfo = () => {
+        const data = {
+            username: username,
+            password: password
+        }
+
+        fetch('/login', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => 
+            console.log('here is the data', data)
+        );
+    }
+
     return (
         <div className={classes.root}>
             <form className={classes.form}>
-                <Typography variant="h6" className={classes.title}>
+                <Typography variant="h6">
                     Popfunnel Login
                 </Typography>
-                <TextField id="standard-basic" label="Username"/>
-                <TextField id="filled-basic" label="Password" type='password'/>
+                <TextField id="standard-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)}/>
+                <TextField id="filled-basic" label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)}/>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop:'10px'}}>
                     <div>
                         <Button
                             variant='contained'
                             color='primary'
                             onClick={() => {
+                                sendLoginInfo()
                             }}
                             disableRipple
                         >
