@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(customer) {
       // define association here
-      dashboard.belongsTo(customer);
-    }
+      database.belongsTo(customer);
+    };
   };
   database.init({
     host: DataTypes.TEXT,
