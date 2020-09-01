@@ -13,7 +13,7 @@ if (!jinst.isJvmCreated()) {
 const bodyParser = require('body-parser');
 const queries = require('./routes/queries');
 const user = require('./routes/user');
-// const dashboard = require('./routes/user');
+const dashboard = require('./routes/dashboard');
 
 const app = express();
 
@@ -26,6 +26,7 @@ app.use('/queries', queries);
 
 // internal db routes
 app.use('/user', user);
+app.use('/dashboard', dashboard);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
