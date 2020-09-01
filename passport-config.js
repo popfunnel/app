@@ -24,7 +24,7 @@ function initialize(passport, getUserByUsername, getUserById) {
     }));
 
     passport.use(new JWTStrategy({
-            jwtFromRequest: req => req.cookies.jwt,
+            jwtFromRequest: req => req.cookies.token,
             secretOrKey: process.env.SECRET
         },
         (jwtPayload, done) => {

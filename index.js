@@ -46,12 +46,24 @@ app.post('/login', (req, res) => {
                 res.status(400).json({error});
             }
 
+            const minutes = 30;
+            const expire_time = new Date().getTime() + (minutes * 60 * 1000);
+
             const payload = {
                 username: user.username,
-                expires: Date.now() + 30*60000
+                expires: expire_time
             };
 
-            req.login()
+            req.login(payload, {session: false}, (error) => {
+                if (error) {
+                    res.status(400).send({error});
+                }
+                const token = jwt.sign(JSON.stringify(payload), process.env.SECRET);
+
+                res.cookie('token', token, {httpOnly: true});
+
+                res.status(200).send({ username });
+            })
         }
 
     ) (req, res);
