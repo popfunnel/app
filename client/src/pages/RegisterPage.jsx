@@ -25,14 +25,13 @@ const useStyles = makeStyles((theme) => ({
 export const RegisterPage = () => {
     const classes = useStyles();
     const [email, setEmail] = React.useState('');
-    const [username, setUsername] = React.useState('');
+    // const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const history = useHistory();
 
     const sendRegisterInfo = () => {
         const data = {
             email: email,
-            username: username,
             password: password
         }
 
@@ -44,10 +43,18 @@ export const RegisterPage = () => {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(data => 
-            console.log('here is the data', data)
-        );
+        .then(response => {
+            if (response.status === 200) {
+                console.log('User created succesfully!!');
+                history.push('/login');
+            } else if (response.status === 400) {
+                alert('There was an error');
+            }
+            console.log(response)
+        });
+        // .then(data => 
+        //     console.log('here is the data', data)
+        // );
     };
 
     const redirectToLoginPage = () => {
@@ -61,7 +68,7 @@ export const RegisterPage = () => {
                     Register for popfunnel
                 </Typography>
                 <TextField id="standard-basic" label="Email" value={email} onChange={e => setEmail(e.target.value)}/>
-                <TextField id="standard-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)}/>
+                {/* <TextField id="standard-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)}/> */}
                 <TextField id="filled-basic" label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)}/>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop:'10px'}}>
                     <div>

@@ -24,14 +24,16 @@ const users = [];
 const initializePassport = require('./passport-config');
 initializePassport(
     passport,
-    username => users.find(user => user.username === username),
+    email => users.find(user => {
+        return user.email === email
+    }),
     id => users.find(user => user.id === id),
 );
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-
+// console.log('here is secret', process.env.SECRET)
 //static react build 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
@@ -41,17 +43,17 @@ app.post('/login', (req, res) => {
         {session: false},
         (error, user) => {
             if (error || !user) {
-                res.status(400).json({error});
+                return res.status(400).json({error});
             }
 
             const minutes = 30;
             const expire_time = new Date().getTime() + (minutes * 60 * 1000);
-
             const payload = {
-                username: user.username,
+                username: user.email,
                 expires: expire_time
             };
-
+            // req.login is the last part of the authentication process, and serializes user
+            // and assigns to req.user (I think)
             req.login(payload, {session: false}, (error) => {
                 if (error) {
                     res.status(400).send({error});
@@ -59,17 +61,14 @@ app.post('/login', (req, res) => {
                 const token = jwt.sign(JSON.stringify(payload), process.env.SECRET);
 
                 res.cookie('token', token, {httpOnly: true});
-
-                res.status(200).send({ username });
+                return res.status(200).send({ payload });
             })
         }
 
     ) (req, res);
-    // res.send(JSON.stringify('I see you are trying to login.')); 
 });
 
 // TODO: our database will take the place of users
-
 app.post('/register', async (req, res) => {
 
     const {username, password, email} = req.body;
@@ -77,19 +76,17 @@ app.post('/register', async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, 10);
         users.push({
             id: Date.now().toString(),
-            username: username,
             email: email,
             password: hashedPassword
         })
-        res.redirect('/login');
-        // res.status(200).send({username})
+
+        // TODO: confirmation that user was created
+        res.status(200).send({ username });
     } catch (error) {
         res.status(400).send({
             error: 'Error registering user.'
         })
-        // res.redirect('/register');
     }
-    res.send('I see you are trying to register')
 });
 
 app.use('/queries', queries);

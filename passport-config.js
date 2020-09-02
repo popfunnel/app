@@ -2,15 +2,15 @@ const LocalStrategy = require('passport-local').Strategy;
 const JWTStrategy = require('passport-jwt').Strategy;
 const bcrypt = require('bcrypt');
 
-function initialize(passport, getUserByUsername, getUserById) {
+function initialize(passport, getUserByEmail, getUserById) {
 
     passport.use(new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password'
     }, async (username, password, done) => {
-        // TODO: use database here
+        // TODO: use database here]
         try {
-            const user = getUserByUsername(username);
+            const user = getUserByEmail(username);
             const passwordsMatch = bcrypt.compare(password, user.password);
 
             if (passwordsMatch) {

@@ -42,10 +42,15 @@ export const LoginPage = () => {
             },
             body: JSON.stringify(data)
         })
-        .then(response => response.json())
-        .then(data => 
-            console.log('here is the data', data)
-        );
+        .then(response => {
+            if (response.status === 200) {
+                console.log('You logged in!!!');
+                history.push('/');
+            } else if (response.status === 400) {
+                alert('Those credentials did not work');
+            }
+            // response.json()
+        })
     };
 
     const redirectToRegisterPage = () => {
