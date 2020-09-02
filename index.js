@@ -35,8 +35,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 //static react build 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
-
-// internal routes 
 app.post('/login', (req, res) => {
     passport.authenticate(
         'local',
