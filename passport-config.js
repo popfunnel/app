@@ -24,17 +24,19 @@ function initialize(passport) {
     }));
 
     passport.use(new JWTStrategy({
-            jwtFromRequest: req => req.cookies.token,
+            jwtFromRequest: req => req.cookies.jwt,
             secretOrKey: process.env.SECRET
         },
         (jwtPayload, done) => {
+            console.log('jwtPayload', )
             if (Date.now() > jwtPayload.expires) {
                 return done('jwt expired');
             } else {
                 return done(null, jwtPayload);
             }
         }
-    ))
+    ));
+    
 };
 
 

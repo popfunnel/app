@@ -17,12 +17,15 @@ const app = express();
 const passport = require('passport');
 
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+
 
 const initializePassport = require('./passport-config');
 initializePassport(passport);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use(cookieParser());
 
 // static react build 
 app.use(express.static(path.join(__dirname, 'client/build')));

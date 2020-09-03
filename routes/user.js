@@ -31,7 +31,7 @@ router.post('/login', (req, res) => {
               res.status(400).send({error});
           }
           const token = jwt.sign(JSON.stringify(payload), process.env.SECRET);
-          res.cookie('token', token, {httpOnly: true});
+          res.cookie('jwt', token, {httpOnly: true});
           return res.status(200).send({ payload });
       });
     }
@@ -67,6 +67,15 @@ router.post('/register', async (req, res) => {
           error: 'Error registering user.'
       });
   };
+});
+
+
+router.get('/protected',
+  passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+    console.log('inside the protected route')
+    const { user } = req;
+    res.status(200).send({user});
 });
 
 module.exports = router;
