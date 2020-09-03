@@ -32,10 +32,10 @@ initializePassport(
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-// console.log('here is secret', process.env.SECRET)
-//static react build 
+// static react build 
 app.use(express.static(path.join(__dirname, 'client/build')));
 
+// backend server routes
 app.use('/queries', queries);
 app.use('/user', user);
 app.use('/dashboard', dashboard);

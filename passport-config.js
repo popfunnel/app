@@ -1,16 +1,16 @@
 const LocalStrategy = require('passport-local').Strategy;
 const JWTStrategy = require('passport-jwt').Strategy;
 const bcrypt = require('bcrypt');
+const usersController = require('./sequelize/controllers').users;
 
-function initialize(passport, getUserByEmail, getUserById) {
+function initialize(passport) {
 
     passport.use(new LocalStrategy({
         usernameField: 'username',
         passwordField: 'password'
     }, async (username, password, done) => {
-        // TODO: use database here
         try {
-            const user = getUserByEmail(username);
+            const user = await usersController.find(username);
             const passwordsMatch = bcrypt.compare(password, user.password);
 
             if (passwordsMatch) {

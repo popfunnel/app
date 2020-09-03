@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   user.init({
     email: DataTypes.STRING,
     name: DataTypes.STRING,
-    password_hash: DataTypes.STRING
+    passwordHash: DataTypes.STRING
   }, {
     sequelize,
     underscored: true,

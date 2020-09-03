@@ -12,8 +12,8 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'relative',
-        bottom:'60px'
+        // position: 'relative',
+        // bottom:'60px'
     },
     form: {
         display: 'flex',
@@ -45,16 +45,15 @@ export const RegisterPage = () => {
         })
         .then(response => {
             if (response.status === 200) {
-                console.log('User created succesfully!!');
                 history.push('/login');
             } else if (response.status === 400) {
                 alert('There was an error');
             }
-            console.log(response)
+            return response.json()
+        })
+        .then(responseMsg => {
+            console.log(responseMsg);
         });
-        // .then(data => 
-        //     console.log('here is the data', data)
-        // );
     };
 
     const redirectToLoginPage = () => {

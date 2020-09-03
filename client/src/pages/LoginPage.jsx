@@ -11,8 +11,8 @@ const useStyles = makeStyles((theme) => ({
         height: '100vh',
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'relative',
-        bottom:'50px'
+        // position: 'relative',
+        // bottom:'50px'
     },
     form: {
         display: 'flex',

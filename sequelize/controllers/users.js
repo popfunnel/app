@@ -20,9 +20,9 @@ module.exports = {
   create(userInfo) {
     return User
       .create({
-        emailAddress: userInfo.emailAddress,
+        email: userInfo.email,
         name: userInfo.name,
-        password_hash: userInfo.passwordHash
+        passwordHash: userInfo.passwordHash
       });
   },
   find(userEmail) {
