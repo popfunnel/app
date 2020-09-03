@@ -11,7 +11,7 @@ function initialize(passport) {
     }, async (username, password, done) => {
         try {
             const user = await usersController.find(username);
-            const passwordsMatch = bcrypt.compare(password, user.password);
+            const passwordsMatch = bcrypt.compare(password, user.passwordHash);
 
             if (passwordsMatch) {
                 return done(null, user);
