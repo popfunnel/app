@@ -69,11 +69,9 @@ router.post('/register', async (req, res) => {
   };
 });
 
-
 router.get('/protected',
   passport.authenticate('jwt', {session: false}),
   (req, res) => {
-    console.log('inside the protected route')
     const { user } = req;
     res.status(200).send({user});
 });
