@@ -18,16 +18,8 @@ const passport = require('passport');
 
 const bodyParser = require('body-parser');
 
-
-const users = [];
 const initializePassport = require('./passport-config');
-initializePassport(
-    passport,
-    email => users.find(user => {
-        return user.email === email
-    }),
-    id => users.find(user => user.id === id),
-);
+initializePassport(passport);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
