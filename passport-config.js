@@ -8,7 +8,7 @@ function initialize(passport, getUserByEmail, getUserById) {
         usernameField: 'username',
         passwordField: 'password'
     }, async (username, password, done) => {
-        // TODO: use database here]
+        // TODO: use database here
         try {
             const user = getUserByEmail(username);
             const passwordsMatch = bcrypt.compare(password, user.password);

@@ -17,8 +17,7 @@ const app = express();
 const passport = require('passport');
 
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
 
 const users = [];
 const initializePassport = require('./passport-config');
@@ -36,58 +35,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 // console.log('here is secret', process.env.SECRET)
 //static react build 
 app.use(express.static(path.join(__dirname, 'client/build')));
-
-app.post('/login', (req, res) => {
-    passport.authenticate(
-        'local',
-        {session: false},
-        (error, user) => {
-            if (error || !user) {
-                return res.status(400).json({error});
-            }
-
-            const minutes = 30;
-            const expire_time = new Date().getTime() + (minutes * 60 * 1000);
-            const payload = {
-                username: user.email,
-                expires: expire_time
-            };
-            // req.login is the last part of the authentication process, and serializes user
-            // and assigns to req.user (I think)
-            req.login(payload, {session: false}, (error) => {
-                if (error) {
-                    res.status(400).send({error});
-                }
-                const token = jwt.sign(JSON.stringify(payload), process.env.SECRET);
-
-                res.cookie('token', token, {httpOnly: true});
-                return res.status(200).send({ payload });
-            })
-        }
-
-    ) (req, res);
-});
-
-// TODO: our database will take the place of users
-app.post('/register', async (req, res) => {
-
-    const {username, password, email} = req.body;
-    try {
-        const hashedPassword = await bcrypt.hash(password, 10);
-        users.push({
-            id: Date.now().toString(),
-            email: email,
-            password: hashedPassword
-        })
-
-        // TODO: confirmation that user was created
-        res.status(200).send({ username });
-    } catch (error) {
-        res.status(400).send({
-            error: 'Error registering user.'
-        })
-    }
-});
 
 app.use('/queries', queries);
 app.use('/user', user);

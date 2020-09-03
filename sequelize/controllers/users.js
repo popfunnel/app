@@ -1,18 +1,38 @@
 const User = require('../models').user;
 
 module.exports = {
-  create(req, res) {
+  // create(req, res) {
+  //   return User
+  //     .create({
+  //       emailAddress: req.body.emailAddress,
+  //       name: req.body.name,
+  //       password_hash: req.body.password_hash
+  //     })
+  //     .then(user => {
+  //       console.log('user', user)
+  //       res.status(201).send(user)
+  //     })
+  //     .catch(error => {
+  //       console.log('error', error)
+  //       res.status(400).send(error)
+  //     });
+  // },
+  create(userInfo) {
     return User
       .create({
-        emailAddress: req.body.emailAddress
-      })
-      .then(user => {
-        console.log('user', user)
-        res.status(201).send(user)
-      })
-      .catch(error => {
-        console.log('error', error)
-        res.status(400).send(error)
+        emailAddress: userInfo.emailAddress,
+        name: userInfo.name,
+        password_hash: userInfo.passwordHash
       });
   },
+  find(userEmail) {
+    return User
+      .findOne(
+        {
+          where: {
+            email: userEmail
+          }
+        }
+      );
+  }
 };

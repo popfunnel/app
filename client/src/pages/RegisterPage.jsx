@@ -35,7 +35,7 @@ export const RegisterPage = () => {
             password: password
         }
 
-        fetch('/register', {
+        fetch('/user/register', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',

@@ -26,6 +26,10 @@ module.exports = {
       deleted_at: {
         allowNull: true,
         type: Sequelize.DATE
+      },
+      password_hash: {
+        allowNull: false,
+        type: Sequelize.STRING
       }
     });
   },

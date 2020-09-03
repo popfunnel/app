@@ -34,7 +34,7 @@ export const LoginPage = () => {
             password: password
         }
 
-        fetch('/login', {
+        fetch('/user/login', {
             method: 'post',
             headers: {
                 'Content-Type': 'application/json',
@@ -49,7 +49,6 @@ export const LoginPage = () => {
             } else if (response.status === 400) {
                 alert('Those credentials did not work');
             }
-            // response.json()
         })
     };
 
