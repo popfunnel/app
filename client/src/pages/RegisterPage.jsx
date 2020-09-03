@@ -67,7 +67,6 @@ export const RegisterPage = () => {
                     Register for popfunnel
                 </Typography>
                 <TextField id="standard-basic" label="Email" value={email} onChange={e => setEmail(e.target.value)}/>
-                {/* <TextField id="standard-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)}/> */}
                 <TextField id="filled-basic" label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)}/>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop:'10px'}}>
                     <div>

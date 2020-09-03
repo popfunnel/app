@@ -4,6 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
+import Link from '@material-ui/core/Link';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,35 +61,36 @@ export const LoginPage = () => {
     return (
         <div className={classes.root}>
             <form className={classes.form}>
-                <Typography variant="h6">
-                    popfunnel Login
-                </Typography>
+                <div style={{margin: '20px'}}>
+                    <Typography variant="h2">
+                        popfunnel
+                    </Typography>
+                </div>
                 <TextField id="standard-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)}/>
                 <TextField id="filled-basic" label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)}/>
-                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop:'10px'}}>
+                <div style={{marginTop: '10px'}}>
+                    <Button
+                        variant='contained'
+                        color='primary'
+                        onClick={() => {
+                            sendLoginInfo()
+                        }}
+                        disableRipple
+                    >
+                        Login
+                    </Button>
+                </div>
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height:'100px'}}>
                     <div>
-                        <Button
-                            variant='contained'
-                            color='primary'
+                        <Link
+                            component="button"
+                            variant="body2"
                             onClick={() => {
-                                sendLoginInfo()
+                                redirectToRegisterPage();
                             }}
-                            disableRipple
                         >
-                            Login
-                        </Button>
-                    </div>
-                    <div>
-                        <Button
-                            variant='contained'
-                            color='primary'
-                            onClick={() => {
-                                redirectToRegisterPage()
-                            }}
-                            disableRipple
-                        >
-                            Register
-                        </Button>
+                            Click here to register.
+                        </Link>
                     </div>
                 </div>
             </form>
