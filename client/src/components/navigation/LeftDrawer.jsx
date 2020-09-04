@@ -16,13 +16,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from "react-router-dom";
 import InfoIcon from '@material-ui/icons/Info';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
-import StorageIcon from '@material-ui/icons/Storage';
+// import StorageIcon from '@material-ui/icons/Storage';
 import { connect } from 'react-redux'
 import { setDrawerOpenStatus } from '../../actions/nav';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import Collapse from '@material-ui/core/Collapse';
-import { SchemaTreeView } from './SchemaTreeView';
+// import ExpandLess from '@material-ui/icons/ExpandLess';
+// import ExpandMore from '@material-ui/icons/ExpandMore';
+// import Collapse from '@material-ui/core/Collapse';
+// import { SchemaTreeView } from './SchemaTreeView';
 import { setSchemaDropdownStatus } from '../../actions/nav';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DashboardIcon from '@material-ui/icons/Dashboard';
