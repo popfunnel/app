@@ -13,17 +13,26 @@ import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
-  // TODO: create user reducer holding this info
+  // Reference: https://medium.com/lightrail/getting-token-authentication-right-in-a-stateless-single-page-application-57d0c6474e3
   const [isAuthenticated, setIsAuthenticated] = React.useState(true);
+
   React.useEffect(() => {
     let jwtHeaderPayload = Cookies.get('jwtHeaderPayload');
     if (!jwtHeaderPayload) {
       setIsAuthenticated(false);
     } else {
       let decodedJwtPayload = jwt_decode(jwtHeaderPayload);
-      setIsAuthenticated(true);
-      // TODO: check expiration here
-    }
+      let {
+        username,
+        expires
+      } = decodedJwtPayload;
+
+      if(expires < new Date().getTime()/1000){
+        setIsAuthenticated(false)
+      } else {
+        setIsAuthenticated(true);
+      }
+    };
   }, [])
 
   return (
