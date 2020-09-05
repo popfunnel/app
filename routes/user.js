@@ -30,6 +30,7 @@ router.post('/login', (req, res) => {
           if (error) {
               res.status(400).send({error});
           }
+          
           const token = jwt.sign(JSON.stringify(payload), process.env.SECRET);
           let splitToken = token.split('.');
           let jwtHeaderPayload = `${splitToken[0]}.${splitToken[1]}`;
