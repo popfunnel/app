@@ -14,11 +14,9 @@ import jwt_decode from 'jwt-decode';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
   // TODO: create user reducer holding this info
-  // TODO: should this be placed
   const [isAuthenticated, setIsAuthenticated] = React.useState(true);
   React.useEffect(() => {
     let jwtHeaderPayload = Cookies.get('jwtHeaderPayload');
-    // console.log("here is jwtHeaderPayload", jwtHeaderPayload)
     if (!jwtHeaderPayload) {
       setIsAuthenticated(false);
     } else {
