@@ -5,10 +5,10 @@ import { QueryPage } from './pages/query/QueryPage';
 import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { AboutPage } from './pages/AboutPage';
 import { LoginPage } from './pages/LoginPage';
+import { LogoutPage } from './pages/LogoutPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ConnectedNavBar } from './components/navigation/NavBar';
 import { theme } from './AppTheme';
-// import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
 
@@ -18,14 +18,12 @@ const PrivateRoute = ({component: Component, ...rest}) => {
 
   React.useEffect(() => {
     let jwtHeaderPayload = Cookies.get('jwtHeaderPayload');
+    console.log('here is jwtheaderpayload', jwtHeaderPayload)
     if (!jwtHeaderPayload) {
       setIsAuthenticated(false);
     } else {
       let decodedJwtPayload = jwt_decode(jwtHeaderPayload);
-      let {
-        username,
-        expires
-      } = decodedJwtPayload;
+      let {username, expires} = decodedJwtPayload;
 
       if(expires < new Date().getTime()/1000){
         setIsAuthenticated(false)
@@ -51,6 +49,7 @@ function App() {
         <Switch>
             <Route path='/login' component={LoginPage}/>
             <Route path='/register' component={RegisterPage}/>
+            <Route path='/logout' component={LogoutPage}/>
             <ConnectedNavBar>
                 <PrivateRoute exact path='/' component={QueryPage}/>
                 <PrivateRoute path='/queryTool' component={QueryPage}/>

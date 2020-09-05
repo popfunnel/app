@@ -11,13 +11,13 @@ import { NavStyles } from './NavStyles';
 import { connect } from 'react-redux'
 import { setDrawerOpenStatus } from '../../actions/nav';
 import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(NavStyles);
 
-// TODO: https://developer.okta.com/blog/2019/05/31/simple-auth-express-fifteen-minutes
-
 const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
     const classes = useStyles();
+    let history = useHistory();
     
     return (
         <div className={classes.root}>
@@ -49,7 +49,7 @@ const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
                     <Button
                         color='secondary'
                         disableRipple
-                        onClick={() => console.log('button click')}
+                        onClick={() => history.push('/logout')}
                     >
                         Logout
                     </Button>
