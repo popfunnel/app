@@ -23,12 +23,19 @@ function initialize(passport) {
         }
     }));
 
+    // TODO: create some middleware for 'authentication layer'
+    function formJWTFromCookies(req) {
+        let headerPayload = req.cookies.jwtHeaderPayload;
+        let signature = req.cookies.jwtSignature;
+        let formedJwt = `${headerPayload}.${signature}`;
+        return formedJwt;
+    }
+
     passport.use(new JWTStrategy({
-            jwtFromRequest: req => req.cookies.jwt,
+            jwtFromRequest: req => formJWTFromCookies(req),
             secretOrKey: process.env.SECRET
         },
         (jwtPayload, done) => {
-            console.log('jwtPayload', )
             if (Date.now() > jwtPayload.expires) {
                 return done('jwt expired');
             } else {

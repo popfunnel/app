@@ -31,7 +31,12 @@ router.post('/login', (req, res) => {
               res.status(400).send({error});
           }
           const token = jwt.sign(JSON.stringify(payload), process.env.SECRET);
-          res.cookie('jwt', token, {httpOnly: true});
+          let splitToken = token.split('.');
+          let jwtHeaderPayload = `${splitToken[0]}.${splitToken[1]}`;
+          let jwtSignature = splitToken[2];
+
+          res.cookie('jwtHeaderPayload', jwtHeaderPayload);
+          res.cookie('jwtSignature', jwtSignature, {httpOnly: true});
           return res.status(200).send({ payload });
       });
     }

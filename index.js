@@ -35,6 +35,14 @@ app.use('/queries', queries);
 app.use('/user', user);
 app.use('/dashboard', dashboard);
 
+
+// app.get('/protected',
+//   passport.authenticate('jwt', {session: false}),
+//   (req, res) => {
+//     const { user } = req;
+//     console.log('here is the user', user);
+//     res.status(200).send({user});
+// });
 // Default index.html for no matching routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));
