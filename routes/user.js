@@ -30,7 +30,7 @@ router.post('/login', (req, res) => {
           if (error) {
               res.status(400).send({error});
           }
-          
+
           const token = jwt.sign(JSON.stringify(payload), process.env.SECRET);
           let splitToken = token.split('.');
           let jwtHeaderPayload = `${splitToken[0]}.${splitToken[1]}`;
@@ -47,7 +47,6 @@ router.post('/login', (req, res) => {
 router.post('/register', async (req, res) => {
   const {email, password} = req.body;
   try {
-
     const isUserCreated = await usersController.find(email);
     if (isUserCreated) {
       return res.status(400).send({

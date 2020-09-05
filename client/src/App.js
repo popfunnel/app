@@ -33,7 +33,8 @@ const PrivateRoute = ({component: Component, ...rest}) => {
         setIsAuthenticated(true);
       }
     };
-  }, [])
+
+  }, []);
 
   return (
     <Route {...rest} render={props => 
@@ -44,7 +45,6 @@ const PrivateRoute = ({component: Component, ...rest}) => {
   );
 };
 
-// TODO: check if we should use render or component
 function App() {
   return (
     <ThemeProvider theme={theme}>
