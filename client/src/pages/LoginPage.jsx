@@ -24,11 +24,10 @@ export const LoginPage = () => {
     const classes = useStyles();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-
     const history = useHistory();
 
+    // Reference: https://reactjs.org/docs/forms.html
     const sendLoginInfo = (e) => {
-        // Reference: https://reactjs.org/docs/forms.html
         e.preventDefault();
         const data = {
             username: username,
@@ -45,7 +44,6 @@ export const LoginPage = () => {
         })
         .then(response => {
             if (response.status === 200) {
-                console.log('You logged in!!!');
                 history.push('/');
             } else if (response.status === 400) {
                 alert('Those credentials did not work');
@@ -72,9 +70,6 @@ export const LoginPage = () => {
                         type='submit'
                         variant='contained'
                         color='primary'
-                        // onClick={() => {
-                        //     sendLoginInfo()
-                        // }}
                         disableRipple
                     >
                         Login
