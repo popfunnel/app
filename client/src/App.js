@@ -18,7 +18,6 @@ const PrivateRoute = ({component: Component, ...rest}) => {
 
   React.useEffect(() => {
     let jwtHeaderPayload = Cookies.get('jwtHeaderPayload');
-    console.log('here is jwtheaderpayload', jwtHeaderPayload)
     if (!jwtHeaderPayload) {
       setIsAuthenticated(false);
     } else {
