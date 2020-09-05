@@ -27,7 +27,9 @@ export const LoginPage = () => {
 
     const history = useHistory();
 
-    const sendLoginInfo = () => {
+    const sendLoginInfo = (e) => {
+        // Reference: https://reactjs.org/docs/forms.html
+        e.preventDefault();
         const data = {
             username: username,
             password: password
@@ -57,7 +59,7 @@ export const LoginPage = () => {
 
     return (
         <div className={classes.root}>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={sendLoginInfo}>
                 <div style={{margin: '20px'}}>
                     <Typography variant="h2">
                         popfunnel
@@ -67,11 +69,12 @@ export const LoginPage = () => {
                 <TextField id="filled-basic" label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)}/>
                 <div style={{marginTop: '10px'}}>
                     <Button
+                        type='submit'
                         variant='contained'
                         color='primary'
-                        onClick={() => {
-                            sendLoginInfo()
-                        }}
+                        // onClick={() => {
+                        //     sendLoginInfo()
+                        // }}
                         disableRipple
                     >
                         Login

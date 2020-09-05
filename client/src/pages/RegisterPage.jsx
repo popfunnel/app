@@ -27,7 +27,8 @@ export const RegisterPage = () => {
     const [password, setPassword] = React.useState('');
     const history = useHistory();
 
-    const sendRegisterInfo = () => {
+    const sendRegisterInfo = (e) => {
+        e.preventDefault();
         const data = {
             email: email,
             password: password
@@ -60,7 +61,7 @@ export const RegisterPage = () => {
 
     return (
         <div className={classes.root}>
-            <form className={classes.form}>
+            <form className={classes.form} onSubmit={sendRegisterInfo}>
                 <Typography variant="h6">
                     Register for popfunnel
                 </Typography>
@@ -69,11 +70,9 @@ export const RegisterPage = () => {
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop:'10px'}}>
                     <div>
                         <Button
+                            type='submit'
                             variant='contained'
                             color='primary'
-                            onClick={() => {
-                                sendRegisterInfo();
-                            }}
                             disableRipple
                         >
                             Register
