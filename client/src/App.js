@@ -13,9 +13,20 @@ import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
+  // TODO: create user reducer holding this info
+  // TODO: should this be placed
   const [isAuthenticated, setIsAuthenticated] = React.useState(true);
-  let jwtPayload = jwt_decode(Cookies.get('jwtHeaderPayload'))
-  console.log('here is jwtHeaderPayload', jwtPayload);
+  React.useEffect(() => {
+    let jwtHeaderPayload = Cookies.get('jwtHeaderPayload');
+    // console.log("here is jwtHeaderPayload", jwtHeaderPayload)
+    if (!jwtHeaderPayload) {
+      setIsAuthenticated(false);
+    } else {
+      let decodedJwtPayload = jwt_decode(jwtHeaderPayload);
+      setIsAuthenticated(true);
+      // TODO: check expiration here
+    }
+  }, [])
 
   return (
     <Route {...rest} render={props => 
@@ -35,9 +46,9 @@ function App() {
             <Route path='/register' component={RegisterPage}/>
             <ConnectedNavBar>
                 <PrivateRoute exact path='/' component={QueryPage}/>
-                <Route path='/queryTool' component={QueryPage}/>
-                <Route path='/about' component={AboutPage}/>
-                <Route path='/dashboard' component={DashboardPage}/>
+                <PrivateRoute path='/queryTool' component={QueryPage}/>
+                <PrivateRoute path='/about' component={AboutPage}/>
+                <PrivateRoute path='/dashboard' component={DashboardPage}/>
             </ConnectedNavBar>
         </Switch>
     </ThemeProvider>
