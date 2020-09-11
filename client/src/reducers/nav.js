@@ -1,7 +1,7 @@
 import * as actions from '../actions/nav';
 
 const initialState = {
-    isDrawerOpen: true,
+    isDrawerOpen: false,
     isSchemaDropdownOpen: false
 }
 
