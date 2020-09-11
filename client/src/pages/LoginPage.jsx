@@ -77,7 +77,7 @@ export const LoginPage = () => {
                 if (response.status === 200) {
                     history.push('/');
                 } else if (response.status === 400) {
-                    dispatch(openSnackbarWithMessage('Did this work?'));
+                    dispatch(openSnackbarWithMessage('Invalid Credentials'));
                     return false;
                 }
             });
