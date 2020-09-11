@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme) => ({
 export const RegisterPage = () => {
     const classes = useStyles();
     const [email, setEmail] = React.useState('');
-    // const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const history = useHistory();
 

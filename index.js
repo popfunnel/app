@@ -43,6 +43,7 @@ app.use('/dashboard', dashboard);
 //     console.log('here is the user', user);
 //     res.status(200).send({user});
 // });
+
 // Default index.html for no matching routes
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));

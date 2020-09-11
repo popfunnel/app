@@ -8,6 +8,7 @@ import { LoginPage } from './pages/LoginPage';
 import { LogoutPage } from './pages/LogoutPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { ConnectedNavBar } from './components/navigation/NavBar';
+import { ConnectedCustomSnackbar } from './components/snackbar/CustomSnackbar';
 import { theme } from './AppTheme';
 import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
@@ -56,6 +57,7 @@ function App() {
                 <PrivateRoute path='/dashboard' component={DashboardPage}/>
             </ConnectedNavBar>
         </Switch>
+        <ConnectedCustomSnackbar/>
     </ThemeProvider>
   )
 }

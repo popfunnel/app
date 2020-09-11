@@ -5,9 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
 import Link from '@material-ui/core/Link';
-import Snackbar from '@material-ui/core/Snackbar';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import { useDispatch } from 'react-redux'
+import { openSnackbarWithMessage } from '../actions/snackbar';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,13 +25,14 @@ const useStyles = makeStyles((theme) => ({
 export const LoginPage = () => {
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch();
+
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [errors, setErrors] = React.useState({
         usernameTextField: false,
         passwordTextField: false,
     });
-    const [isErrorSnackbarOpen, setIsErrorSnackBarOpen] = React.useState(false);
 
     const USERNAME_TEXT_FIELD = 'usernameTextField';
     const PASSWORD_TEXT_FIELD = 'passwordTextField';
@@ -55,7 +55,7 @@ export const LoginPage = () => {
             });
             return false;
         };
-    }
+    };
     
     // Reference: https://reactjs.org/docs/forms.html
     const sendLoginInfo = (e) => {
@@ -77,7 +77,7 @@ export const LoginPage = () => {
                 if (response.status === 200) {
                     history.push('/');
                 } else if (response.status === 400) {
-                    setIsErrorSnackBarOpen(true);
+                    dispatch(openSnackbarWithMessage('Did this work?'));
                     return false;
                 }
             });
@@ -89,14 +89,6 @@ export const LoginPage = () => {
     const redirectToRegisterPage = () => {
         history.push('/register');
     }
-
-    const handleErrorSnackbarClose = (event, reason) => {
-        if (reason === 'clickaway') {
-        return;
-        }
-
-        setIsErrorSnackBarOpen(false);
-    };
 
     return (
         <div className={classes.root}>
@@ -132,24 +124,6 @@ export const LoginPage = () => {
                     </div>
                 </div>
             </form>
-            <Snackbar
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'left',
-                }}
-                open={isErrorSnackbarOpen}
-                autoHideDuration={6000}
-                onClose={handleErrorSnackbarClose}
-                message="Invalid credentials."
-                action={
-                    <>
-                        <IconButton size="small" aria-label="close" color="inherit" onClick={handleErrorSnackbarClose}>
-                        <CloseIcon fontSize="small" />
-                        </IconButton>
-                    </>
-                }
-            />
         </div>
-        
-    )
+    );
 };
