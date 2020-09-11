@@ -22,10 +22,37 @@ const useStyles = makeStyles((theme) => ({
 
 export const LoginPage = () => {
     const classes = useStyles();
+    const history = useHistory();
     const [username, setUsername] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const history = useHistory();
+    const [errors, setErrors] = React.useState({
+        usernameTextField: false,
+        passwordTextField: false,
+    })
+    
+    const USERNAME_TEXT_FIELD = 'usernameTextField';
+    const PASSWORD_TEXT_FIELD = 'passwordTextField';
 
+    const validate = () => {
+        let newErrors = {};
+        if (!username.length) {
+            newErrors[USERNAME_TEXT_FIELD] = true;
+        };
+
+        if (!password.length) {
+            newErrors[PASSWORD_TEXT_FIELD] = true;
+        };
+
+        if (Object.keys(newErrors).length === 0) {
+            return true;
+        } else {
+            setErrors(prevState => {
+                return {...prevState, ...newErrors};
+            });
+            return false;
+        }
+    }
+    
     // Reference: https://reactjs.org/docs/forms.html
     const sendLoginInfo = (e) => {
         e.preventDefault();
@@ -33,22 +60,25 @@ export const LoginPage = () => {
             username: username,
             password: password
         }
-
-        fetch('/user/login', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (response.status === 200) {
-                history.push('/');
-            } else if (response.status === 400) {
-                alert('Those credentials did not work');
-            }
-        })
+        if (validate()) {
+            fetch('/user/login', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    history.push('/');
+                } else if (response.status === 400) {
+                    alert('Those credentials did not work');
+                }
+            });
+        } else {
+            return false;
+        }
     };
 
     const redirectToRegisterPage = () => {
@@ -63,8 +93,8 @@ export const LoginPage = () => {
                         popfunnel
                     </Typography>
                 </div>
-                <TextField id="standard-basic" label="Username" value={username} onChange={e => setUsername(e.target.value)}/>
-                <TextField id="filled-basic" label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)}/>
+                <TextField id={USERNAME_TEXT_FIELD} label="Username" value={username} onChange={e => setUsername(e.target.value)} error={errors[USERNAME_TEXT_FIELD]}/>
+                <TextField id={PASSWORD_TEXT_FIELD} label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)} error={errors[PASSWORD_TEXT_FIELD]}/>
                 <div style={{marginTop: '10px'}}>
                     <Button
                         type='submit'
