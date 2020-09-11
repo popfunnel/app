@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import Link from '@material-ui/core/Link';
 import { useDispatch } from 'react-redux'
 import { openSnackbarWithMessage } from '../actions/snackbar';
+import { connect } from 'react-redux'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -75,7 +76,7 @@ export const LoginPage = () => {
             })
             .then(response => {
                 if (response.status === 200) {
-                    history.push('/');
+                    history.push('/info');
                     dispatch(openSnackbarWithMessage('Login Successful!'));
                 } else if (response.status === 400) {
                     dispatch(openSnackbarWithMessage('Invalid Credentials.'));
@@ -99,8 +100,8 @@ export const LoginPage = () => {
                         popfunnel
                     </Typography>
                 </div>
-                <TextField id={USERNAME_TEXT_FIELD} label="Username" value={username} onChange={e => setUsername(e.target.value)} error={errors[USERNAME_TEXT_FIELD]}/>
-                <TextField id={PASSWORD_TEXT_FIELD} label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)} error={errors[PASSWORD_TEXT_FIELD]}/>
+                <TextField id={USERNAME_TEXT_FIELD} label="Username" value={username} onChange={e => setUsername(e.target.value)} error={errors[USERNAME_TEXT_FIELD]} autoComplete="on"/>
+                <TextField id={PASSWORD_TEXT_FIELD} label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)} error={errors[PASSWORD_TEXT_FIELD]} autoComplete="on"/>
                 <div style={{marginTop: '10px'}}>
                     <Button
                         type='submit'

@@ -3,10 +3,12 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { QueryPage } from './pages/query/QueryPage';
 import { DashboardPage } from './pages/dashboard/DashboardPage';
-import { AboutPage } from './pages/AboutPage';
+// import { AboutPage } from './pages/AboutPage';
 import { LoginPage } from './pages/LoginPage';
 import { LogoutPage } from './pages/LogoutPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { InfoPage } from './pages/InfoPage';
+
 import { ConnectedNavBar } from './components/navigation/NavBar';
 import { ConnectedCustomSnackbar } from './components/snackbar/CustomSnackbar';
 import { theme } from './AppTheme';
@@ -23,7 +25,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
       setIsAuthenticated(false);
     } else {
       let decodedJwtPayload = jwt_decode(jwtHeaderPayload);
-      let {username, expires} = decodedJwtPayload;
+      let {expires} = decodedJwtPayload;
 
       if(expires < new Date().getTime()/1000){
         setIsAuthenticated(false)
@@ -53,8 +55,9 @@ function App() {
             <ConnectedNavBar>
                 <PrivateRoute exact path='/' component={QueryPage}/>
                 <PrivateRoute path='/queryTool' component={QueryPage}/>
-                <PrivateRoute path='/about' component={AboutPage}/>
                 <PrivateRoute path='/dashboard' component={DashboardPage}/>
+                <PrivateRoute path='/info' component={InfoPage}/>
+                {/* <PrivateRoute path='/about' component={AboutPage}/> */}
             </ConnectedNavBar>
         </Switch>
         <ConnectedCustomSnackbar/>

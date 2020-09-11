@@ -65,7 +65,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
             </div>
             <Divider/>
             <List>
-                <ListItem key={uuidv4()} button disableRipple  onClick={() => {history.push('/')}}>
+                <ListItem key={uuidv4()} button disableRipple  onClick={() => {history.push('/queryTool')}}>
                     <ListItemIcon><EqualizerIcon/></ListItemIcon>
                     <ListItemText primary={'Query Tools'} />
                 </ListItem>
@@ -90,20 +90,20 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                     <ListItemIcon><DashboardIcon/></ListItemIcon>
                     <ListItemText primary={'Dashboards'} />
                 </ListItem>
-                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/about')}}>
+                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
                     <ListItemIcon><SlideshowIcon/></ListItemIcon>
                     <ListItemText primary={'Slides'} />
                 </ListItem>
             </List>
             <Divider/>
             <List>
-                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/about')}}>
+                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
                     <ListItemIcon><SettingsIcon/></ListItemIcon>
                     <ListItemText primary={'Settings'} />
                 </ListItem>
-                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/about')}}>
+                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
                     <ListItemIcon><InfoIcon/></ListItemIcon>
-                    <ListItemText primary={'About'} />
+                    <ListItemText primary={'Info'} />
                 </ListItem>
             </List>
         </Drawer>
