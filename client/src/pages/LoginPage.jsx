@@ -4,8 +4,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
-// import Link from '@material-ui/core/Link';
-import { useDispatch } from 'react-redux'
+import Link from '@material-ui/core/Link';
+import { useDispatch } from 'react-redux';
 import { openSnackbarWithMessage } from '../actions/snackbar';
 import { setUsername as setUsernameInStore } from '../actions/user';
 
@@ -76,9 +76,9 @@ export const LoginPage = () => {
             })
             .then(response => {
                 if (response.status === 200) {
-                    history.push('/info');
                     dispatch(setUsernameInStore(username));
                     dispatch(openSnackbarWithMessage('Login Successful!'));
+                    history.push('/info');
                 } else if (response.status === 400) {
                     dispatch(openSnackbarWithMessage('Invalid Credentials.'));
                     return false;
@@ -89,9 +89,9 @@ export const LoginPage = () => {
         }
     };
 
-    // const redirectToRegisterPage = () => {
-    //     history.push('/register');
-    // }
+    const redirectToRegisterPage = () => {
+        history.push('/register');
+    }
 
     return (
         <div className={classes.root}>
@@ -113,7 +113,7 @@ export const LoginPage = () => {
                         Login
                     </Button>
                 </div>
-                {/* <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height:'100px'}}>
+                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height:'100px'}}>
                     <div>
                         <Link
                             component="button"
@@ -125,7 +125,7 @@ export const LoginPage = () => {
                             Click here to register.
                         </Link>
                     </div>
-                </div> */}
+                </div>
             </form>
         </div>
     );

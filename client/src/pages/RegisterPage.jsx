@@ -5,6 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import { useHistory } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { openSnackbarWithMessage } from '../actions/snackbar';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,9 +25,38 @@ const useStyles = makeStyles((theme) => ({
 
 export const RegisterPage = () => {
     const classes = useStyles();
+    const history = useHistory();
+    const dispatch = useDispatch();
+
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
-    const history = useHistory();
+    const [errors, setErrors] = React.useState({
+        usernameTextField: false,
+        passwordTextField: false,
+    });
+
+    const EMAIL_TEXT_FIELD = 'emailTextField';
+    const PASSWORD_TEXT_FIELD = 'passwordTextField';
+
+    const validate = () => {
+        let newErrors = {};
+        if (!email.length) {
+            newErrors[EMAIL_TEXT_FIELD] = true;
+        };
+
+        if (!password.length) {
+            newErrors[PASSWORD_TEXT_FIELD] = true;
+        };
+
+        if (Object.keys(newErrors).length === 0) {
+            return true;
+        } else {
+            setErrors(prevState => {
+                return {...prevState, ...newErrors};
+            });
+            return false;
+        };
+    };
 
     const sendRegisterInfo = (e) => {
         e.preventDefault();
@@ -32,26 +64,32 @@ export const RegisterPage = () => {
             email: email,
             password: password
         }
-
-        fetch('/user/register', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (response.status === 200) {
-                history.push('/login');
-            } else if (response.status === 400) {
-                alert('There was an error');
-            }
-            return response.json()
-        })
-        .then(responseMsg => {
-            console.log(responseMsg);
-        });
+        if (validate()) {
+            fetch('/user/register', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    dispatch(openSnackbarWithMessage('Registration successful!'));
+                    history.push('/login');
+                } else if (response.status === 400 || response.status === 500) {
+                    dispatch(openSnackbarWithMessage("An error occurred..."))
+                    return false;
+                };
+                return response.json()
+            })
+            .then(responseMsg => {
+                console.log(responseMsg);
+            });
+            return true;
+        } else {
+            return false;
+        }
     };
 
     const redirectToLoginPage = () => {
@@ -64,8 +102,8 @@ export const RegisterPage = () => {
                 <Typography variant="h6">
                     Register for popfunnel
                 </Typography>
-                <TextField id="standard-basic" label="Email" value={email} onChange={e => setEmail(e.target.value)} autoComplete="on"/>
-                <TextField id="filled-basic" label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)} autoComplete="on"/>
+                <TextField id={EMAIL_TEXT_FIELD} label="Email" value={email} onChange={e => setEmail(e.target.value)} error={errors[EMAIL_TEXT_FIELD]} autoComplete="on"/>
+                <TextField id={PASSWORD_TEXT_FIELD} label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)} error={errors[PASSWORD_TEXT_FIELD]} autoComplete="on"/>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop:'10px'}}>
                     <div>
                         <Button
