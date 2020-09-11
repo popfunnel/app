@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 // import Link from '@material-ui/core/Link';
 import { useDispatch } from 'react-redux'
 import { openSnackbarWithMessage } from '../actions/snackbar';
-import { connect } from 'react-redux'
+import { setUsername as setUsernameInStore } from '../actions/user';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -77,6 +77,7 @@ export const LoginPage = () => {
             .then(response => {
                 if (response.status === 200) {
                     history.push('/info');
+                    dispatch(setUsernameInStore(username));
                     dispatch(openSnackbarWithMessage('Login Successful!'));
                 } else if (response.status === 400) {
                     dispatch(openSnackbarWithMessage('Invalid Credentials.'));

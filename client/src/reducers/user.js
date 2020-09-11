@@ -5,9 +5,10 @@ const initialState = {
     profile: ''
 };
 
-function setUsername(state) {
+function setUsername(state, username) {
     return {
-        ...state
+        ...state,
+        username: username
     }
 }
 
