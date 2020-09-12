@@ -94,7 +94,7 @@ export const LoginPage = () => {
 
     const redirectToRegisterPage = () => {
         // history.push('/register');
-        dispatch(openSnackbarWithMessage("Unfortunately, you can't register right now."));
+        dispatch(openSnackbarWithMessage("Unfortunately, you can't register for popfunnel right now."));
     }
 
     return (
