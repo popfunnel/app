@@ -8,6 +8,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import {setCurrentDashboard} from '../../actions/dashboard';
+import { v4 as uuidv4 } from 'uuid';
 
 // const useStyles = makeStyles((theme) => ({
 //     addDashboard: {
@@ -62,8 +63,8 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
                     >
                         {dashboards.map(dashboard => {
                             return (
-                                <MenuItem value={dashboard}>{dashboard}</MenuItem>        
-                            )
+                                <MenuItem key={uuidv4()} value={dashboard}>{dashboard}</MenuItem>        
+                            );
                         })}
                         {/* <MenuItem value={'example-dashboard1'}>very-long-dashboard-name</MenuItem>
                         <MenuItem value={'example-dashboard2'}>shorter-dashboard-name</MenuItem> */}
