@@ -82,6 +82,9 @@ export const LoginPage = () => {
                 } else if (response.status === 400) {
                     dispatch(openSnackbarWithMessage('Invalid Credentials.'));
                     return false;
+                } else if (response.status === 500) {
+                    dispatch(openSnackbarWithMessage('Bad response from server.'));
+                    return false;
                 }
             });
         } else {
