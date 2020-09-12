@@ -5,15 +5,23 @@ import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { withStyles } from '@material-ui/core/styles';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
+import {setCurrentDashboard} from '../../actions/dashboard';
 
-export const DashboardPage = () => {
-    // TODO: add this to redux
+// const useStyles = makeStyles((theme) => ({
+//     addDashboard: {
+//         backgroundColor: '#000000',
+//         flex:'1',
+//         padding: '0px',
+//     }
+// }));
+
+export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards}) => {
+    // const classes = useStyles();
     let history = useHistory();
-    const [currentDashboard, setCurrentDashboard] = React.useState('example-dashboard1')
-    
+    // const [currentDashboard, setCurrentDashboard] = React.useState('example-dashboard1')
+    // const [dashboardOptions, setDashboardOptions] = React.useState()
     // TODO: read about MUI component customization
     // https://material-ui.com/customization/components/
     const StyledSelect = withStyles((theme) => ({
@@ -30,31 +38,47 @@ export const DashboardPage = () => {
         history.push('/queryTool');
     }
     
+    // const getDashboardList = () => {
+    //     fetch('/dashboard')
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         console.log('data', data);
+    //     })
+    // };
+
+    // React.useEffect(() => {
+    //     getDashboardList()
+    // }, [])
     
     return (
         <div style={{height:'100%'}}>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width:'100%', padding:'10px'}}>
-                <ButtonGroup>
+                <div style={{display:'flex'}}>
                     <StyledSelect
                         id="dashboard-select"
                         value={currentDashboard}
                         onChange={e => {setCurrentDashboard(e.target.value)}}
                         variant='outlined'
-                        >
-                        <MenuItem value={'example-dashboard1'}>very-long-dashboard-name</MenuItem>
-                        <MenuItem value={'example-dashboard2'}>shorter-dashboard-name</MenuItem>
+                    >
+                        {dashboards.map(dashboard => {
+                            return (
+                                <MenuItem value={dashboard}>{dashboard}</MenuItem>        
+                            )
+                        })}
+                        {/* <MenuItem value={'example-dashboard1'}>very-long-dashboard-name</MenuItem>
+                        <MenuItem value={'example-dashboard2'}>shorter-dashboard-name</MenuItem> */}
                     </StyledSelect>
-                    {/* TODO: https://material-ui.com/components/dialogs/ */}
                     <Button
-                        variant="contained"
+                        variant="outlined"
                         color="secondary"
                         onClick={() => {handleAddChart()}}
-                        endIcon={<AddIcon />}
                         disableRipple
-                        />
-                </ButtonGroup>
+                    >
+                        <AddIcon/>
+                    </Button>
+                </div>
                 <Button
-                    variant="contained"
+                    variant="outlined"
                     color="secondary"
                     onClick={() => {handleAddChart()}}
                     endIcon={<AddIcon/>}
@@ -70,12 +94,13 @@ export const DashboardPage = () => {
 
 const mapStateToProps = state => {
     return {
-
+        currentDashboard: state.dashboard.currentDashboard,
+        dashboards: state.dashboard.dashboards
     }
 }
 
 const mapDispatchToProps = {
-
+    setCurrentDashboard
 };
 
-export const ConnectedDashboardPage = connect(mapStateToProps, mapDispatchToProps);
+export const ConnectedDashboardPage = connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

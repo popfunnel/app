@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { QueryPage } from './pages/query/QueryPage';
-import { DashboardPage } from './pages/dashboard/DashboardPage';
+import { ConnectedDashboardPage } from './pages/dashboard/DashboardPage';
 // import { AboutPage } from './pages/AboutPage';
 import { LoginPage } from './pages/LoginPage';
 import { LogoutPage } from './pages/LogoutPage';
@@ -55,7 +55,7 @@ function App() {
             <ConnectedNavBar>
                 <PrivateRoute exact path='/' component={QueryPage}/>
                 <PrivateRoute path='/queryTool' component={QueryPage}/>
-                <PrivateRoute path='/dashboard' component={DashboardPage}/>
+                <PrivateRoute path='/dashboard' component={ConnectedDashboardPage}/>
                 <PrivateRoute path='/info' component={InfoPage}/>
                 {/* <PrivateRoute path='/about' component={AboutPage}/> */}
             </ConnectedNavBar>

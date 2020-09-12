@@ -1,8 +1,10 @@
-import * as actions from '../actions/queryTool';
+import * as queryActions from '../actions/queryTool';
+import * as actions from '../actions/dashboard';
 
 const initialState = {
-    currentDashboard: 'test_dashboard',
-    dashboardChartConfigs: []
+    currentDashboard: 'example-dashboard1',
+    dashboardChartConfigs: [],
+    dashboards: ['example-dashboard1', 'example-dashboard2']
 };
 
 
@@ -19,11 +21,20 @@ function saveChartConfig(state, chartConfig) {
 
 }
 
+function setCurrentDashboard(state, dashboard) {
+    return {
+        ...state,
+        currentDashboard: dashboard
+    }
+}
+
 
 export default function dashboard(state = initialState, action) {
     switch (action.type) {
-        case actions.SAVE_CHART_CONFIG:
+        case queryActions.SAVE_CHART_CONFIG:
             return saveChartConfig(state, action.chartConfig);
+        case actions.SET_CURRENT_DASHBOARD:
+            return setCurrentDashboard(state, action.dashboard);    
         default:
             return state;
     };
