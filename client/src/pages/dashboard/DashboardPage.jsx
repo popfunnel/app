@@ -6,13 +6,15 @@ import { useHistory } from "react-router-dom";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import { connect } from 'react-redux';
 
 
 export const DashboardPage = () => {
     // TODO: add this to redux
-    const [currentDashboard, setCurrentDashboard] = React.useState('example-dashboard')
+    let history = useHistory();
+    const [currentDashboard, setCurrentDashboard] = React.useState('example-dashboard1')
     
-
     // TODO: read about MUI component customization
     // https://material-ui.com/customization/components/
     const StyledSelect = withStyles((theme) => ({
@@ -20,33 +22,43 @@ export const DashboardPage = () => {
             fontSize: '15px',
         },
         outlined: {
-            padding: '5px'
+            padding: '10px'
         }
     }))(Select);
-
-    let history = useHistory();
+    
+    
     const handleAddChart = () => {
         history.push('/queryTool');
     }
     
-
+    
     return (
         <div style={{height:'100%'}}>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width:'100%', padding:'10px'}}>
-                <StyledSelect
-                    id="dashboard-select"
-                    value={currentDashboard}
-                    onChange={e => {setCurrentDashboard(e.target.value)}}
-                    // label="Age"
-                    variant='outlined'
-                >
-                    <MenuItem value={'example-dashboard'}>Example</MenuItem>
-                </StyledSelect>
+                <ButtonGroup>
+                    <StyledSelect
+                        id="dashboard-select"
+                        value={currentDashboard}
+                        onChange={e => {setCurrentDashboard(e.target.value)}}
+                        variant='outlined'
+                        >
+                        <MenuItem value={'example-dashboard1'}>very-long-dashboard-name</MenuItem>
+                        <MenuItem value={'example-dashboard2'}>shorter-dashboard-name</MenuItem>
+                    </StyledSelect>
+                    {/* TODO: https://material-ui.com/components/dialogs/ */}
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => {handleAddChart()}}
+                        endIcon={<AddIcon />}
+                        disableRipple
+                        />
+                </ButtonGroup>
                 <Button
                     variant="contained"
                     color="secondary"
                     onClick={() => {handleAddChart()}}
-                    endIcon={<AddIcon />}
+                    endIcon={<AddIcon/>}
                     disableRipple
                 >
                     Add chart
@@ -55,4 +67,16 @@ export const DashboardPage = () => {
             <ConnectedDashboard/>
         </div>
     )
+};
+
+const mapStateToProps = state => {
+    return {
+
+    }
 }
+
+const mapDispatchToProps = {
+
+};
+
+export const ConnectedDashboardPage = connect(mapStateToProps, mapDispatchToProps);

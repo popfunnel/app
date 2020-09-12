@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { openSnackbarWithMessage } from '../actions/snackbar';
 
-
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
