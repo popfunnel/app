@@ -9,7 +9,6 @@ import { withStyles } from '@material-ui/core/styles';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { connect } from 'react-redux';
 
-
 export const DashboardPage = () => {
     // TODO: add this to redux
     let history = useHistory();
