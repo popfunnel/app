@@ -1,3 +1,5 @@
+import {openSnackbarWithMessage} from './snackbar';
+
 export const SET_RAW_RESULTS = 'SET_RAW_RESULTS';
 export const setRawResults = (rawResults) => {
     return {
@@ -122,16 +124,26 @@ export const queryDatabase = queryInput => (dispatch, getState) => {
         },
         body: JSON.stringify(data)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (response.status === 200) {
+            return response.json()
+        } else {
+            throw new Error('Bad response from server.');
+        }
+    })
     .then(data => {
-        
         dispatch(setRawResults(data));
+        
         if (data.length) {
             let attributes = data.length ? Object.keys(data[0]) : [];
             dispatch(createColumnSelections(attributes));
             dispatch(setChartConfig(data));
         }
+
         return data;
+    })
+    .catch(error => {
+        dispatch(openSnackbarWithMessage(`${error}`));
     });
 };
 
