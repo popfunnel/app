@@ -93,7 +93,8 @@ export const LoginPage = () => {
     };
 
     const redirectToRegisterPage = () => {
-        history.push('/register');
+        // history.push('/register');
+        dispatch(openSnackbarWithMessage("Unfortunately, you can't register right now."));
     }
 
     return (
