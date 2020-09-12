@@ -9,6 +9,12 @@ import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import {setCurrentDashboard} from '../../actions/dashboard';
 import { v4 as uuidv4 } from 'uuid';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 // const useStyles = makeStyles((theme) => ({
 //     addDashboard: {
@@ -33,11 +39,13 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
             padding: '10px'
         }
     }))(Select);
+
+    const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
     
     
     const handleAddChart = () => {
         history.push('/queryTool');
-    }
+    };
     
     // const getDashboardList = () => {
     //     fetch('/dashboard')
@@ -50,6 +58,14 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
     // React.useEffect(() => {
     //     getDashboardList()
     // }, [])
+    
+    const openDashboardDialog = () => {
+        setIsDashboardDialogOpen(true);
+    };
+    
+    const closeDashboardDialog = () => {
+        setIsDashboardDialogOpen(false);
+    };
     
     return (
         <div style={{height:'100%'}}>
@@ -72,7 +88,7 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
                     <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={() => {handleAddChart()}}
+                        onClick={() => {openDashboardDialog()}}
                         disableRipple
                     >
                         <AddIcon/>
@@ -89,8 +105,31 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
                 </Button>
             </div>
             <ConnectedDashboard/>
+            <Dialog open={isDashboardDialogOpen} onClose={closeDashboardDialog} aria-labelledby="dashboard-form-dialog">
+                {/* <DialogTitle id="dashboard-form-dialog-title">New Dashboard</DialogTitle> */}
+                <DialogContent>
+                    {/* <DialogContentText>
+                        Enter a unique name:
+                    </DialogContentText> */}
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="dashboard-name"
+                        label="Dashboard Name"
+                        fullWidth
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={closeDashboardDialog} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={closeDashboardDialog} color="primary">
+                        Create
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
-    )
+    );
 };
 
 const mapStateToProps = state => {
