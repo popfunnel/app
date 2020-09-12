@@ -26,8 +26,8 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     } else {
       let decodedJwtPayload = jwt_decode(jwtHeaderPayload);
       let {expires} = decodedJwtPayload;
-
-      if(expires < new Date().getTime()/1000){
+      
+      if (expires < new Date().getTime()) {
         setIsAuthenticated(false)
       } else {
         setIsAuthenticated(true);

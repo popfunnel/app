@@ -19,7 +19,7 @@ router.post('/login', (req, res) => {
       if (error || !user) {
           return res.status(400).json({error});
       }
-      const minutes = 30;
+      const minutes = 1;
       const expire_time = new Date().getTime() + (minutes * 60 * 1000);
       const payload = {
           username: user.email,
