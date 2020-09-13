@@ -66,7 +66,7 @@ export const LoginPage = () => {
             username: username,
             password: password
         }
-        console.log('enter!!')
+
         if (validate()) {
             fetch('/user/login', {
                 method: 'post',

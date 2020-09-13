@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
     created_by: DataTypes.INTEGER,
     updated_by: DataTypes.INTEGER,
     owned_by: DataTypes.INTEGER,
-    name: DataTypes.STRING
+    name: DataTypes.STRING,
+    chart_layout: DataTypes.ARRAY(DataTypes.JSON)
   }, {
     sequelize,
     modelName: 'dashboard',

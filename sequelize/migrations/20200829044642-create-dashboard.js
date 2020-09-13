@@ -20,6 +20,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      chart_layout: {
+        type: Sequelize.ARRAY(Sequelize.JSON)
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE

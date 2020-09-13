@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import {setCurrentDashboard} from '../../actions/dashboard';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,18 +14,8 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
-// const useStyles = makeStyles((theme) => ({
-//     addDashboard: {
-//         backgroundColor: '#000000',
-//         flex:'1',
-//         padding: '0px',
-//     }
-// }));
-
 export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards}) => {
-    // const classes = useStyles();
     let history = useHistory();
-    // const [currentDashboard, setCurrentDashboard] = React.useState('example-dashboard1')
     // const [dashboardOptions, setDashboardOptions] = React.useState()
     // TODO: read about MUI component customization
     // https://material-ui.com/customization/components/
@@ -39,7 +29,7 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
     }))(Select);
 
     const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
-    
+    const [dashboardName, setDashboardName] = React.useState('');
     
     const handleAddChart = () => {
         history.push('/queryTool');
@@ -63,6 +53,29 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
     
     const closeDashboardDialog = () => {
         setIsDashboardDialogOpen(false);
+    };
+
+    const createDashboard = () =>  {
+
+        // TODO: add validation on entered dashboardname
+        let data = {
+            name: dashboardName
+        }
+
+        fetch('/dashboard/create', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            console.log('returned from server! here is the response', response)
+            // if (response.status === 200) {
+
+            // }
+        });
     };
     
     return (
@@ -102,12 +115,10 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
             </div>
             <ConnectedDashboard/>
             <Dialog open={isDashboardDialogOpen} onClose={closeDashboardDialog} aria-labelledby="dashboard-form-dialog">
-                {/* <DialogTitle id="dashboard-form-dialog-title">New Dashboard</DialogTitle> */}
                 <DialogContent>
-                    {/* <DialogContentText>
-                        Enter a unique name:
-                    </DialogContentText> */}
                     <TextField
+                        value={dashboardName}
+                        onChange={e => setDashboardName(e.target.value)}
                         autoFocus
                         margin="dense"
                         id="dashboard-name"
@@ -119,7 +130,7 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
                     <Button onClick={closeDashboardDialog} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={closeDashboardDialog} color="primary">
+                    <Button onClick={createDashboard} color="primary">
                         Create
                     </Button>
                 </DialogActions>
