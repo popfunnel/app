@@ -13,8 +13,6 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 // const useStyles = makeStyles((theme) => ({
 //     addDashboard: {
@@ -82,8 +80,6 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
                                 <MenuItem key={uuidv4()} value={dashboard}>{dashboard}</MenuItem>        
                             );
                         })}
-                        {/* <MenuItem value={'example-dashboard1'}>very-long-dashboard-name</MenuItem>
-                        <MenuItem value={'example-dashboard2'}>shorter-dashboard-name</MenuItem> */}
                     </StyledSelect>
                     <Button
                         variant="outlined"

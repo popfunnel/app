@@ -7,7 +7,6 @@ const initialState = {
     dashboards: ['example-dashboard1', 'example-dashboard2']
 };
 
-
 // TODO: this will be async call to backend
 function saveChartConfig(state, chartConfig) {
     // TODO: fetch to set in database!

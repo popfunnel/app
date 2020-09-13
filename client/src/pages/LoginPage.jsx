@@ -12,9 +12,10 @@ import { setUsername as setUsernameInStore } from '../actions/user';
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
-        height: '100vh',
+        flexDirection:'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: '100vh'
     },
     form: {
         display: 'flex',
@@ -65,6 +66,7 @@ export const LoginPage = () => {
             username: username,
             password: password
         }
+        console.log('enter!!')
         if (validate()) {
             fetch('/user/login', {
                 method: 'post',
@@ -93,8 +95,8 @@ export const LoginPage = () => {
     };
 
     const redirectToRegisterPage = () => {
-        // history.push('/register');
-        dispatch(openSnackbarWithMessage("Unfortunately, you can't register for popfunnel right now."));
+        history.push('/register');
+        // dispatch(openSnackbarWithMessage("Unfortunately, you can't register for popfunnel right now."));
     }
 
     return (
@@ -117,20 +119,20 @@ export const LoginPage = () => {
                         Login
                     </Button>
                 </div>
-                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height:'100px'}}>
-                    <div>
-                        <Link
-                            component="button"
-                            variant="body2"
-                            onClick={() => {
-                                redirectToRegisterPage();
-                            }}
-                        >
-                            Click here to register.
-                        </Link>
-                    </div>
-                </div>
             </form>
+            <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height:'100px'}}>
+                <div>
+                    <Link
+                        component="button"
+                        variant="body2"
+                        onClick={() => {
+                            redirectToRegisterPage();
+                        }}
+                    >
+                        Click here to register.
+                    </Link>
+                </div>
+            </div>
         </div>
     );
 };

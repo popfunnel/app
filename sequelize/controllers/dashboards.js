@@ -17,17 +17,17 @@ module.exports = {
       });
   },
   getById(req, res) {
-      return Dashboard
-        .findByPk(req.params["dashboard_id"])
-        .then(dashboard => {
-            console.log('did', req.params["dashboard_id"])
-            console.log('dashboard', dashboard)
-            res.status(201).send(dashboard)
-        })
-        .catch(error => {
-            console.log('error', error)
-            res.status(400).send(error)
-        });
+    return Dashboard
+      .findByPk(req.params["dashboard_id"])
+      .then(dashboard => {
+          console.log('did', req.params["dashboard_id"])
+          console.log('dashboard', dashboard)
+          res.status(201).send(dashboard)
+      })
+      .catch(error => {
+          console.log('error', error)
+          res.status(400).send(error)
+      });
   },
   list(req, res) {
     return Dashboard
