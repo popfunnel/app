@@ -1,19 +1,49 @@
-export const SET_CURRENT_DASHBOARD = 'SET_CURRENT_DASHBOARD';
-export const setCurrentDashboard = dashboard => (dispatch, getState) => {
-    dispatch({type: SET_CURRENT_DASHBOARD, dashboard});
+const fetchDashboardById = dashboardId => {
+    return fetch(`/dashboard/${dashboardId}`)
+        .then(response => {
+            if (response.status === 201) {
+                return response.json();
+            } else {
+                throw new Error('Bad response from server.');
+            };
+        });
 };
 
-export const SET_DASHBOARD_OPTIONS = 'SET_DASHBOARD_OPTIONS';
-export const setDashboardOptions = () => (dispatch, getState) => {
-    return fetch('/dashboard/list')
-    .then(response => response.json())
-    .then(data => {
-        if (data.length) {
-            dispatch({type: SET_DASHBOARD_OPTIONS, dashboardOptions: data});
-        };
+export const SET_CURRENT_DASHBOARD = 'SET_CURRENT_DASHBOARD';
+export const setCurrentDashboard = dashboardId => (dispatch, getState) => {
+    return fetchDashboardById(dashboardId)
+        .then(data => {
+            dispatch({type: SET_CURRENT_DASHBOARD, dashboardInfo: data});
+        })
+};
 
-        return data;
+
+const fetchDashboardIds = () => {
+    return fetch('/dashboard/list').then(response => {
+        if (response.status === 201) {
+            return response.json();
+        } else {
+            throw new Error('Bad response from server.');
+        };
     });
+}
+
+export const SET_DASHBOARD_OPTIONS = 'SET_DASHBOARD_OPTIONS';
+export const setDashboardOptions = () => async (dispatch, getState) => {
+    try {
+        let dashboardOptions = await fetchDashboardIds();
+        if (dashboardOptions.length) {
+            if( getState().dashboard.currentDashboard.id === 'no-dashboards-option') { 
+                let currentDashboardInfo = await fetchDashboardById(dashboardOptions[0].id);
+                dispatch({type: SET_DASHBOARD_OPTIONS, dashboardOptions: dashboardOptions, newCurrentDashboard: currentDashboardInfo});
+            } else {
+                dispatch({type: SET_DASHBOARD_OPTIONS, dashboardOptions: dashboardOptions});
+            }
+        };
+        return dashboardOptions;
+    } catch (error) {
+        throw error;
+    }
 };
 
 export const createNewDashboard = dashboardName => (dispatch, getState) => {
@@ -38,6 +68,6 @@ export const createNewDashboard = dashboardName => (dispatch, getState) => {
     })
     .then(data => {
         let newCurrentDashboard = data.find(dashboardInfo => dashboardInfo.name === dashboardName);
-        dispatch(setCurrentDashboard, newCurrentDashboard.id);
+        dispatch(setCurrentDashboard(newCurrentDashboard.id));
     });
 } 

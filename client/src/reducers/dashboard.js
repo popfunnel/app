@@ -2,7 +2,9 @@ import * as queryActions from '../actions/queryTool';
 import * as actions from '../actions/dashboard';
 
 const initialState = {
-    currentDashboard: 'no-dashboards-option',
+    currentDashboard: {
+        id: 'no-dashboards-option'
+    },
     dashboardChartConfigs: [],
     dashboardOptions: []
 };
@@ -19,18 +21,15 @@ function saveChartConfig(state, chartConfig) {
     }
 }
 
-function setCurrentDashboard(state, dashboard) {
+function setCurrentDashboard(state, dashboardInfo) {
     return {
         ...state,
-        currentDashboard: dashboard
+        currentDashboard: dashboardInfo
     }
 }
 
-function setDashboardOptions(state, dashboardOptions) {
-    let newCurrentDashboard;
-    if (state.currentDashboard === 'no-dashboards-option') {
-        newCurrentDashboard = dashboardOptions[0].id
-    }
+function setDashboardOptions(state, dashboardOptions, newCurrentDashboard) {
+
     return {
         ...state,
         currentDashboard: newCurrentDashboard || state.currentDashboard,
@@ -44,9 +43,9 @@ export default function dashboard(state = initialState, action) {
         case queryActions.SAVE_CHART_CONFIG:
             return saveChartConfig(state, action.chartConfig);
         case actions.SET_CURRENT_DASHBOARD:
-            return setCurrentDashboard(state, action.dashboard);
+            return setCurrentDashboard(state, action.dashboardInfo);
         case actions.SET_DASHBOARD_OPTIONS:
-            return setDashboardOptions(state, action.dashboardOptions);
+            return setDashboardOptions(state, action.dashboardOptions, action.newCurrentDashboard);
         default:
             return state;
     };

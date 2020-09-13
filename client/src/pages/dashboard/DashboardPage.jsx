@@ -15,7 +15,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
-export const DashboardPage = ({currentDashboard, setCurrentDashboard, createNewDashboard, setDashboardOptions, dashboardOptions}) => {
+export const DashboardPage = ({currentDashboardId, setCurrentDashboard, createNewDashboard, setDashboardOptions, openSnackbarWithMessage, dashboardOptions}) => {
     let history = useHistory();
     // const [dashboardOptions, setDashboardOptions] = React.useState([]);
     // TODO: read about MUI component customization
@@ -35,10 +35,14 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, createNewD
     // TODO: fine for now
     React.useEffect(() => {
         let fetchDashboardOptions = async () => {
-            await setDashboardOptions();
+            try {
+                await setDashboardOptions();
+            } catch (error) {
+                openSnackbarWithMessage(`${error}`);
+            };
         };
         fetchDashboardOptions();
-    }, [setDashboardOptions]);
+    }, [setDashboardOptions, openSnackbarWithMessage]);
     
     const handleAddChart = () => {
         history.push('/queryTool');
@@ -79,15 +83,16 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, createNewD
         };
         
         return dashboardMenuItems;
-    }
+    };
     
+    // TODO: Allow users to press 'enter' key to save new dashboard
     return (
         <div style={{height:'100%'}}>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width:'100%', padding:'10px'}}>
                 <div style={{display:'flex'}}>
                     <StyledSelect
                         id="dashboard-select"
-                        value={currentDashboard}
+                        value={currentDashboardId}
                         onChange={e => {setCurrentDashboard(e.target.value)}}
                         variant='outlined'
                     >
@@ -140,7 +145,7 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, createNewD
 
 const mapStateToProps = state => {
     return {
-        currentDashboard: state.dashboard.currentDashboard,
+        currentDashboardId: state.dashboard.currentDashboard.id,
         dashboardOptions: state.dashboard.dashboardOptions
     }
 }
