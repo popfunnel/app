@@ -113,7 +113,7 @@ const Dashboard = ({chartConfigs}) => {
     // TODO: Add plus button
     if (!chartConfigs.length) {
         return (
-            <div>
+            <div style={{margin: '10px'}}>
                 Created charts will appear here.
             </div>
         )

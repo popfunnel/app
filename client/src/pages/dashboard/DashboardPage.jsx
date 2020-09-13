@@ -7,7 +7,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import {setCurrentDashboard, getDashboardOptions} from '../../actions/dashboard';
+import {setCurrentDashboard, setDashboardOptions, createNewDashboard} from '../../actions/dashboard';
 import {openSnackbarWithMessage} from '../../actions/snackbar';
 import { v4 as uuidv4 } from 'uuid';
 import TextField from '@material-ui/core/TextField';
@@ -15,7 +15,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
-export const DashboardPage = ({currentDashboard, setCurrentDashboard, getDashboardOptions, dashboardOptions}) => {
+export const DashboardPage = ({currentDashboard, setCurrentDashboard, createNewDashboard, setDashboardOptions, dashboardOptions}) => {
     let history = useHistory();
     // const [dashboardOptions, setDashboardOptions] = React.useState([]);
     // TODO: read about MUI component customization
@@ -30,12 +30,20 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, getDashboa
     }))(Select);
     const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
     const [dashboardName, setDashboardName] = React.useState('');
+
+    // TODO: read about async effects: https://www.robinwieruch.de/react-hooks-fetch-data
+    // TODO: fine for now
+    React.useEffect(() => {
+        let fetchDashboardOptions = async () => {
+            await setDashboardOptions();
+        };
+        fetchDashboardOptions();
+    }, [setDashboardOptions]);
     
     const handleAddChart = () => {
         history.push('/queryTool');
     };
 
-    React.useEffect(getDashboardOptions, []);
     
     const openDashboardDialog = () => {
         setIsDashboardDialogOpen(true);
@@ -47,27 +55,16 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, getDashboa
 
     const createDashboard = () =>  {
         // TODO: add validation on entered dashboardname
-        let data = {
-            name: dashboardName
-        }
-
-        fetch('/dashboard/create', {
-            method: 'post',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => {
-            if (response.status === 201) {
-                openSnackbarWithMessage('New Dashboard created successfully!');
-                getDashboardOptions();
-            } else {
-                openSnackbarWithMessage('Server error.');
-            };
+        createNewDashboard(dashboardName)
+        .then(() => {
             setDashboardName('');
             closeDashboardDialog();
+            openSnackbarWithMessage('Dashboard created succesfully!');
+        })
+        .catch(error => {
+            setDashboardName('');
+            closeDashboardDialog();
+            openSnackbarWithMessage(`${error}`);
         });
     };
 
@@ -80,6 +77,7 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, getDashboa
         if (!dashboardMenuItems.length) {
             dashboardMenuItems.push( <MenuItem key={uuidv4()} id={'no-dashboards-option'} value={'no-dashboards-option'}>No dashboards available.</MenuItem>)
         };
+        
         return dashboardMenuItems;
     }
     
@@ -149,7 +147,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     setCurrentDashboard,
-    getDashboardOptions,
+    setDashboardOptions,
+    createNewDashboard,
     openSnackbarWithMessage
 };
 
