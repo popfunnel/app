@@ -31,7 +31,7 @@ module.exports = {
   },
   list(req, res) {
     return Dashboard
-        .findAll()
+        .findAll({attributes: ['id', 'name']})
         .then(dashboards => {
             console.log('dashboard', dashboards)
             res.status(201).send(dashboards)

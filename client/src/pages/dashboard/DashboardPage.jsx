@@ -7,16 +7,17 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import {setCurrentDashboard} from '../../actions/dashboard';
+import {setCurrentDashboard, getDashboardOptions} from '../../actions/dashboard';
+import {openSnackbarWithMessage} from '../../actions/snackbar';
 import { v4 as uuidv4 } from 'uuid';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 
-export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards}) => {
+export const DashboardPage = ({currentDashboard, setCurrentDashboard, getDashboardOptions, dashboardOptions}) => {
     let history = useHistory();
-    // const [dashboardOptions, setDashboardOptions] = React.useState()
+    // const [dashboardOptions, setDashboardOptions] = React.useState([]);
     // TODO: read about MUI component customization
     // https://material-ui.com/customization/components/
     const StyledSelect = withStyles((theme) => ({
@@ -27,25 +28,14 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
             padding: '10px'
         }
     }))(Select);
-
     const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
     const [dashboardName, setDashboardName] = React.useState('');
     
     const handleAddChart = () => {
         history.push('/queryTool');
     };
-    
-    // const getDashboardList = () => {
-    //     fetch('/dashboard')
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log('data', data);
-    //     })
-    // };
 
-    // React.useEffect(() => {
-    //     getDashboardList()
-    // }, [])
+    React.useEffect(getDashboardOptions, []);
     
     const openDashboardDialog = () => {
         setIsDashboardDialogOpen(true);
@@ -56,7 +46,6 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
     };
 
     const createDashboard = () =>  {
-
         // TODO: add validation on entered dashboardname
         let data = {
             name: dashboardName
@@ -71,12 +60,28 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
             body: JSON.stringify(data)
         })
         .then(response => {
-            console.log('returned from server! here is the response', response)
-            // if (response.status === 200) {
-
-            // }
+            if (response.status === 201) {
+                openSnackbarWithMessage('New Dashboard created successfully!');
+                getDashboardOptions();
+            } else {
+                openSnackbarWithMessage('Server error.');
+            };
+            setDashboardName('');
+            closeDashboardDialog();
         });
     };
+
+    const getDashboardMenuItems = () => {
+        let dashboardMenuItems = dashboardOptions.map(dashboard => {
+            return (
+                <MenuItem key={uuidv4()} id={dashboard.id} value={dashboard.id}>{dashboard.name}</MenuItem>        
+            );
+        });
+        if (!dashboardMenuItems.length) {
+            dashboardMenuItems.push( <MenuItem key={uuidv4()} id={'no-dashboards-option'} value={'no-dashboards-option'}>No dashboards available.</MenuItem>)
+        };
+        return dashboardMenuItems;
+    }
     
     return (
         <div style={{height:'100%'}}>
@@ -88,11 +93,7 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
                         onChange={e => {setCurrentDashboard(e.target.value)}}
                         variant='outlined'
                     >
-                        {dashboards.map(dashboard => {
-                            return (
-                                <MenuItem key={uuidv4()} value={dashboard}>{dashboard}</MenuItem>        
-                            );
-                        })}
+                        {getDashboardMenuItems()}
                     </StyledSelect>
                     <Button
                         variant="outlined"
@@ -142,12 +143,14 @@ export const DashboardPage = ({currentDashboard, setCurrentDashboard, dashboards
 const mapStateToProps = state => {
     return {
         currentDashboard: state.dashboard.currentDashboard,
-        dashboards: state.dashboard.dashboards
+        dashboardOptions: state.dashboard.dashboardOptions
     }
 }
 
 const mapDispatchToProps = {
-    setCurrentDashboard
+    setCurrentDashboard,
+    getDashboardOptions,
+    openSnackbarWithMessage
 };
 
 export const ConnectedDashboardPage = connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

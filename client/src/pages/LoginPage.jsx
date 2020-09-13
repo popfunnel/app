@@ -8,6 +8,7 @@ import Link from '@material-ui/core/Link';
 import { useDispatch } from 'react-redux';
 import { openSnackbarWithMessage } from '../actions/snackbar';
 import { setUsername as setUsernameInStore } from '../actions/user';
+import { getDashboardOptions } from '../actions/dashboard';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -80,6 +81,7 @@ export const LoginPage = () => {
                 if (response.status === 200) {
                     dispatch(setUsernameInStore(username));
                     dispatch(openSnackbarWithMessage('Login Successful!'));
+                    dispatch(getDashboardOptions());
                     history.push('/info');
                 } else if (response.status === 400) {
                     dispatch(openSnackbarWithMessage('Invalid Credentials.'));
