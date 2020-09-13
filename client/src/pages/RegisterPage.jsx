@@ -101,8 +101,8 @@ export const RegisterPage = () => {
                 <Typography variant="h6">
                     Register for popfunnel
                 </Typography>
-                <TextField id={EMAIL_TEXT_FIELD} label="Email" value={email} onChange={e => setEmail(e.target.value)} error={errors[EMAIL_TEXT_FIELD]} autoComplete="on"/>
-                <TextField id={PASSWORD_TEXT_FIELD} label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)} error={errors[PASSWORD_TEXT_FIELD]} autoComplete="on"/>
+                <TextField disabled={true} id={EMAIL_TEXT_FIELD} label="Email" value={email} onChange={e => setEmail(e.target.value)} error={errors[EMAIL_TEXT_FIELD]} autoComplete="on"/>
+                <TextField disabled={true} id={PASSWORD_TEXT_FIELD} label="Password" type='password' value={password} onChange={e => setPassword(e.target.value)} error={errors[PASSWORD_TEXT_FIELD]} autoComplete="on"/>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginTop:'10px'}}>
                     <div>
                         <Button
