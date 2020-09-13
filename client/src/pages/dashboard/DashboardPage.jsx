@@ -14,6 +14,7 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import SaveIcon from '@material-ui/icons/Save';
 
 export const DashboardPage = ({currentDashboardId, setCurrentDashboard, createNewDashboard, setDashboardOptions, openSnackbarWithMessage, dashboardOptions}) => {
     let history = useHistory();
@@ -107,15 +108,26 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, createNe
                         <AddIcon/>
                     </Button>
                 </div>
-                <Button
-                    variant="outlined"
-                    color="secondary"
-                    onClick={() => {handleAddChart()}}
-                    endIcon={<AddIcon/>}
-                    disableRipple
-                >
-                    Add chart
-                </Button>
+                <div>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {handleAddChart()}}
+                        endIcon={<AddIcon/>}
+                        disableRipple
+                    >
+                        Add chart
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        color="secondary"
+                        onClick={() => {handleAddChart()}}
+                        endIcon={<SaveIcon/>}
+                        disableRipple
+                    >
+                        Save
+                    </Button>
+                </div>
             </div>
             <ConnectedDashboard/>
             <Dialog open={isDashboardDialogOpen} onClose={closeDashboardDialog} aria-labelledby="dashboard-form-dialog">

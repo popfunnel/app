@@ -112,7 +112,7 @@ const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, conf
                     }}
                     disableRipple
                 >
-                Save Config
+                    Save Config
                 </Button>
             </div>}
             

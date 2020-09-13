@@ -11,4 +11,4 @@ export const closeSnackbar = () => {
     return {
         type: CLOSE_SNACKBAR
     }
-}
+};
