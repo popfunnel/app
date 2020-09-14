@@ -12,7 +12,7 @@ import { ColumnSelector } from './ColumnSelections';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import { setSeriesType, saveChartConfig, saveChart } from '../../../../actions/queryTool';
-import {setCurrentDashboard, setDashboardOptions, createNewDashboard} from '../../../../actions/dashboard';
+import { setDashboardOptions } from '../../../../actions/dashboard';
 
 import { openSnackbarWithMessage } from '../../../../actions/snackbar';
 import { connect } from 'react-redux'
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, config, 
-    saveChartConfig, saveChart, openSnackbarWithMessage}) => {
+    saveChartConfig, saveChart, openSnackbarWithMessage, setDashboardOptions}) => {
     const classes = useStyles();
     
     const StyledAccordion = withStyles({
@@ -67,24 +67,22 @@ const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, conf
     
     let history = useHistory();
 
-    // React.useEffect(() => {
-    //     let fetchDashboardOptions = async () => {
-    //         try {
-    //             await setDashboardOptions();
-    //         } catch (error) {
-    //             openSnackbarWithMessage(`${error}`);
-    //         };
-    //     };
-    //     fetchDashboardOptions();
-    // }, [setDashboardOptions, openSnackbarWithMessage]);
+    React.useEffect(() => {
+        let fetchDashboardOptions = async () => {
+            try {
+                await setDashboardOptions();
+            } catch (error) {
+                openSnackbarWithMessage(`${error}`);
+            };
+        };
+        fetchDashboardOptions();
+    }, [setDashboardOptions, openSnackbarWithMessage]);
     
     // const saveChart = () => {}
     
     // TODO: save button should be in a better location
-    // TODO: snackbar after success or failure
     // TODO: add ability to render table inside dashboard page
     // TODO: force user to enter name for chart and add to chart config
-        // TODO: maybe use this form dialog? https://material-ui.com/components/dialogs/
     return (
         <div style={{display:'flex', flexDirection: 'column', height: '100%'}}>
             <Typography variant="overline" display="block" gutterBottom>
@@ -168,6 +166,7 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
+    setDashboardOptions,
     setSeriesType,
     saveChartConfig,
     saveChart,
