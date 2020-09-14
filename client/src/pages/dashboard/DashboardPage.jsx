@@ -135,7 +135,7 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, createNe
                         value={dashboardName}
                         onChange={e => setDashboardName(e.target.value)}
                         autoFocus
-                        margin="dense"
+                        // margin="dense"
                         id="dashboard-name"
                         label="Dashboard Name"
                         fullWidth

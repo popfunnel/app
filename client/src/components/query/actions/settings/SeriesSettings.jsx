@@ -18,6 +18,7 @@ import { openSnackbarWithMessage } from '../../../../actions/snackbar';
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
+import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     chartSelect: {
@@ -51,6 +52,18 @@ const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, conf
         },
         expanded: {},
     })(Accordion);
+
+    // TODO: read about customization!!
+    const StyledTextField = withStyles({
+        root: {
+            '& .MuiInputLabel-animated': {
+                fontSize: '12px'
+            },
+            '& .MuiInputBase-input': {
+                padding: '5px'
+            }
+        }
+    })(TextField);
     
     let history = useHistory();
 
@@ -115,7 +128,15 @@ const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, conf
                 </StyledAccordion>
             </div>
             {(queryResults.length > 0 && seriesType !== 'Table') &&
-            <div style={{display:'flex', justifyContent:'center'}}>   
+            <div style={{display:'flex', flexDirection: 'column', justifyContent:'center'}}>
+                <StyledTextField
+                    // className={classes.chartNameTextField}
+                    // value={dashboardName}
+                    // onChange={e => setDashboardName(e.target.value)}
+                    id="chart-name"
+                    label="Chart Name"
+                    // fullWidth
+                />  
                 <Button
                     color='secondary'
                     onClick={() => {
