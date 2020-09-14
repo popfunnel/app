@@ -1,3 +1,4 @@
+
 const fetchDashboardById = dashboardId => {
     return fetch(`/dashboard/${dashboardId}`)
         .then(response => {
@@ -9,14 +10,41 @@ const fetchDashboardById = dashboardId => {
         });
 };
 
-export const SET_CURRENT_DASHBOARD = 'SET_CURRENT_DASHBOARD';
-export const setCurrentDashboard = dashboardId => (dispatch, getState) => {
-    return fetchDashboardById(dashboardId)
-        .then(data => {
-            dispatch({type: SET_CURRENT_DASHBOARD, dashboardInfo: data});
+const fetchChartsByDashboardId = dashboardId => {
+    return fetch(`/chart/${dashboardId}`)
+        .then(response => {
+            if (response.status === 201) {
+                return response.json();
+            } else {
+                throw new Error('Bad response from server.');
+            };
         })
 };
 
+export const SET_CURRENT_DASHBOARD = 'SET_CURRENT_DASHBOARD';
+export const setCurrentDashboard = dashboardId => async (dispatch, getState) => {
+    try {
+        const [dashboardInfo, currentDashboardCharts] = 
+            await Promise.all([fetchDashboardById(dashboardId), fetchChartsByDashboardId(dashboardId)])
+        dispatch({type: SET_CURRENT_DASHBOARD, dashboardInfo, currentDashboardCharts});
+
+        return dashboardInfo;
+    } catch(error) {
+        throw error;
+    };
+};
+
+// export const SET_CURRENT_DASHBOARD_CHARTS = 'SET_CURRENT_DASHBOARD_CHARTS';
+// export const setCurrentDashboardCharts = () => async (dispatch, getState) => {
+//     let dashboardId = getState().dashboard.currentDashboard.id;
+//     try {
+//         let currentDashboardCharts = await fetchChartsByDashboardId(dashboardId)
+//         dispatch({type: SET_CURRENT_DASHBOARD_CHARTS, currentDashboardCharts});
+//         return currentDashboardCharts;
+//     } catch(error) {
+//         throw error;
+//     };
+// }
 
 const fetchDashboardIds = () => {
     return fetch('/dashboard/list').then(response => {
@@ -28,29 +56,38 @@ const fetchDashboardIds = () => {
     });
 }
 
-export const SET_DASHBOARD_OPTIONS = 'SET_DASHBOARD_OPTIONS';
-export const setDashboardOptions = () => async (dispatch, getState) => {
+export const REFRESH_DASHBOARD_INFO = 'REFRESH_DASHBOARD_INFO';
+export const RESET_DASHBOARD_INFO = 'RESET_DASHBOARD_INFO';
+export const refreshDashboardInfo = () => async (dispatch, getState) => {
     try {
         let dashboardOptions = await fetchDashboardIds();
+        let currentDashboard = getState().dashboard.currentDashboard
         if (dashboardOptions.length) {
-            if( getState().dashboard.currentDashboard.id === 'no-dashboards-option') { 
-                let currentDashboardInfo = await fetchDashboardById(dashboardOptions[0].id);
-                dispatch({type: SET_DASHBOARD_OPTIONS, dashboardOptions: dashboardOptions, newCurrentDashboard: currentDashboardInfo});
-            } else {
-                dispatch({type: SET_DASHBOARD_OPTIONS, dashboardOptions: dashboardOptions});
-            }
-        };
-        return dashboardOptions;
+            let currentDashboardId = currentDashboard.id === 'no-dashboards-option' ?
+                dashboardOptions[0].id :
+                currentDashboard.id;
+                
+            const [currentDashboardInfo, currentDashboardCharts] = 
+                await Promise.all([fetchDashboardById(currentDashboardId),
+                    fetchChartsByDashboardId(currentDashboardId)]);
+            
+            dispatch({type: REFRESH_DASHBOARD_INFO, currentDashboardInfo, currentDashboardCharts, dashboardOptions});
+            return dashboardOptions;  
+        } else {
+            dispatch({type: RESET_DASHBOARD_INFO});
+        }
+
     } catch (error) {
-        throw error;
+        throw Error;
     }
-};
+}
 
 export const createNewDashboard = dashboardName => (dispatch, getState) => {
     let data = {
         name: dashboardName
     }
 
+    // TODO: refactor to use async await
     return fetch('/dashboard/create', {
         method: 'post',
         headers: {
@@ -61,7 +98,7 @@ export const createNewDashboard = dashboardName => (dispatch, getState) => {
     })
     .then(response => {
         if (response.status === 201) {
-            return dispatch(setDashboardOptions());
+            return dispatch(refreshDashboardInfo());
         } else {
             throw new Error('Bad response from server.');
         };

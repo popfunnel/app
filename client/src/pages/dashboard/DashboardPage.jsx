@@ -7,7 +7,7 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import {setCurrentDashboard, setDashboardOptions, createNewDashboard} from '../../actions/dashboard';
+import {setCurrentDashboard, refreshDashboardInfo, createNewDashboard} from '../../actions/dashboard';
 import {openSnackbarWithMessage} from '../../actions/snackbar';
 import { v4 as uuidv4 } from 'uuid';
 import TextField from '@material-ui/core/TextField';
@@ -16,9 +16,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import SaveIcon from '@material-ui/icons/Save';
 
-export const DashboardPage = ({currentDashboardId, setCurrentDashboard, createNewDashboard, setDashboardOptions, openSnackbarWithMessage, dashboardOptions}) => {
+export const DashboardPage = ({currentDashboardId, setCurrentDashboard, refreshDashboardInfo, createNewDashboard,
+    openSnackbarWithMessage, dashboardOptions}) => {
+        
     let history = useHistory();
-    // const [dashboardOptions, setDashboardOptions] = React.useState([]);
     // TODO: read about MUI component customization
     // https://material-ui.com/customization/components/
     const StyledSelect = withStyles((theme) => ({
@@ -37,13 +38,14 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, createNe
     React.useEffect(() => {
         let fetchDashboardOptions = async () => {
             try {
-                await setDashboardOptions();
+                await refreshDashboardInfo();
             } catch (error) {
                 openSnackbarWithMessage(`${error}`);
             };
         };
         fetchDashboardOptions();
-    }, [setDashboardOptions, openSnackbarWithMessage]);
+        console.log('hey leaving in dashboardpage')
+    }, [refreshDashboardInfo, openSnackbarWithMessage]);
     
     const handleAddChart = () => {
         history.push('/queryTool');
@@ -135,7 +137,7 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, createNe
                         value={dashboardName}
                         onChange={e => setDashboardName(e.target.value)}
                         autoFocus
-                        // margin="dense"
+                        margin="dense"
                         id="dashboard-name"
                         label="Dashboard Name"
                         fullWidth
@@ -163,9 +165,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     setCurrentDashboard,
-    setDashboardOptions,
     createNewDashboard,
-    openSnackbarWithMessage
+    openSnackbarWithMessage,
+    refreshDashboardInfo
 };
 
 export const ConnectedDashboardPage = connect(mapStateToProps, mapDispatchToProps)(DashboardPage);

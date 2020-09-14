@@ -102,31 +102,26 @@ import { CustomLineChart } from '../query/display/Line';
 // 	}]
 // }]
 
-const Dashboard = ({chartConfigs}) => {
-    // const layout = [
-    //           {i: 'a', x: 0, y: 0, w: 1, h: 2},
-    //           {i: 'b', x: 1, y: 0, w: 3, h: 2, minW: 2, maxW: 4},
-    //           {i: 'c', x: 4, y: 0, w: 1, h: 2}
-    //         ];
-    
+const Dashboard = ({dashboardCharts}) => {
+    const [currentLayout, setCurrentLayout] = React.useEffect([]);
 
-    // TODO: Add plus button
-    if (!chartConfigs.length) {
+    if (!dashboardCharts.length) {
         return (
-
             <div style={{margin: '10px', textAlign: 'center'}}>
                 Created charts will appear here.
             </div>
-        )
-    }
+        );
+    };
+
     const getGridItems = () => {
-        return chartConfigs.map((config, index) => {
-            if (config.type === 'Bar') {
+        return dashboardCharts.map((chartInfo, index) => {
+            let {config, type} = chartInfo
+            if (type === 'Bar') {
                 // TODO: use better keys
                 return (
                     <div key={`Bar-${index}`} data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><CustomBarChart config={config}/></div>
                 );
-            } else if (config.type === 'Line') {
+            } else if (type === 'Line') {
                 // TODO: use better keys
                 return (
                     <div key={`Line-${index}`} data-grid={{x: 0, y: 0, w: 3, h: 6, autoSize:true}}><CustomLineChart config={config}/></div>
@@ -148,7 +143,6 @@ const Dashboard = ({chartConfigs}) => {
     // TODO: read more about autosize options
     // TODO: read more about react-grid-layout
     // https://github.com/STRML/react-grid-layout#grid-item-props
-    // TODO: save saved configs in db/store
     // TODO: add multiple y axis series 
     // return (
     //     <GridLayout className="layout" cols={12} rowHeight={30} width={1800}>
@@ -165,28 +159,29 @@ const Dashboard = ({chartConfigs}) => {
             cols={12}
             rowHeight={30}
             width={1800}
-            onLayoutChange={(layout) => console.log('layout', layout)}
+            onLayoutChange={(layout) => {
+                console.log('layout', layout)
+                setCurrentLayout(layout)
+            }}
         >
             {getGridItems()}
         </GridLayout>
+        // <div>
+        //     hey
+        // </div>
     )
 }
 
 
 const mapStateToProps = state => {
     return {
-        chartConfigs: state.dashboard.dashboardChartConfigs
+        dashboardCharts: state.dashboard.currentDashboardCharts
     }
 }
 
 const mapDispatchToProps = {};
 
 export const ConnectedDashboard = connect(mapStateToProps, mapDispatchToProps)(Dashboard);
-
-
-
-
-
 
 // class MyFirstGrid extends React.Component {
 //   render() {

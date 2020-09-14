@@ -12,7 +12,7 @@ import { ColumnSelector } from './ColumnSelections';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import { setSeriesType, saveChartConfig, saveChart } from '../../../../actions/queryTool';
-import { setDashboardOptions } from '../../../../actions/dashboard';
+import { refreshDashboardInfo } from '../../../../actions/dashboard';
 
 import { openSnackbarWithMessage } from '../../../../actions/snackbar';
 import { connect } from 'react-redux'
@@ -31,9 +31,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, config, 
-    saveChartConfig, saveChart, openSnackbarWithMessage, setDashboardOptions}) => {
+const SeriesSettings = ({seriesType, setSeriesType, queryResults, saveChart,
+    openSnackbarWithMessage, refreshDashboardInfo}) => {
+        
     const classes = useStyles();
+    let history = useHistory();
     
     const StyledAccordion = withStyles({
         root: {
@@ -54,31 +56,41 @@ const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, conf
     })(Accordion);
 
     // TODO: read about customization!!
-    const StyledTextField = withStyles({
-        root: {
-            '& .MuiInputLabel-animated': {
-                fontSize: '12px'
-            },
-            '& .MuiInputBase-input': {
-                padding: '5px'
-            }
-        }
-    })(TextField);
-    
-    let history = useHistory();
+    // const StyledTextField = withStyles({
+    //     root: {
+    //         '& .MuiInputLabel-animated': {
+    //             fontSize: '12px'
+    //         },
+    //         '& .MuiInputBase-input': {
+    //             padding: '5px'
+    //         }
+    //     }
+    // })(TextField);
+
+    const [chartName, setChartName] = React.useState('');
+    const [chartNameHasError, setChartNameHasError] = React.useState(false);
 
     React.useEffect(() => {
         let fetchDashboardOptions = async () => {
             try {
-                await setDashboardOptions();
+                await refreshDashboardInfo();
             } catch (error) {
                 openSnackbarWithMessage(`${error}`);
             };
         };
         fetchDashboardOptions();
-    }, [setDashboardOptions, openSnackbarWithMessage]);
+    }, [refreshDashboardInfo, openSnackbarWithMessage]);
+
+    const validateChartName = () => {
+        if (!chartName.length) {
+            setChartNameHasError(true);
+            openSnackbarWithMessage(`Chart Name cannot be empty.`);
+            return false;
+        } else {
+            return true;
+        }
+    }
     
-    // const saveChart = () => {}
     
     // TODO: save button should be in a better location
     // TODO: add ability to render table inside dashboard page
@@ -127,28 +139,45 @@ const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, conf
             </div>
             {(queryResults.length > 0 && seriesType !== 'Table') &&
             <div style={{display:'flex', flexDirection: 'column', justifyContent:'center'}}>
-                <StyledTextField
-                    // className={classes.chartNameTextField}
-                    // value={dashboardName}
-                    // onChange={e => setDashboardName(e.target.value)}
-                    id="chart-name"
-                    label="Chart Name"
-                    // fullWidth
+                <TextField
+                    id='chart-name'
+                    label='Chart Name'
+                    value={chartName}
+                    placeholder='Untitled'
+                    onChange={e => {
+                        setChartNameHasError(false);
+                        setChartName(e.target.value)
+                    }}
+                    error={chartNameHasError}
+                    inputProps={{
+                        style: {
+                            fontSize: '12px'
+                        }
+                    }}
+                    InputLabelProps={{
+                        style: {
+                            fontSize: '12px'
+                        },
+                        shrink: true
+                    }}
                 />  
                 <Button
                     color='secondary'
                     onClick={() => {
-                        saveChart('userEnteredName')
-                        .then(() => {
-                            history.push('/dashboard')
-                        })
-                        .catch(error => {
-                            openSnackbarWithMessage(`${error}`);
-                        });
+                        if (validateChartName()) {
+                            saveChart(chartName)
+                            .then(() => {
+                                // refreshDashboardInfo()
+                                history.push('/dashboard');
+                            })
+                            .catch(error => {
+                                openSnackbarWithMessage(`${error}`);
+                            });
+                        }
                     }}
                     disableRipple
                 >
-                    Save Chart
+                    Save
                 </Button>
             </div>}
             
@@ -166,11 +195,11 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-    setDashboardOptions,
     setSeriesType,
     saveChartConfig,
     saveChart,
-    openSnackbarWithMessage
+    openSnackbarWithMessage,
+    refreshDashboardInfo
 };
 
 export const ConnectedSeriesSettings = connect(mapStateToProps, mapDispatchToProps)(SeriesSettings);

@@ -21,7 +21,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       chart_layout: {
-        type: Sequelize.ARRAY(Sequelize.JSON)
+        type: Sequelize.JSON
       },
       created_at: {
         allowNull: false,
