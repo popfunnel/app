@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
     username: DataTypes.TEXT,
     password: DataTypes.TEXT,
     database_type: DataTypes.TEXT,
-    name: DataTypes.TEXT
+    name: DataTypes.TEXT,
+    customer_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'database',

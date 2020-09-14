@@ -18,7 +18,9 @@ module.exports = (sequelize, DataTypes) => {
     type: DataTypes.STRING,
     config: DataTypes.JSON,
     raw_query: DataTypes.TEXT,
-    raw_results: DataTypes.JSON
+    raw_results: DataTypes.JSON,
+    dashboard_id: DataTypes.INTEGER,
+    customer_id: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'chart',

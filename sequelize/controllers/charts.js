@@ -2,8 +2,6 @@ const Chart = require('../models').chart;
 
 module.exports = {
   create(req, res) {
-    console.log(JSON.stringify(req.body.rawResults));
-
     return Chart
       .create({
         name: req.body.name,

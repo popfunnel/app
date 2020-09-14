@@ -99,6 +99,7 @@ export const resetChart = () => {
 export const SAVE_CHART = 'SAVE_CHART';
 export const saveChart = name => (dispatch, getState) => {
     let state = getState()
+    console.log('this is the dashboardid', state.dashboard.currentDashboard.id)
     let data = {
         name: name,
         type: state.chart.seriesType,
