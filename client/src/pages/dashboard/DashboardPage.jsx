@@ -16,7 +16,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import SaveIcon from '@material-ui/icons/Save';
 
-export const DashboardPage = ({currentDashboardId, setCurrentDashboard, refreshDashboardInfo, createNewDashboard,
+export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentDashboardLayout, refreshDashboardInfo, createNewDashboard,
     openSnackbarWithMessage, dashboardOptions}) => {
         
     let history = useHistory();
@@ -32,7 +32,7 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, refreshD
     }))(Select);
     const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
     const [dashboardName, setDashboardName] = React.useState('');
-
+    const [currentLayout, setCurrentLayout] = React.useState(currentDashboardLayout);
     // TODO: read about async effects: https://www.robinwieruch.de/react-hooks-fetch-data
     // TODO: fine for now
     React.useEffect(() => {
@@ -86,8 +86,35 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, refreshD
         
         return dashboardMenuItems;
     };
-    
-    // TODO: Allow users to press 'enter' key to save new dashboard
+
+    const saveChartLayout = () => {
+        let data = {
+            dashboard_id: currentDashboardId,
+            chartLayout: currentLayout
+        }
+
+        return fetch('/dashboard/update-layout', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.status === 200) {
+                openSnackbarWithMessage('Chart layout saved!');
+                return refreshDashboardInfo();
+            } else if (response.status === 500 || response.status === 400) {
+                openSnackbarWithMessage('Bad response from server.');
+                return false;
+            }
+        })
+        .catch(error => {
+            openSnackbarWithMessage(`${error}`);
+        });
+    }
+
     return (
         <div style={{height:'100%'}}>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width:'100%', padding:'10px'}}>
@@ -122,7 +149,7 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, refreshD
                     <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={() => {handleAddChart()}}
+                        onClick={() => {saveChartLayout()}}
                         endIcon={<SaveIcon/>}
                         disableRipple
                     >
@@ -130,7 +157,7 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, refreshD
                     </Button>
                 </div>
             </div>
-            <ConnectedDashboard/>
+            <ConnectedDashboard currentLayout={currentLayout} setCurrentLayout={setCurrentLayout}/>
             <Dialog open={isDashboardDialogOpen} onClose={closeDashboardDialog} aria-labelledby="dashboard-form-dialog">
                 <DialogContent>
                     <TextField
@@ -159,6 +186,7 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, refreshD
 const mapStateToProps = state => {
     return {
         currentDashboardId: state.dashboard.currentDashboard.id,
+        currentDashboardLayout: state.dashboard.currentDashboard.chart_layout || [],
         dashboardOptions: state.dashboard.dashboardOptions
     }
 }

@@ -6,6 +6,8 @@ router.get('/list', dashboardsController.list);
 
 router.post('/create', dashboardsController.create);
 
+router.post('/update-layout', dashboardsController.updateLayout);
+
 router.get('/:dashboard_id', dashboardsController.getById);
 
 module.exports = router;

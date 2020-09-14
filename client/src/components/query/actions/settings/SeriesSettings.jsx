@@ -55,18 +55,6 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, saveChart,
         expanded: {},
     })(Accordion);
 
-    // TODO: read about customization!!
-    // const StyledTextField = withStyles({
-    //     root: {
-    //         '& .MuiInputLabel-animated': {
-    //             fontSize: '12px'
-    //         },
-    //         '& .MuiInputBase-input': {
-    //             padding: '5px'
-    //         }
-    //     }
-    // })(TextField);
-
     const [chartName, setChartName] = React.useState('');
     const [chartNameHasError, setChartNameHasError] = React.useState(false);
 
