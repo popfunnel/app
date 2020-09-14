@@ -4,12 +4,11 @@ module.exports = {
   create(req, res) {
     return Chart
       .create({
-        name: req.body.name,
+        name: req.body.name
         // dashboard_id:,
         // config:,
         // configured_results:,
-        // raw_results:,
-        // add user meta
+        // raw_results:
       })
       .then(chart => {
         console.log('chart', chart)

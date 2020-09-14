@@ -8,5 +8,4 @@ router.post('/create', dashboardsController.create);
 
 router.get('/:dashboard_id', dashboardsController.getById);
 
-
 module.exports = router;
