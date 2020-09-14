@@ -8,9 +8,9 @@ const initialState = {
     },
     settings: {},
     config: {
-        dataKey: '',
-        keys: [],
-        data: []
+        xAxisKey: '',
+        yAxisKeys: [],
+        formattedData: []
     }
 };
 
@@ -131,7 +131,7 @@ export function setChartConfig(state, rawResults) {
         series
     } = settings;
 
-    let keys = new Set();
+    let yAxisKeys = new Set();
     let indices = new Set();
 
     /* 
@@ -167,7 +167,6 @@ export function setChartConfig(state, rawResults) {
         rawResults.forEach(row => {
             yAxis.forEach(chosen_y => {
                 let yValue = sanitizeData(row[chosen_y]);
-                console.log('here is the yvalue', yValue)
                 // TODO: if no series chosen and x axis is same as y axis, convert to num before add
                 if (dataByIndex[row[xAxis]][chosen_y] && !isNaN(yValue)) {
                     dataByIndex[row[xAxis]] = {
@@ -180,7 +179,7 @@ export function setChartConfig(state, rawResults) {
                         [chosen_y]: yValue
                     };
                 }
-                keys.add(chosen_y);
+                yAxisKeys.add(chosen_y);
             })
         })
     } else if (yAxis.length === 1) {
@@ -198,7 +197,7 @@ export function setChartConfig(state, rawResults) {
                         [row[chosen_series]]: yValue
                     };
                 }
-                keys.add(row[chosen_series]);
+                yAxisKeys.add(row[chosen_series]);
             });
         });
     } else if (yAxis.length > 1) {
@@ -218,27 +217,26 @@ export function setChartConfig(state, rawResults) {
                             [seriesName]: yValue
                         };
                     }
-                    keys.add(seriesName);
-                })
-                
+                    yAxisKeys.add(seriesName);
+                });
             });
         });
-    }
+    };
     // TODO: add final else case
 
     let formattedData = [...indices].map(index => dataByIndex[index]);
 
     let config = {
-        dataKey: xAxis,
-        keys: [...keys],
-        data: formattedData
-    }
+        xAxisKey: xAxis,
+        yAxisKeys: [...yAxisKeys],
+        formattedData
+    };
 
     return {
         ...state,
         settings,
         config
-    }
+    };
 };
 
 
@@ -251,9 +249,9 @@ function resetChart() {
         },
         settings: {},
         config: {
-            dataKey: '',
-            keys: [],
-            data: []
+            xAxisKey: '',
+            yAxisKeys: [],
+            formattedData: []
         }
     }
 }

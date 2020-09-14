@@ -15,9 +15,10 @@ module.exports = (sequelize, DataTypes) => {
     updated_by: DataTypes.INTEGER,
     owned_by: DataTypes.INTEGER,
     name: DataTypes.STRING,
+    type: DataTypes.STRING,
     config: DataTypes.JSON,
-    configured_results: DataTypes.ARRAY(DataTypes.JSON),
-    raw_results: DataTypes.ARRAY(DataTypes.JSON)
+    raw_query: DataTypes.TEXT,
+    raw_results: DataTypes.JSON
   }, {
     sequelize,
     modelName: 'chart',

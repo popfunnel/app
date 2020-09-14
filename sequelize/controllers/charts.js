@@ -2,13 +2,16 @@ const Chart = require('../models').chart;
 
 module.exports = {
   create(req, res) {
+    console.log(JSON.stringify(req.body.rawResults));
+
     return Chart
       .create({
-        name: req.body.name
-        // dashboard_id:,
-        // config:,
-        // configured_results:,
-        // raw_results:
+        name: req.body.name,
+        type: req.body.type, 
+        config: req.body.config,
+        raw_query: req.body.rawQuery,
+        raw_results: req.body.rawResults,
+        dashboard_id: req.body.dashboardId
       })
       .then(chart => {
         console.log('chart', chart)
@@ -19,7 +22,7 @@ module.exports = {
         res.status(400).send(error)
       });
   },
-  getAllByDashboard(req, res) {
+  getAllByDashboardId(req, res) {
     return Chart
       .findAll({
         where: {
@@ -27,7 +30,7 @@ module.exports = {
         }
       })
       .then(charts => {
-          // console.log('did', req.params["dashboard_id"])
+          console.log('dashboard_id', req.params["dashboard_id"])
           console.log('charts', charts)
           res.status(201).send(charts)
       })

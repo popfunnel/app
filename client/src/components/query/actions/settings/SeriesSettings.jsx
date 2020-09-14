@@ -11,7 +11,10 @@ import { ColumnSelector } from './ColumnSelections';
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
-import { setSeriesType, saveChartConfig } from '../../../../actions/queryTool';
+import { setSeriesType, saveChartConfig, saveChart } from '../../../../actions/queryTool';
+import {setCurrentDashboard, setDashboardOptions, createNewDashboard} from '../../../../actions/dashboard';
+
+import { openSnackbarWithMessage } from '../../../../actions/snackbar';
 import { connect } from 'react-redux'
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
@@ -27,7 +30,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, config, saveChartConfig}) => {
+const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, config, 
+    saveChartConfig, saveChart, openSnackbarWithMessage}) => {
     const classes = useStyles();
     
     const StyledAccordion = withStyles({
@@ -49,6 +53,19 @@ const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, conf
     })(Accordion);
     
     let history = useHistory();
+
+    // React.useEffect(() => {
+    //     let fetchDashboardOptions = async () => {
+    //         try {
+    //             await setDashboardOptions();
+    //         } catch (error) {
+    //             openSnackbarWithMessage(`${error}`);
+    //         };
+    //     };
+    //     fetchDashboardOptions();
+    // }, [setDashboardOptions, openSnackbarWithMessage]);
+    
+    // const saveChart = () => {}
     
     // TODO: save button should be in a better location
     // TODO: snackbar after success or failure
@@ -102,17 +119,17 @@ const SeriesSettings = ({seriesType, setSeriesType, rawQuery, queryResults, conf
                 <Button
                     color='secondary'
                     onClick={() => {
-                        let chartConfig = {
-                            ...config,
-                            type: seriesType,
-                            query: rawQuery
-                        };
-                        saveChartConfig(chartConfig);
-                        history.push('/dashboard')
+                        saveChart('userEnteredName')
+                        .then(() => {
+                            history.push('/dashboard')
+                        })
+                        .catch(error => {
+                            openSnackbarWithMessage(`${error}`);
+                        });
                     }}
                     disableRipple
                 >
-                    Save Config
+                    Save Chart
                 </Button>
             </div>}
             
@@ -131,7 +148,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     setSeriesType,
-    saveChartConfig
+    saveChartConfig,
+    saveChart,
+    openSnackbarWithMessage
 };
 
 export const ConnectedSeriesSettings = connect(mapStateToProps, mapDispatchToProps)(SeriesSettings);

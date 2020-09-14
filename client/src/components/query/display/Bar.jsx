@@ -13,26 +13,26 @@ export const CustomBarChart = ({config}) => {
 
     // TODO: rename datakey to 'xaxis datakey'
     let {
-        dataKey,
-        keys,
-        data
+        xAxisKey,
+        yAxisKeys,
+        formattedData
     } = config;
 
     return (
         <Paper style={{height:'100%', width:'100%'}}>
             <ResponsiveContainer>
                 <BarChart
-                    data={data}
+                    data={formattedData}
                     margin={{
                         top: 5, right: 30, left: 20, bottom: 5,
                     }}
                 >
                     <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis dataKey={dataKey}/>
+                    <XAxis dataKey={xAxisKey}/>
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    {keys.map((key, index) => {
+                    {yAxisKeys.map((key, index) => {
                         let colorIndex = index%5;
                         return <Bar key={key} dataKey={key} fill={colors[colorIndex]}/>
                     })}

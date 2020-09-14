@@ -6,11 +6,12 @@ import {
   } from 'recharts';
 
 export const CustomLineChart = ({config}) => {
+    // TODO: map for each yaxis key
     return (
         <Paper style={{height:'100%', width:'100%'}}>
             <ResponsiveContainer>
                 <LineChart
-                    data={config.data}
+                    data={config.formattedData}
                     margin={{
                     top: 5, right: 30, left: 20, bottom: 5,
                     }}

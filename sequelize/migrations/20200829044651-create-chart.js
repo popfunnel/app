@@ -20,14 +20,17 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      type: {
+        type: Sequelize.STRING
+      },
       config: {
         type: Sequelize.JSON
       },
-      configured_results: {
-        type: Sequelize.ARRAY(Sequelize.JSON)
+      raw_query: {
+        type: Sequelize.TEXT
       },
       raw_results: {
-        type: Sequelize.ARRAY(Sequelize.JSON)
+        type: Sequelize.JSON
       },
       created_at: {
         allowNull: false,

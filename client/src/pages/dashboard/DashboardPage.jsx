@@ -49,7 +49,6 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, createNe
         history.push('/queryTool');
     };
 
-    
     const openDashboardDialog = () => {
         setIsDashboardDialogOpen(true);
     };
