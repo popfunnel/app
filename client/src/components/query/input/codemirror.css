@@ -3,7 +3,8 @@
 .CodeMirror {
     /* Set height, width, borders, and global font properties here */
     font-family: sans-serif, 'FiraSans';
-    height: 300px;
+    font-size: 13px;
+    height: 375px;
     color: black;
     direction: ltr;
   }

@@ -1,4 +1,3 @@
-
 const fetchDashboardById = dashboardId => {
     return fetch(`/dashboard/${dashboardId}`)
         .then(response => {
@@ -24,6 +23,7 @@ const fetchChartsByDashboardId = dashboardId => {
 export const SET_CURRENT_DASHBOARD = 'SET_CURRENT_DASHBOARD';
 export const setCurrentDashboard = dashboardId => async (dispatch, getState) => {
     try {
+        // TODO: there is a bit of latency in the ui when changing current dashboard
         const [dashboardInfo, currentDashboardCharts] = 
             await Promise.all([fetchDashboardById(dashboardId), fetchChartsByDashboardId(dashboardId)])
         dispatch({type: SET_CURRENT_DASHBOARD, dashboardInfo, currentDashboardCharts});
@@ -57,7 +57,7 @@ const getNewCurrentDashboardId = (dashboardOptions, currentDashboard) => {
             dashboardOptions[0].id :
             currentDashboard.id;
     };
-    
+
     return newCurrentDashboardId;
 };
 
