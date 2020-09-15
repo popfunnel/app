@@ -6,7 +6,7 @@ import { QueryActions } from '../../components/query/actions/QueryActions';
 export const QueryPage = () => {
     return (
         <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh - 64px)'}}>
-            <div style={{display:'flex', flexDirection:'column', flex: 1, overflowY:'scroll'}}>
+            <div style={{display:'flex', flexDirection:'column', flex: 1, overflowY:'auto'}}>
                 <ConnectedQueryInput/>
                 <ConnectedDisplayContainer/>
             </div>
