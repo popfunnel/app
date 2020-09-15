@@ -27,24 +27,12 @@ export const setCurrentDashboard = dashboardId => async (dispatch, getState) => 
         const [dashboardInfo, currentDashboardCharts] = 
             await Promise.all([fetchDashboardById(dashboardId), fetchChartsByDashboardId(dashboardId)])
         dispatch({type: SET_CURRENT_DASHBOARD, dashboardInfo, currentDashboardCharts});
-
+        persistCurrentDashboardId(dashboardId);
         return dashboardInfo;
     } catch(error) {
         throw error;
     };
 };
-
-// export const SET_CURRENT_DASHBOARD_CHARTS = 'SET_CURRENT_DASHBOARD_CHARTS';
-// export const setCurrentDashboardCharts = () => async (dispatch, getState) => {
-//     let dashboardId = getState().dashboard.currentDashboard.id;
-//     try {
-//         let currentDashboardCharts = await fetchChartsByDashboardId(dashboardId)
-//         dispatch({type: SET_CURRENT_DASHBOARD_CHARTS, currentDashboardCharts});
-//         return currentDashboardCharts;
-//     } catch(error) {
-//         throw error;
-//     };
-// }
 
 const fetchDashboardIds = () => {
     return fetch('/dashboard/list').then(response => {
@@ -56,22 +44,41 @@ const fetchDashboardIds = () => {
     });
 }
 
+
+
+const getNewCurrentDashboardId = (dashboardOptions, currentDashboard) => {
+    let newCurrentDashboardId;
+    let persistedCurrentDashboardId = sessionStorage.getItem('currentDashboardId');
+    if (persistedCurrentDashboardId &&
+        dashboardOptions.find(option => option.id.toString() === persistedCurrentDashboardId)) {
+            newCurrentDashboardId = persistedCurrentDashboardId;
+    } else {
+        newCurrentDashboardId = currentDashboard.id === 'no-dashboards-option' ?
+            dashboardOptions[0].id :
+            currentDashboard.id;
+    };
+    
+    return newCurrentDashboardId;
+};
+
+export const persistCurrentDashboardId = (currentDashboardId) => {
+    sessionStorage.setItem('currentDashboardId', `${currentDashboardId}`);
+}
+
 export const REFRESH_DASHBOARD_INFO = 'REFRESH_DASHBOARD_INFO';
 export const RESET_DASHBOARD_INFO = 'RESET_DASHBOARD_INFO';
 export const refreshDashboardInfo = () => async (dispatch, getState) => {
     try {
         let dashboardOptions = await fetchDashboardIds();
-        let currentDashboard = getState().dashboard.currentDashboard
+        let currentDashboard = getState().dashboard.currentDashboard;
         if (dashboardOptions.length) {
-            let currentDashboardId = currentDashboard.id === 'no-dashboards-option' ?
-                dashboardOptions[0].id :
-                currentDashboard.id;
-                
+            let newCurrentDashboardId = getNewCurrentDashboardId(dashboardOptions, currentDashboard);
             const [currentDashboardInfo, currentDashboardCharts] = 
-                await Promise.all([fetchDashboardById(currentDashboardId),
-                    fetchChartsByDashboardId(currentDashboardId)]);
+                await Promise.all([fetchDashboardById(newCurrentDashboardId),
+                    fetchChartsByDashboardId(newCurrentDashboardId)]);
             
             dispatch({type: REFRESH_DASHBOARD_INFO, currentDashboardInfo, currentDashboardCharts, dashboardOptions});
+            persistCurrentDashboardId(currentDashboardInfo.id);
             return dashboardOptions;  
         } else {
             dispatch({type: RESET_DASHBOARD_INFO});

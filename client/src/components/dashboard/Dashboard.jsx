@@ -5,8 +5,10 @@ import '../../../node_modules/react-resizable/css/styles.css'
 import { connect } from 'react-redux';
 import { CustomBarChart } from '../query/display/Bar';
 import { CustomLineChart } from '../query/display/Line';
+import {openSnackbarWithMessage} from '../../actions/snackbar';
 
-const Dashboard = ({dashboardCharts, initialDashboardLayout, setCurrentLayout}) => {
+
+const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout, setCurrentLayout, openSnackbarWithMessage}) => {
 
     if (!dashboardCharts.length) {
         return (
@@ -14,6 +16,32 @@ const Dashboard = ({dashboardCharts, initialDashboardLayout, setCurrentLayout}) 
                 Created charts will appear here.
             </div>
         );
+    };
+
+    const autoSaveChartLayout = (currentLayout) => {
+        let data = {
+            dashboard_id: currentDashboardId,
+            chartLayout: currentLayout
+        }
+
+        return fetch('/dashboard/update-layout', {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => {
+            if (response.status === 200) {
+                return true;
+            } else if (response.status === 500 || response.status === 400) {
+                return false;
+            }
+        })
+        .catch(error => {
+            openSnackbarWithMessage(`${error}`);
+        });
     };
 
     const getGridItems = () => {
@@ -38,6 +66,8 @@ const Dashboard = ({dashboardCharts, initialDashboardLayout, setCurrentLayout}) 
     // TODO: use responsive layout
     // Reference: https://github.com/STRML/react-grid-layout#grid-item-props
     // TODO: add multiple y axis series 
+
+    // context menu for grids https://material-ui.com/components/menus/
     return (
         <GridLayout
             className="layout"
@@ -46,26 +76,27 @@ const Dashboard = ({dashboardCharts, initialDashboardLayout, setCurrentLayout}) 
             rowHeight={30}
             width={1800}
             onLayoutChange={(layout) => {
-                console.log('layout', layout)
-                setCurrentLayout(layout)
+                // TODO: save chart layout in dashboard action?
+                setCurrentLayout(layout);
+                autoSaveChartLayout(layout);
             }}
         >
             {getGridItems()}
         </GridLayout>
-        // <div>
-        //     hey
-        // </div>
     )
 }
 
 
 const mapStateToProps = state => {
     return {
+        currentDashboardId: state.dashboard.currentDashboard.id,
         dashboardCharts: state.dashboard.currentDashboardCharts,
         initialDashboardLayout: state.dashboard.currentDashboard.chart_layout || [],
     }
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    openSnackbarWithMessage
+};
 
 export const ConnectedDashboard = connect(mapStateToProps, mapDispatchToProps)(Dashboard);

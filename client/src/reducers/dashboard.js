@@ -8,18 +8,6 @@ const initialState = {
     dashboardOptions: []
 };
 
-// // TODO: this will be async call to backend
-// function saveChartConfig(state, chartConfig) {
-//     // TODO: fetch to set in database!
-//     let chartConfigs = [...state.dashboardChartConfigs];
-//     chartConfigs.push(chartConfig);
-    
-//     return {
-//         ...state,
-//         dashboardChartConfigs: chartConfigs
-//     };
-// };
-
 function setCurrentDashboard(state, dashboardInfo, currentDashboardCharts) {
     return {
         ...state,
@@ -27,13 +15,6 @@ function setCurrentDashboard(state, dashboardInfo, currentDashboardCharts) {
         currentDashboardCharts: currentDashboardCharts
     };
 };
-
-// function setCurrentDashboardCharts(state, currentDashboardCharts) {
-//     return {
-//         ...state,
-//         currentDashboardCharts: currentDashboardCharts
-//     }
-// };
 
 function refreshDashboardInfo(state, currentDashboardInfo, currentDashboardCharts, dashboardOptions) {
     return {
@@ -58,12 +39,8 @@ function resetDashboardInfo(state) {
 
 export default function dashboard(state = initialState, action) {
     switch (action.type) {
-        // case queryActions.SAVE_CHART_CONFIG:
-        //     return saveChartConfig(state, action.chartConfig);
         case actions.SET_CURRENT_DASHBOARD:
             return setCurrentDashboard(state, action.dashboardInfo, action.currentDashboardCharts);
-        // case actions.SET_CURRENT_DASHBOARD_CHARTS:
-        //     return setCurrentDashboardCharts(state, action.currentDashboardCharts);
         case actions.REFRESH_DASHBOARD_INFO:
             return refreshDashboardInfo(state, action.currentDashboardInfo, action.currentDashboardCharts, action.dashboardOptions);
         case actions.RESET_DASHBOARD_INFO:

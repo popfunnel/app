@@ -44,7 +44,6 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
             };
         };
         fetchDashboardOptions();
-        console.log('hey leaving in dashboardpage')
     }, [refreshDashboardInfo, openSnackbarWithMessage]);
     
     const handleAddChart = () => {
@@ -87,6 +86,8 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
         return dashboardMenuItems;
     };
 
+    // TODO: save functionality is duplicated in connecteddashboard component,
+    // move to action?
     const saveChartLayout = () => {
         let data = {
             dashboard_id: currentDashboardId,
@@ -122,7 +123,9 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
                     <StyledSelect
                         id="dashboard-select"
                         value={currentDashboardId}
-                        onChange={e => {setCurrentDashboard(e.target.value)}}
+                        onChange={e => {
+                            setCurrentDashboard(e.target.value)
+                        }}
                         variant='outlined'
                     >
                         {getDashboardMenuItems()}
