@@ -13,8 +13,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     table: {
-        // minWidth: 650,
+        minWidth: 650,
     },
+    cell: {
+        fontSize: '12px'
+    }
 }));
 
 const ResultsTable = ({queryResults}) => {
@@ -27,7 +30,7 @@ const ResultsTable = ({queryResults}) => {
             <TableHead>
                 <TableRow>
                     {attributes.map(header => (
-                        <TableCell key={uuidv4()}>{header}</TableCell>
+                        <TableCell className={classes.cell} key={uuidv4()}>{header}</TableCell>
                     ))}
                 </TableRow>
             </TableHead>
@@ -39,7 +42,7 @@ const ResultsTable = ({queryResults}) => {
             <TableBody>
                 {queryResults.map((row) => (
                     <TableRow key={uuidv4()}>
-                        {attributes.map(col => <TableCell key={uuidv4()}>{row[col]}</TableCell>)}
+                        {attributes.map(col => <TableCell className={classes.cell} key={uuidv4()}>{row[col]}</TableCell>)}
                     </TableRow>
                 ))}
             </TableBody>

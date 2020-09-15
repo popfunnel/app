@@ -9,6 +9,12 @@ import 'codemirror/theme/yonce.css';
 import 'codemirror/mode/sql/sql';
 import { connect } from 'react-redux'
 import { queryDatabase, resetForm } from '../../../actions/queryTool';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Collapse from '@material-ui/core/Collapse';
+import { ConnectedResultsTable } from '../display/Table'
+// import { SchemaTreeView } from './SchemaTreeView';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
 const QueryInput = ({queryDatabase, resetForm}) => {
     let exampleQuery = `SELECT
@@ -38,6 +44,7 @@ const QueryInput = ({queryDatabase, resetForm}) => {
     25`
 
     let [queryInput, setQueryInput] = React.useState(exampleQuery);
+    let [areResultsOpen, setAreResultsOpen] = React.useState(false);
 
     const commentToken = '--' // for non-postgres this might be something else
     let formatHelper = (cm) => {
@@ -66,6 +73,7 @@ const QueryInput = ({queryDatabase, resetForm}) => {
             cm.replaceRange(lineText, {line: currentLine-1, anchor: 0}, {line: currentLine, anchor: 0})
         }
     }
+
     return (
         <Paper style={{marginTop:'5px', width:'100%'}}>
             <CodeMirror
@@ -96,29 +104,44 @@ const QueryInput = ({queryDatabase, resetForm}) => {
                     setQueryInput(value)
                 }}
             />
-            <div style={{display:'flex', justifyContent:'flex-end', width:'100%', paddingRight:'10px'}}>
+            <div style={{display:'flex', justifyContent:'space-between', width:'100%', paddingRight:'10px'}}>
                 <div>
                     <Button
-                        color='secondary'
-                        onClick={() => {
-                            setQueryInput('')
-                            resetForm()}
-                        }
+                        onClick={() => {setAreResultsOpen(!areResultsOpen)}}
+                        endIcon={areResultsOpen ? <ExpandMore/> : <ChevronRightIcon/>}
                         disableRipple
                     >
-                        Reset
+                        Output
                     </Button>
                 </div>
                 <div>
                     <Button
                         color='secondary'
-                        onClick={() => queryDatabase(queryInput)}
+                        onClick={() => {
+                            setQueryInput('');
+                            resetForm();
+                        }}
+                        disableRipple
+                    >
+                        Reset
+                    </Button>
+                    <Button
+                        color='secondary'
+                        onClick={() => {
+                            setAreResultsOpen(false);
+                            queryDatabase(queryInput);
+                        }}
                         disableRipple
                     >
                         Run Sql
                     </Button>
                 </div>
             </div>
+            <Collapse in={areResultsOpen} timeout="auto">
+                <div style={{width:'100%'}}>
+                    <ConnectedResultsTable/>
+                </div>
+            </Collapse>
         </Paper>
     );
 };
@@ -129,3 +152,22 @@ const mapDispatchToProps = {
 };
 
 export const ConnectedQueryInput = connect(undefined, mapDispatchToProps)(QueryInput);
+
+
+/* <ListItem
+    button
+    disableRipple
+    onClick={() => {
+        setDrawerOpenStatus(true);
+        setSchemaDropdownStatus(!isSchemaDropdownOpen);
+    }}
+>
+    <ListItemIcon>
+        <StorageIcon/>
+    </ListItemIcon>
+    <ListItemText primary="Schemas" />
+    {isSchemaDropdownOpen ? <ExpandLess /> : <ExpandMore />}
+</ListItem>
+<Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
+    <SchemaTreeView/>
+</Collapse> */
