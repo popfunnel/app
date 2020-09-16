@@ -13,9 +13,23 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import { ConnectedResultsTable } from '../display/Table'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { asOutputContainer } from '../display/OutputContainer'
+import { asOutputContainer } from '../display/OutputContainer';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+    buttonRoot: {
+        backgroundColor: 'transparent',
+        "&:hover": {
+            backgroundColor: 'transparent'
+        }
+    },
+    buttonLabel: {
+        textTransform: "none"
+    }
+}));
 
 const QueryEditor = ({queryDatabase, resetForm}) => {
+    const classes = useStyles();
     let exampleQuery = `SELECT
     date(Date_trunc('day', rental_date)) AS rental_date,
     Count(*) AS total,
@@ -77,7 +91,7 @@ const QueryEditor = ({queryDatabase, resetForm}) => {
     const getResultsTable = () => {
         let ResultsTable = asOutputContainer(ConnectedResultsTable);
         return <ResultsTable/>
-    }
+    };
 
     return (
         <Paper style={{marginTop:'5px', width:'100%'}}>
@@ -115,12 +129,17 @@ const QueryEditor = ({queryDatabase, resetForm}) => {
                         onClick={() => {setAreResultsOpen(!areResultsOpen)}}
                         endIcon={areResultsOpen ? <ExpandMore/> : <ChevronRightIcon/>}
                         disableRipple
+                        // style={{ backgroundColor: 'transparent' }}
+                        classes={{
+                            root: classes.buttonRoot,
+                            label: classes.buttonLabel
+                        }}
                     >
                         Output
                     </Button>
                 </div>
                 <div>
-                    <Button
+                    {/* <Button
                         color='secondary'
                         onClick={() => {
                             setQueryInput('');
@@ -129,13 +148,17 @@ const QueryEditor = ({queryDatabase, resetForm}) => {
                         disableRipple
                     >
                         Reset
-                    </Button>
+                    </Button> */}
                     <Button
                         color='secondary'
                         onClick={() => {
                             queryDatabase(queryInput);
                         }}
                         disableRipple
+                        classes={{
+                            root: classes.buttonRoot,
+                            label: classes.buttonLabel
+                        }}
                     >
                         Run Sql
                     </Button>
