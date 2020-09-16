@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     buttonLabel: {
+        fontSize:'12px',
         textTransform: "none"
     }
 }));
