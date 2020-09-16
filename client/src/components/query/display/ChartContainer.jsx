@@ -5,7 +5,7 @@ import { ConnectedCustomBarChart } from './Bar'
 import { ConnectedCustomLineChart } from './Line'
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
-import { asOutputContainer }  from './OutputContainer';
+import { withOutputContainer }  from './OutputContainer';
 
 const ChartContainer = ({queryResults, seriesType, config}) => {
     // TODO: add row numbers to table, headers should be styled
@@ -19,7 +19,7 @@ const ChartContainer = ({queryResults, seriesType, config}) => {
         } else if (seriesType === 'Line') {
             ChartComponent = ConnectedCustomLineChart;
         }
-        let Chart = asOutputContainer(ChartComponent);
+        let Chart = withOutputContainer(ChartComponent);
         return <Chart noResultsMsg={'Start by running a query using the editor!'}/>
     };
 

@@ -27,7 +27,7 @@ export const OutputContainer = (Component) =>
         const NoResults = () => {
             return (
                 <div className={classes.noResults}>
-                    {noResultsMsg || 'No output.'}
+                    {noResultsMsg || 'No output to display.'}
                 </div>
             );
         }
@@ -45,7 +45,7 @@ const mapStateToProps = state => ({
     queryResults: state.query.rawResults
 });
 
-export const asOutputContainer = compose(
+export const withOutputContainer = compose(
     connect(mapStateToProps, null),
     OutputContainer
 );

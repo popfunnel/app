@@ -10,7 +10,6 @@ import TableRow from '@material-ui/core/TableRow';
 import { connect } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid';
 
-
 const useStyles = makeStyles((theme) => ({
     table: {
         // minWidth: 650,
@@ -20,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
         outline: '1px solid black;'
     }
 }));
+
+// Reference: https://material-ui.com/components/tables/
 
 const ResultsTable = ({queryResults}) => {
     const classes = useStyles();
