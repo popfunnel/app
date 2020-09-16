@@ -13,6 +13,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import { ConnectedResultsTable } from '../display/Table'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import { asOutputContainer } from '../display/OutputContainer'
 
 const QueryEditor = ({queryDatabase, resetForm}) => {
     let exampleQuery = `SELECT
@@ -53,6 +54,7 @@ const QueryEditor = ({queryDatabase, resetForm}) => {
             cm.setValue(sqlFormatter.format(cm.getValue()))
         }
     }
+
     let commentHelper = function(cm) {
         let selection = cm.getSelection()
         if (selection) {
@@ -70,6 +72,11 @@ const QueryEditor = ({queryDatabase, resetForm}) => {
             }
             cm.replaceRange(lineText, {line: currentLine-1, anchor: 0}, {line: currentLine, anchor: 0})
         }
+    }
+
+    const getResultsTable = () => {
+        let ResultsTable = asOutputContainer(ConnectedResultsTable);
+        return <ResultsTable/>
     }
 
     return (
@@ -136,7 +143,7 @@ const QueryEditor = ({queryDatabase, resetForm}) => {
             </div>
             <Collapse in={areResultsOpen} timeout="auto">
                 <div style={{width:'100%'}}>
-                    <ConnectedResultsTable/>
+                    {getResultsTable()}
                 </div>
             </Collapse>
         </Paper>

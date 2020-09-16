@@ -155,7 +155,6 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, saveChart,
                         if (validateChartName()) {
                             saveChart(chartName)
                             .then(() => {
-                                // refreshDashboardInfo()
                                 history.push('/dashboard');
                             })
                             .catch(error => {
