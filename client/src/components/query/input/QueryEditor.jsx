@@ -9,14 +9,12 @@ import 'codemirror/theme/yonce.css';
 import 'codemirror/mode/sql/sql';
 import { connect } from 'react-redux'
 import { queryDatabase, resetForm } from '../../../actions/queryTool';
-import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from '@material-ui/core/Collapse';
 import { ConnectedResultsTable } from '../display/Table'
-// import { SchemaTreeView } from './SchemaTreeView';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-const QueryInput = ({queryDatabase, resetForm}) => {
+const QueryEditor = ({queryDatabase, resetForm}) => {
     let exampleQuery = `SELECT
     date(Date_trunc('day', rental_date)) AS rental_date,
     Count(*) AS total,
@@ -128,7 +126,6 @@ const QueryInput = ({queryDatabase, resetForm}) => {
                     <Button
                         color='secondary'
                         onClick={() => {
-                            setAreResultsOpen(false);
                             queryDatabase(queryInput);
                         }}
                         disableRipple
@@ -151,23 +148,4 @@ const mapDispatchToProps = {
     resetForm
 };
 
-export const ConnectedQueryInput = connect(undefined, mapDispatchToProps)(QueryInput);
-
-
-/* <ListItem
-    button
-    disableRipple
-    onClick={() => {
-        setDrawerOpenStatus(true);
-        setSchemaDropdownStatus(!isSchemaDropdownOpen);
-    }}
->
-    <ListItemIcon>
-        <StorageIcon/>
-    </ListItemIcon>
-    <ListItemText primary="Schemas" />
-    {isSchemaDropdownOpen ? <ExpandLess /> : <ExpandMore />}
-</ListItem>
-<Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
-    <SchemaTreeView/>
-</Collapse> */
+export const ConnectedQueryEditor = connect(undefined, mapDispatchToProps)(QueryEditor);

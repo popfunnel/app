@@ -7,6 +7,7 @@ import { CustomLineChart } from './Line'
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
+import { withOutputContainer}  from './OutputContainer';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -25,7 +26,8 @@ const DisplayContainer = ({queryResults, seriesType, config}) => {
     const SeriesTitle = () => {
         return (
             <div style={{paddingLeft: '10px'}}>
-                <Typography variant="h6" display="block">{seriesType}</Typography>
+                {/* <Typography variant="h6" display="block">{seriesType}</Typography> */}
+                <Typography variant="h6" display="block">Chart</Typography>
             </div>
         );
     }
@@ -45,20 +47,24 @@ const DisplayContainer = ({queryResults, seriesType, config}) => {
             return <CustomBarChart config={config}/>
         } else if (seriesType === 'Line') {
             return <CustomLineChart config={config}/>
-        }
+        };
     }
 
     const getDisplay = () => {
         if (!queryResults.length) {
             return <NoResults/>
         } else if (seriesType === 'Table') {
-            return <ConnectedResultsTable/>    
-        } else {
+            const ConnectedResultsTableWithOutputContainer = withOutputContainer(ConnectedResultsTable)
+            return <ConnectedResultsTableWithOutputContainer/>    
+        }else {
+            // TODO: create fixed chart container(Paper) with overflow auto
+            // TODO: output dropdown should be fixed size with overflow auto
+            // TODO: add row numbers to table, headers should be styled
             return (
                 <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
-                    <div style={{height:'80%', width:'80%'}}>
+                    <Paper style={{height:'80%', width:'80%'}}>
                         {getChart()}
-                    </div>
+                    </Paper>
                 </div>
             );
         };

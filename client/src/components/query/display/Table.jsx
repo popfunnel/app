@@ -13,10 +13,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     table: {
-        minWidth: 650,
+        // minWidth: 650,
     },
     cell: {
-        fontSize: '12px'
+        fontSize: '12px',
+        outline: '1px solid black;'
     }
 }));
 
@@ -51,7 +52,7 @@ const ResultsTable = ({queryResults}) => {
 
     return(
         <TableContainer component={Paper}>
-            <Table className={classes.table}  size="small" aria-label="query results">
+            <Table  className={classes.table}  size="small" aria-label="query results">
                 <TableBodyHeader/>
                 <TableBodyRows/>
             </Table>
