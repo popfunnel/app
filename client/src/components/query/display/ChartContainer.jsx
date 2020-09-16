@@ -20,17 +20,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const DisplayContainer = ({queryResults, seriesType, config}) => {
+const ChartContainer = ({queryResults, seriesType, config}) => {
     const classes = useStyles();
     
-    const SeriesTitle = () => {
-        return (
-            <div style={{paddingLeft: '10px'}}>
-                {/* <Typography variant="h6" display="block">{seriesType}</Typography> */}
-                <Typography variant="h6" display="block">Chart</Typography>
-            </div>
-        );
-    }
+    // const SeriesTitle = () => {
+    //     return (
+    //         <div style={{paddingLeft: '10px'}}>
+    //             {/* <Typography variant="h6" display="block">{seriesType}</Typography> */}
+    //         </div>
+    //     );
+    // }
 
     const NoResults = () => {
         return (
@@ -50,6 +49,9 @@ const DisplayContainer = ({queryResults, seriesType, config}) => {
         };
     }
 
+    // TODO: create fixed chart container(Paper) with overflow auto
+    // TODO: output dropdown should be fixed size with overflow auto
+    // TODO: add row numbers to table, headers should be styled
     const getDisplay = () => {
         if (!queryResults.length) {
             return <NoResults/>
@@ -57,9 +59,6 @@ const DisplayContainer = ({queryResults, seriesType, config}) => {
             const ConnectedResultsTableWithOutputContainer = withOutputContainer(ConnectedResultsTable)
             return <ConnectedResultsTableWithOutputContainer/>    
         }else {
-            // TODO: create fixed chart container(Paper) with overflow auto
-            // TODO: output dropdown should be fixed size with overflow auto
-            // TODO: add row numbers to table, headers should be styled
             return (
                 <div style={{display:'flex', alignItems: 'center', justifyContent:'center', height:'85%', width:'100%'}}>
                     <Paper style={{height:'80%', width:'80%'}}>
@@ -70,9 +69,13 @@ const DisplayContainer = ({queryResults, seriesType, config}) => {
         };
     }
 
+    // const getChart = () => {
+
+    // };
+
     return (
         <div style={{flex: 1}}>
-            <SeriesTitle/>
+            <Typography variant="h6" display="block">Chart</Typography>
             {getDisplay()}
         </div>
     )
@@ -88,4 +91,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {};
 
-export const ConnectedDisplayContainer = connect(mapStateToProps, mapDispatchToProps)(DisplayContainer);
+export const ConnectedChartContainer = connect(mapStateToProps, mapDispatchToProps)(ChartContainer);
