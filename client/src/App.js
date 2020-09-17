@@ -17,28 +17,25 @@ import jwt_decode from 'jwt-decode';
 
 const PrivateRoute = ({component: Component, ...rest}) => {
   // Reference: https://medium.com/lightrail/getting-token-authentication-right-in-a-stateless-single-page-application-57d0c6474e3
-  const [isAuthenticated, setIsAuthenticated] = React.useState(true);
-
-  React.useEffect(() => {
+  const checkIsAuthenticated = () => {
     let jwtHeaderPayload = Cookies.get('jwtHeaderPayload');
     if (!jwtHeaderPayload) {
-      setIsAuthenticated(false);
+      return false;
     } else {
       let decodedJwtPayload = jwt_decode(jwtHeaderPayload);
       let {expires} = decodedJwtPayload;
       
       if (expires < new Date().getTime()) {
-        setIsAuthenticated(false)
+        return false;
       } else {
-        setIsAuthenticated(true);
+        return true;
       }
     };
-
-  }, []);
+  }
 
   return (
     <Route {...rest} render={props => 
-      isAuthenticated ?
+      checkIsAuthenticated() ?
       <Component {...props}/> :
       <Redirect to='/login'/>}
     />
