@@ -10,7 +10,7 @@ export const QueryPage = () => {
     return (
         <>
             <ConnectedQueryToolHeader/>
-            <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh - 108px)'}}>
+            <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh - 108px)', marginTop: '5px'}}>
                 <div style={{display:'flex', flexDirection:'column', flex: 1, overflowY:'auto'}}>
                     <ConnectedQueryEditor/>
                     <ConnectedChartContainer/>
