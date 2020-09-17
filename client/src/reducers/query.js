@@ -2,20 +2,23 @@ import * as actions from '../actions/queryTool';
 
 const initialState = {
     rawResults: [],
-    userInput: ''
+    userInput: '',
+    isLoading: false,
 }
 
 function setRawResults(state, rawResults) {
     return {
         ...state,
-        rawResults
+        rawResults,
+        isLoading:false
     };
 };
 
 function setUserInput(state, userInput) {
     return {
         ...state,
-        userInput
+        userInput,
+        isLoading: true
     };
 };
 

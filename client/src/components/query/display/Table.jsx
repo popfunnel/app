@@ -12,15 +12,25 @@ import { v4 as uuidv4 } from 'uuid';
 
 const useStyles = makeStyles((theme) => ({
     table: {
-        // minWidth: 650,
+        width: 'auto',
+        margin:'20px',
+       
+    },
+    row: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+    },
+    head: {
+        fontSize: '12px',
+        fontWeight: 'bold',
+        border: '1px solid rgba(224, 224, 224, 1)'
     },
     cell: {
         fontSize: '12px',
-        outline: '1px solid black;'
+        border: '1px solid rgba(224, 224, 224, 1)'
     }
 }));
-
-// Reference: https://material-ui.com/components/tables/
 
 const ResultsTable = ({queryResults}) => {
     const classes = useStyles();
@@ -31,8 +41,9 @@ const ResultsTable = ({queryResults}) => {
         return(
             <TableHead>
                 <TableRow>
+                    <TableCell key={uuidv4()} className={classes.head}/>
                     {attributes.map(header => (
-                        <TableCell className={classes.cell} key={uuidv4()}>{header}</TableCell>
+                        <TableCell key={uuidv4()} className={classes.head} >{header}</TableCell>
                     ))}
                 </TableRow>
             </TableHead>
@@ -42,9 +53,10 @@ const ResultsTable = ({queryResults}) => {
     let TableBodyRows = () => {
         return(
             <TableBody>
-                {queryResults.map((row) => (
-                    <TableRow key={uuidv4()}>
-                        {attributes.map(col => <TableCell className={classes.cell} key={uuidv4()}>{row[col]}</TableCell>)}
+                {queryResults.map((row, index) => (
+                    <TableRow key={uuidv4()} className={classes.row}>
+                        <TableCell className={classes.cell} key={uuidv4()}>{index+1}</TableCell>
+                        {attributes.map(col => <TableCell key={uuidv4()} className={classes.cell} >{row[col]}</TableCell>)}
                     </TableRow>
                 ))}
             </TableBody>
@@ -53,7 +65,7 @@ const ResultsTable = ({queryResults}) => {
 
     return(
         <TableContainer component={Paper}>
-            <Table  className={classes.table}  size="small" aria-label="query results">
+            <Table className={classes.table} size="small" aria-label="query results">
                 <TableBodyHeader/>
                 <TableBodyRows/>
             </Table>
