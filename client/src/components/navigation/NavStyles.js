@@ -61,6 +61,9 @@ export const NavStyles = (theme) => ({
         // necessary for content to be below app bar
         // ...theme.mixins.toolbar
     },
+    listItemText: {
+        fontSize: '14px'
+    },
     content: {
         display:'flex',
         flexDirection:'column',

@@ -36,7 +36,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
     let history = useHistory();
 
     // TODO: add schema tree view in additional drawer expansion
-    // TODO: add profile button with
+    // TODO: add profile button with dropdown
     return (
         <>
             <CssBaseline />
@@ -64,10 +64,10 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                     </IconButton>
                 </div>
                 <Divider/>
-                <List>
+                <List >
                     <ListItem key={uuidv4()} button disableRipple  onClick={() => {history.push('/queryTool')}}>
                         <ListItemIcon><EqualizerIcon/></ListItemIcon>
-                        <ListItemText primary={'Query Tools'} />
+                        <ListItemText classes={{primary: classes.listItemText}} primary={'Query Tools'} />
                     </ListItem>
                     {/* <ListItem
                         button
@@ -88,26 +88,25 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                     </Collapse> */}
                     <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/dashboard')}}>
                         <ListItemIcon><DashboardIcon/></ListItemIcon>
-                        <ListItemText primary={'Dashboards'} />
+                        <ListItemText classes={{primary: classes.listItemText}} primary={'Dashboards'} />
                     </ListItem>
                     <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
                         <ListItemIcon><SlideshowIcon/></ListItemIcon>
-                        <ListItemText primary={'Slides'} />
+                        <ListItemText classes={{primary: classes.listItemText}} primary={'Slides'} />
                     </ListItem>
                 </List>
                 <Divider/>
                 <List>
                     <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
                         <ListItemIcon><SettingsIcon/></ListItemIcon>
-                        <ListItemText primary={'Settings'} />
+                        <ListItemText classes={{primary: classes.listItemText}} primary={'Settings'} />
                     </ListItem>
                     <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
                         <ListItemIcon><InfoIcon/></ListItemIcon>
-                        <ListItemText primary={'Info'} />
+                        <ListItemText classes={{primary: classes.listItemText}} primary={'Info'} />
                     </ListItem>
                 </List>
             </Drawer>
-        {/* </div> */}
         </>
     );
 };
