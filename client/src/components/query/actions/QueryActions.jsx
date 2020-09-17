@@ -57,7 +57,7 @@ export const QueryActions = () => {
   }))(Tab);
   
   return (
-    <div style={{height: 'calc(100vh - 64px)'}}>
+    <div style={{height: 'calc(100vh - 98px)'}}>
         <div className={classes.tabContainer}>
             {getTabContent()}
             <div style={{height: '100%'}}>

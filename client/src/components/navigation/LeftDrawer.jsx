@@ -38,76 +38,77 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
     // TODO: add schema tree view in additional drawer expansion
     // TODO: add profile button with
     return (
-        <div className={classes.root}>
-        <CssBaseline />
-        <Drawer
-            variant="permanent"
-            className={clsx(classes.drawer, {
-                [classes.drawerOpen]: isDrawerOpen,
-                [classes.drawerClose]: !isDrawerOpen,
-            })}
-            classes={{
-                paper: clsx({
+        <>
+            <CssBaseline />
+            <Drawer
+                variant="permanent"
+                className={clsx(classes.drawer, {
                     [classes.drawerOpen]: isDrawerOpen,
                     [classes.drawerClose]: !isDrawerOpen,
-                }),
-            }}
-        >
-            <div className={classes.toolbar}>
-                <IconButton
-                    onClick={() => {
-                        setSchemaDropdownStatus(false);
-                        setDrawerOpenStatus(false);
-                    }}
-                >
-                    {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-                </IconButton>
-            </div>
-            <Divider/>
-            <List>
-                <ListItem key={uuidv4()} button disableRipple  onClick={() => {history.push('/queryTool')}}>
-                    <ListItemIcon><EqualizerIcon/></ListItemIcon>
-                    <ListItemText primary={'Query Tools'} />
-                </ListItem>
-                {/* <ListItem
-                    button
-                    disableRipple
-                    onClick={() => {
-                        setDrawerOpenStatus(true);
-                        setSchemaDropdownStatus(!isSchemaDropdownOpen);
-                    }}
-                >
-                    <ListItemIcon>
-                        <StorageIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary="Schemas" />
-                    {isSchemaDropdownOpen ? <ExpandLess /> : <ExpandMore />}
-                </ListItem>
-                <Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
-                    <SchemaTreeView/>
-                </Collapse> */}
-                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/dashboard')}}>
-                    <ListItemIcon><DashboardIcon/></ListItemIcon>
-                    <ListItemText primary={'Dashboards'} />
-                </ListItem>
-                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
-                    <ListItemIcon><SlideshowIcon/></ListItemIcon>
-                    <ListItemText primary={'Slides'} />
-                </ListItem>
-            </List>
-            <Divider/>
-            <List>
-                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
-                    <ListItemIcon><SettingsIcon/></ListItemIcon>
-                    <ListItemText primary={'Settings'} />
-                </ListItem>
-                <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
-                    <ListItemIcon><InfoIcon/></ListItemIcon>
-                    <ListItemText primary={'Info'} />
-                </ListItem>
-            </List>
-        </Drawer>
-        </div>
+                })}
+                classes={{
+                    paper: clsx({
+                        [classes.drawerOpen]: isDrawerOpen,
+                        [classes.drawerClose]: !isDrawerOpen,
+                    }),
+                }}
+            >
+                <div className={classes.leftToolbar}>
+                    <IconButton
+                        onClick={() => {
+                            setSchemaDropdownStatus(false);
+                            setDrawerOpenStatus(false);
+                        }}
+                    >
+                        {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+                    </IconButton>
+                </div>
+                <Divider/>
+                <List>
+                    <ListItem key={uuidv4()} button disableRipple  onClick={() => {history.push('/queryTool')}}>
+                        <ListItemIcon><EqualizerIcon/></ListItemIcon>
+                        <ListItemText primary={'Query Tools'} />
+                    </ListItem>
+                    {/* <ListItem
+                        button
+                        disableRipple
+                        onClick={() => {
+                            setDrawerOpenStatus(true);
+                            setSchemaDropdownStatus(!isSchemaDropdownOpen);
+                        }}
+                    >
+                        <ListItemIcon>
+                            <StorageIcon/>
+                        </ListItemIcon>
+                        <ListItemText primary="Schemas" />
+                        {isSchemaDropdownOpen ? <ExpandLess /> : <ExpandMore />}
+                    </ListItem>
+                    <Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
+                        <SchemaTreeView/>
+                    </Collapse> */}
+                    <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/dashboard')}}>
+                        <ListItemIcon><DashboardIcon/></ListItemIcon>
+                        <ListItemText primary={'Dashboards'} />
+                    </ListItem>
+                    <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
+                        <ListItemIcon><SlideshowIcon/></ListItemIcon>
+                        <ListItemText primary={'Slides'} />
+                    </ListItem>
+                </List>
+                <Divider/>
+                <List>
+                    <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
+                        <ListItemIcon><SettingsIcon/></ListItemIcon>
+                        <ListItemText primary={'Settings'} />
+                    </ListItem>
+                    <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
+                        <ListItemIcon><InfoIcon/></ListItemIcon>
+                        <ListItemText primary={'Info'} />
+                    </ListItem>
+                </List>
+            </Drawer>
+        {/* </div> */}
+        </>
     );
 };
 

@@ -12,6 +12,10 @@ export const NavStyles = (theme) => ({
             duration: theme.transitions.duration.leavingScreen,
         }),
     },
+    topToolbar: {
+        paddingLeft: theme.spacing(2),
+        minHeight:'48px'
+    },
     appBarShift: {
         marginLeft: drawerWidth,
         width: `calc(100% - ${drawerWidth}px)`,
@@ -45,17 +49,17 @@ export const NavStyles = (theme) => ({
         }),
         overflowX: 'hidden',
         width: theme.spacing(7) + 1,
-        [theme.breakpoints.up('sm')]: {
-            width: theme.spacing(9) + 1,
-        },
+        // [theme.breakpoints.up('sm')]: {
+        //     width: theme.spacing(9) + 1,
+        // },
     },
-    toolbar: {
+    leftToolbar: {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-end',
         padding: theme.spacing(0, 1),
         // necessary for content to be below app bar
-        ...theme.mixins.toolbar
+        // ...theme.mixins.toolbar
     },
     content: {
         display:'flex',

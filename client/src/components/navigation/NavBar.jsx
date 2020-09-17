@@ -30,7 +30,7 @@ const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
                     }
                 )}
             >
-                <Toolbar>
+                <Toolbar className={classes.topToolbar}>
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -57,7 +57,7 @@ const NavBar = ({children, isDrawerOpen, setDrawerOpenStatus}) => {
             </AppBar>
             <ConnectedLeftDrawer/>
             <div className={classes.content}>
-                <div style={{minHeight:'64px'}}/>
+                <div style={{minHeight:'48px'}}/>
                 <div style={{flex:1}}>
                     {children}
                 </div>

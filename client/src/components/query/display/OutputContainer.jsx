@@ -32,7 +32,6 @@ export const OutputContainer = (Component) =>
                         {isLoading && <LinearProgress color="secondary"/>}
                     </div> */}
                     <div className={classes.noResults}>
-                        
                         {noResultsMsg || 'No output to display.'}
                     </div>
                 </>

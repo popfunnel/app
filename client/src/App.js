@@ -57,7 +57,6 @@ function App() {
                 <PrivateRoute path='/queryTool' component={QueryPage}/>
                 <PrivateRoute path='/dashboard' component={ConnectedDashboardPage}/>
                 <PrivateRoute path='/info' component={InfoPage}/>
-                {/* <PrivateRoute path='/about' component={AboutPage}/> */}
             </ConnectedNavBar>
         </Switch>
         <ConnectedCustomSnackbar/>
