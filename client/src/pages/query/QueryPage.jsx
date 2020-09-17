@@ -9,7 +9,7 @@ export const QueryPage = () => {
     return (
         <>
             <div style= {{minHeight: '50px', boxShadow: '0 4px 5px -2px black', fontSize: '12px'}}>
-                Current Path/ Save actions here
+                [popfunnel demo]/Query Editor
             </div>
             <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh - 98px)'}}>
                 <div style={{display:'flex', flexDirection:'column', flex: 1, overflowY:'auto'}}>

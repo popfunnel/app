@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux'
 import { compose } from 'redux';
 import { makeStyles } from '@material-ui/core/styles';
-import LinearProgress from '@material-ui/core/LinearProgress';
+// import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles((theme) => ({
     noResults: {
@@ -23,13 +23,13 @@ const useStyles = makeStyles((theme) => ({
 export const OutputContainer = (Component) => 
     function NewComponent(props) {
         const classes = useStyles();
-        const {queryResults, isLoading, noResultsMsg} = props;
+        const {queryResults, noResultsMsg} = props;
 
         const NoResults = () => {
             return (
                 <>
                     {/* <div style={{width:'100%'}}>
-                        {isLoading && <LinearProgress color="secondary"/>}
+                        {props.isLoading && <LinearProgress color="secondary"/>}
                     </div> */}
                     <div className={classes.noResults}>
                         {noResultsMsg || 'No output to display.'}
