@@ -11,14 +11,11 @@ import { ColumnSelector } from './ColumnSelections';
 
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
-import { setSeriesType, saveChartConfig, saveChart } from '../../../../actions/queryTool';
+import { setSeriesType, saveChart } from '../../../../actions/queryTool';
 import { refreshDashboardInfo } from '../../../../actions/dashboard';
 
 import { openSnackbarWithMessage } from '../../../../actions/snackbar';
 import { connect } from 'react-redux'
-import Button from '@material-ui/core/Button';
-import { useHistory } from "react-router-dom";
-import TextField from '@material-ui/core/TextField';
 
 const useStyles = makeStyles((theme) => ({
     chartSelect: {
@@ -30,12 +27,9 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
 const SeriesSettings = ({seriesType, setSeriesType, queryResults, saveChart,
     openSnackbarWithMessage, refreshDashboardInfo}) => {
-        
     const classes = useStyles();
-    let history = useHistory();
     
     const StyledAccordion = withStyles({
         root: {
@@ -55,9 +49,6 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, saveChart,
         expanded: {},
     })(Accordion);
 
-    const [chartName, setChartName] = React.useState('');
-    const [chartNameHasError, setChartNameHasError] = React.useState(false);
-
     React.useEffect(() => {
         let fetchDashboardOptions = async () => {
             try {
@@ -68,21 +59,8 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, saveChart,
         };
         fetchDashboardOptions();
     }, [refreshDashboardInfo, openSnackbarWithMessage]);
-
-    const validateChartName = () => {
-        if (!chartName.length) {
-            setChartNameHasError(true);
-            openSnackbarWithMessage(`Chart Name cannot be empty.`);
-            return false;
-        } else {
-            return true;
-        }
-    }
     
-    
-    // TODO: save button should be in a better location
     // TODO: add ability to render table inside dashboard page
-    // TODO: force user to enter name for chart and add to chart config
     return (
         <div style={{display:'flex', flexDirection: 'column', height: '100%'}}>
             <Typography variant="overline" display="block" gutterBottom>
@@ -125,49 +103,6 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, saveChart,
                     <AccordionDetails>Series options</AccordionDetails>
                 </StyledAccordion>
             </div>
-            {(queryResults.length > 0 && seriesType !== 'Table') &&
-            <div style={{display:'flex', flexDirection: 'column', justifyContent:'center'}}>
-                <TextField
-                    id='chart-name'
-                    label='Chart Name'
-                    value={chartName}
-                    placeholder='Untitled'
-                    onChange={e => {
-                        setChartNameHasError(false);
-                        setChartName(e.target.value)
-                    }}
-                    error={chartNameHasError}
-                    inputProps={{
-                        style: {
-                            fontSize: '12px'
-                        }
-                    }}
-                    InputLabelProps={{
-                        style: {
-                            fontSize: '12px'
-                        },
-                        shrink: true
-                    }}
-                />  
-                <Button
-                    color='secondary'
-                    onClick={() => {
-                        if (validateChartName()) {
-                            saveChart(chartName)
-                            .then(() => {
-                                history.push('/dashboard');
-                            })
-                            .catch(error => {
-                                openSnackbarWithMessage(`${error}`);
-                            });
-                        }
-                    }}
-                    disableRipple
-                >
-                    Save
-                </Button>
-            </div>}
-            
         </div>
     );
 }
@@ -183,7 +118,6 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     setSeriesType,
-    saveChartConfig,
     saveChart,
     openSnackbarWithMessage,
     refreshDashboardInfo

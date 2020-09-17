@@ -7,7 +7,6 @@ import { CustomBarChart } from '../query/display/Bar';
 import { CustomLineChart } from '../query/display/Line';
 import {openSnackbarWithMessage} from '../../actions/snackbar';
 
-
 const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout, setCurrentLayout, openSnackbarWithMessage}) => {
 
     if (!dashboardCharts.length) {
@@ -47,6 +46,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
     const getGridItems = () => {
         return dashboardCharts.map((chartInfo, index) => {
             let {id, name, config, type} = chartInfo;
+            // console.log(`${id}-${name}-${type}`)
             if (type === 'Bar') {
                 return (
                     <div key={`${id}-${name}-${type}`} data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><CustomBarChart config={config}/></div>
@@ -56,9 +56,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
                     <div key={`${id}-${name}-${type}`} data-grid={{x: 0, y: 0, w: 3, h: 6, autoSize:true}}><CustomLineChart config={config}/></div>
                 );
             } else {
-                return (
-                    <div>Error</div>
-                )
+                throw new Error('Bad Chart config!')
             }
         });
     };

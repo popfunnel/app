@@ -2,16 +2,15 @@ import React from 'react';
 import { ConnectedQueryEditor } from '../../components/query/input/QueryEditor';
 import { ConnectedChartContainer } from '../../components/query/display/ChartContainer';
 import { QueryActions } from '../../components/query/actions/QueryActions';
+import { ConnectedQueryToolHeader } from '../../components/query/actions/QueryToolHeader';
 
 export const QueryPage = () => {
     // Reference: https://css-tricks.com/snippets/css/css-box-shadow/
     // TODO: add marginTop to ConnectedChartContainer
     return (
         <>
-            <div style= {{minHeight: '50px', boxShadow: '0 4px 5px -2px black', fontSize: '12px'}}>
-                [popfunnel demo]/Query Editor
-            </div>
-            <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh - 98px)'}}>
+            <ConnectedQueryToolHeader/>
+            <div style={{display:'flex', flexDirection:'row', width: '100%', maxHeight:'calc(100vh - 108px)'}}>
                 <div style={{display:'flex', flexDirection:'column', flex: 1, overflowY:'auto'}}>
                     <ConnectedQueryEditor/>
                     <ConnectedChartContainer/>
