@@ -8,8 +8,6 @@ import { connect } from 'react-redux'
 import { withOutputContainer }  from './OutputContainer';
 
 const ChartContainer = ({queryResults, seriesType, config}) => {
-    // TODO: add row numbers to table, headers should be styled
-
     const getChart = () => {
         let ChartComponent = ConnectedResultsTable;
         if (seriesType === 'Table') {
@@ -24,8 +22,10 @@ const ChartContainer = ({queryResults, seriesType, config}) => {
     };
 
     return (
-        <div style={{flex: 1}}>
-            <Typography variant="h6" display="block">Chart</Typography>
+        <div style={{flex: 1, marginTop: '5px'}}>
+            <div style={{marginLeft: '10px'}}>
+                <Typography variant="h5" display="block">Chart</Typography>
+            </div>
             {getChart()}
         </div>
     )

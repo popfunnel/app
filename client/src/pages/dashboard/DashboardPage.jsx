@@ -118,28 +118,31 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
 
     return (
         <div style={{height:'100%'}}>
-            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width:'100%', padding:'10px'}}>
-                <div style={{display:'flex'}}>
-                    <StyledSelect
-                        id="dashboard-select"
-                        value={currentDashboardId}
-                        onChange={e => {
-                            setCurrentDashboard(e.target.value)
-                        }}
-                        variant='outlined'
-                    >
-                        {getDashboardMenuItems()}
-                    </StyledSelect>
-                    <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={() => {openDashboardDialog()}}
-                        disableRipple
-                    >
-                        <AddIcon/>
-                    </Button>
+            <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width:'100%', height: '60px', boxShadow: '0 4px 5px -2px black', fontSize: '12px'}}>
+                <div style={{display:'flex', flexDirection: 'column', marginLeft: '10px'}}>
+                    {/* <div>[popfunnel demo] / </div> */}
+                    <div style={{display: 'flex', height: '36px'}}>
+                        <StyledSelect
+                            id="dashboard-select"
+                            value={currentDashboardId}
+                            onChange={e => {
+                                setCurrentDashboard(e.target.value)
+                            }}
+                            variant='outlined'
+                        >
+                            {getDashboardMenuItems()}
+                        </StyledSelect>
+                        <Button
+                            variant="outlined"
+                            color="secondary"
+                            onClick={() => {openDashboardDialog()}}
+                            disableRipple
+                        >
+                            <AddIcon/>
+                        </Button>
+                    </div>
                 </div>
-                <div>
+                <div style={{marginRight: '24px'}}>
                     <Button
                         variant="outlined"
                         color="secondary"
