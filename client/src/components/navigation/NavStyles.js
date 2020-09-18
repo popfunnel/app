@@ -25,7 +25,6 @@ export const NavStyles = (theme) => ({
         }),
     },
     menuButton: {
-        marginRight: 36,
     },
     hide: {
         display: 'none',
