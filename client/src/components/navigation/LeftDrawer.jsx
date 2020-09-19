@@ -67,7 +67,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                 <List >
                     <ListItem key={uuidv4()} button disableRipple  onClick={() => {history.push('/queryTool')}}>
                         <ListItemIcon><EqualizerIcon/></ListItemIcon>
-                        <ListItemText classes={{primary: classes.listItemText}} primary={'Query Tools'} />
+                        <ListItemText classes={{primary: classes.listItemText}} primary={'Charts'} />
                     </ListItem>
                     {/* <ListItem
                         button
