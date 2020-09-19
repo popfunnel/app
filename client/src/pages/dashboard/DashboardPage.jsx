@@ -2,7 +2,6 @@ import React from 'react';
 import { ConnectedDashboard } from  '../../components/dashboard/Dashboard';
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
-import { useHistory } from "react-router-dom";
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
@@ -17,9 +16,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import SaveIcon from '@material-ui/icons/Save';
 
 export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentDashboardLayout, refreshDashboardInfo, createNewDashboard,
-    openSnackbarWithMessage, dashboardOptions}) => {
+    openSnackbarWithMessage, dashboardOptions, location, history}) => {
         
-    let history = useHistory();
     // TODO: read about MUI component customization
     // https://material-ui.com/customization/components/
     const StyledSelect = withStyles((theme) => ({
