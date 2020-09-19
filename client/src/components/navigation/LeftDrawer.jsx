@@ -30,13 +30,27 @@ import SlideshowIcon from '@material-ui/icons/Slideshow';
 
 const useStyles = makeStyles(NavStyles);
 
-export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownOpen, setSchemaDropdownStatus}) => {
+export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownOpen, setSchemaDropdownStatus, currentDashboardId}) => {
     const classes = useStyles();
     const theme = useTheme();
     let history = useHistory();
 
     // TODO: add schema tree view in additional drawer expansion
     // TODO: add profile button with dropdown
+
+    const getDashboardRoute = () => {
+        if (currentDashboardId === 'default') {
+            let persistedCurrentDashboardId = sessionStorage.getItem('currentDashboardId');
+            // if (persistedCurrentDashboardId === 'default') {
+            //     history.push(`/dashboard`);
+            // } else {
+                history.push(`/dashboard/${persistedCurrentDashboardId}`)
+            // }
+        } else {
+            history.push(`/dashboard/${currentDashboardId}`)
+        };
+    };
+    
     return (
         <>
             <CssBaseline />
@@ -86,7 +100,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
                     <Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
                         <SchemaTreeView/>
                     </Collapse> */}
-                    <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/dashboard')}}>
+                    <ListItem key={uuidv4()} button disableRipple onClick={() => {getDashboardRoute()}}>
                         <ListItemIcon><DashboardIcon/></ListItemIcon>
                         <ListItemText classes={{primary: classes.listItemText}} primary={'Dashboards'} />
                     </ListItem>
@@ -113,6 +127,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
 
 const mapStateToProps = state => {
     return {
+        currentDashboardId: state.dashboard.currentDashboard.id,
         isDrawerOpen: state.nav.isDrawerOpen,
         isSchemaDropdownOpen: state.nav.isSchemaDropdownOpen
     }

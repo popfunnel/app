@@ -2,7 +2,7 @@ import * as actions from '../actions/dashboard';
 
 const initialState = {
     currentDashboard: {
-        id: 'no-dashboards-option'
+        id: 'default'
     },
     currentDashboardCharts: [],
     dashboardOptions: []
@@ -29,7 +29,7 @@ function resetDashboardInfo(state) {
     return {
         ...state,
         currentDashboard: {
-            id: 'no-dashboards-option'
+            id: 'default'
         },
         currentDashboardCharts: [],
         dashboardOptions: []

@@ -47,17 +47,17 @@ const fetchDashboardIds = () => {
 
 
 const getNewCurrentDashboardId = (dashboardOptions, currentDashboard) => {
-    let newCurrentDashboardId;
-    let persistedCurrentDashboardId = sessionStorage.getItem('currentDashboardId');
-    if (persistedCurrentDashboardId &&
-        dashboardOptions.find(option => option.id.toString() === persistedCurrentDashboardId)) {
-            newCurrentDashboardId = persistedCurrentDashboardId;
-    } else {
-        newCurrentDashboardId = currentDashboard.id === 'no-dashboards-option' ?
+    // let newCurrentDashboardId;
+    // let persistedCurrentDashboardId = sessionStorage.getItem('currentDashboardId');
+    // if (persistedCurrentDashboardId &&
+    //     dashboardOptions.find(option => option.id.toString() === persistedCurrentDashboardId)) {
+    //         newCurrentDashboardId = persistedCurrentDashboardId;
+    // } else {
+    let newCurrentDashboardId = currentDashboard.id === 'default' ?
             dashboardOptions[0].id :
             currentDashboard.id;
-    };
-
+    // };
+    console.log('here is newCurrentDashboardId', newCurrentDashboardId)
     return newCurrentDashboardId;
 };
 
@@ -67,25 +67,41 @@ export const persistCurrentDashboardId = (currentDashboardId) => {
 
 export const REFRESH_DASHBOARD_INFO = 'REFRESH_DASHBOARD_INFO';
 export const RESET_DASHBOARD_INFO = 'RESET_DASHBOARD_INFO';
-export const refreshDashboardInfo = () => async (dispatch, getState) => {
+export const refreshDashboardInfo = (locationDashboardId) => async (dispatch, getState) => {
     try {
         let dashboardOptions = await fetchDashboardIds();
         let currentDashboard = getState().dashboard.currentDashboard;
         if (dashboardOptions.length) {
-            let newCurrentDashboardId = getNewCurrentDashboardId(dashboardOptions, currentDashboard);
-            const [currentDashboardInfo, currentDashboardCharts] = 
-                await Promise.all([fetchDashboardById(newCurrentDashboardId),
-                    fetchChartsByDashboardId(newCurrentDashboardId)]);
-            
+            let newCurrentDashboardId = locationDashboardId;
+            if (!newCurrentDashboardId) {
+                newCurrentDashboardId = currentDashboard.id;
+            }
+
+            let currentDashboardInfo;
+            let currentDashboardCharts;
+            if (newCurrentDashboardId === 'default') {
+                currentDashboardInfo = {
+                    id: 'default'
+                }
+                currentDashboardCharts = []
+            } else {
+                [currentDashboardInfo, currentDashboardCharts] = 
+                    await Promise.all([fetchDashboardById(newCurrentDashboardId),
+                        fetchChartsByDashboardId(newCurrentDashboardId)]);
+            }
+
+
             dispatch({type: REFRESH_DASHBOARD_INFO, currentDashboardInfo, currentDashboardCharts, dashboardOptions});
             persistCurrentDashboardId(currentDashboardInfo.id);
-            return dashboardOptions;  
+
+            return newCurrentDashboardId;  
         } else {
             dispatch({type: RESET_DASHBOARD_INFO});
         }
 
     } catch (error) {
-        throw Error;
+
+        throw error;
     }
 }
 
@@ -112,6 +128,6 @@ export const createNewDashboard = dashboardName => (dispatch, getState) => {
     })
     .then(data => {
         let newCurrentDashboard = data.find(dashboardInfo => dashboardInfo.name === dashboardName);
-        dispatch(setCurrentDashboard(newCurrentDashboard.id));
+        return dispatch(setCurrentDashboard(newCurrentDashboard.id));
     });
 } 

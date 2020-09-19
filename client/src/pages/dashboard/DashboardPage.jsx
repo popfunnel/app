@@ -17,7 +17,7 @@ import SaveIcon from '@material-ui/icons/Save';
 
 export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentDashboardLayout, refreshDashboardInfo, createNewDashboard,
     openSnackbarWithMessage, dashboardOptions, location, history}) => {
-        
+    
     // TODO: read about MUI component customization
     // https://material-ui.com/customization/components/
     const StyledSelect = withStyles((theme) => ({
@@ -35,14 +35,24 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
     // TODO: fine for now
     React.useEffect(() => {
         let fetchDashboardOptions = async () => {
+            let locationDashboardId = location.pathname.split('/')[2];
+
+            // 
+            console.log('here is locaiondashboardid', locationDashboardId)
+            // If defined, use to get information. if not defined, grab from session and place in url
+            // if not in session, use first retrieved option and then place in url
             try {
-                await refreshDashboardInfo();
+                let currentDashboardId = await refreshDashboardInfo(locationDashboardId);
+                // if (!locationDashboardId && currentDashboardId !== 'default') {
+                    // history.push(`/dashboard/${currentDashboardId}`);
+                // }
             } catch (error) {
+                console.log('here is the error', error)
                 openSnackbarWithMessage(`${error}`);
             };
         };
         fetchDashboardOptions();
-    }, [refreshDashboardInfo, openSnackbarWithMessage]);
+    }, [refreshDashboardInfo, openSnackbarWithMessage, history, location.pathname]);
     
     const handleAddChart = () => {
         history.push('/queryTool');
@@ -77,9 +87,9 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
                 <MenuItem key={uuidv4()} id={dashboard.id} value={dashboard.id}>{dashboard.name}</MenuItem>        
             );
         });
-        if (!dashboardMenuItems.length) {
-            dashboardMenuItems.push( <MenuItem key={uuidv4()} id={'no-dashboards-option'} value={'no-dashboards-option'}>No dashboards available.</MenuItem>)
-        };
+        // if (!dashboardMenuItems.length) {
+            dashboardMenuItems.push(<MenuItem key={uuidv4()} id={'default'} value={'default'}>None</MenuItem>)
+        // };
         
         return dashboardMenuItems;
     };
@@ -124,7 +134,12 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
                             id="dashboard-select"
                             value={currentDashboardId}
                             onChange={e => {
-                                setCurrentDashboard(e.target.value)
+                                // if (e.target.value === 'default') {
+                                //     history.push('/dashboard')
+                                // } else {
+
+                                    history.push(`/dashboard/${e.target.value}`);
+                                // }
                             }}
                             variant='outlined'
                         >
