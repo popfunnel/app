@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-
+import {setCurrentDashboard, refreshDashboardInfo, createNewDashboard} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
 import { saveChart, resetForm } from '../../../actions/queryTool';
 import Button from '@material-ui/core/Button';
@@ -18,11 +18,29 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const QueryToolHeader = ({currentDashboardId, saveChart, openSnackbarWithMessage, rawResults, seriesType}) => {
+export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveChart, openSnackbarWithMessage, rawResults, seriesType}) => {
     const classes = useStyles();
     let history = useHistory();
     const [chartName, setChartName] = React.useState('');
     const [chartNameHasError, setChartNameHasError] = React.useState(false);
+    
+    React.useEffect(() => {
+        let fetchDashboardOptions = async () => {
+            try {
+                // TODO: should dashboard id be in chart url?
+                let persistedCurrentDashboardId = sessionStorage.getItem('currentDashboardId');
+                if (persistedCurrentDashboardId) {
+                    await refreshDashboardInfo(persistedCurrentDashboardId);
+                } else {
+                    await refreshDashboardInfo('default');
+                };
+            } catch (error) {
+                openSnackbarWithMessage(`${error}`);
+            };
+        };
+        fetchDashboardOptions();
+    }, [refreshDashboardInfo, openSnackbarWithMessage]);
+
     const validateChartName = () => {
         // TODO: ensure a chart has been created
         // TODO: support multiple snackbars
@@ -37,7 +55,7 @@ export const QueryToolHeader = ({currentDashboardId, saveChart, openSnackbarWith
         } else {
             return true;
         }
-    }
+    };
 
     return (
         <div style={{height: '60px', boxShadow: '0 4px 5px -2px black', fontSize: '12px'}}>
@@ -77,10 +95,11 @@ export const QueryToolHeader = ({currentDashboardId, saveChart, openSnackbarWith
                     <Button
                         color='secondary'
                         onClick={() => {
+                            // prompt user to create a new dashboard if current is 'default'
                             if (validateChartName()) {
                                 saveChart(chartName)
                                 .then(() => {
-                                    history.push('/dashboard');
+                                    history.push(`/dashboard/${currentDashboardId}`);
                                 })
                                 .catch(error => {
                                     openSnackbarWithMessage(`${error}`);
@@ -107,7 +126,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     openSnackbarWithMessage,
-    saveChart
+    saveChart,
+    refreshDashboardInfo
 };
 
 

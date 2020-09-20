@@ -82,8 +82,9 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
         let dashboardMenuItems = [];
         dashboardMenuItems.push(<MenuItem key={uuidv4()} id={'default'} value={'default'}>None</MenuItem>)
         dashboardOptions.forEach(dashboard => {
-            dashboardMenuItems.push(<MenuItem key={uuidv4()} id={dashboard.id} value={dashboard.id}>{dashboard.name}</MenuItem>)
+            dashboardMenuItems.push(<MenuItem key={uuidv4()} id={dashboard.id} value={dashboard.id}>{dashboard.name}</MenuItem>);
         });
+        
         return dashboardMenuItems;
     };
 

@@ -56,9 +56,10 @@ export const refreshDashboardInfo = (locationDashboardId) => async (dispatch, ge
         let currentDashboard = getState().dashboard.currentDashboard;
         if (dashboardOptions.length) {
             let newCurrentDashboardId = locationDashboardId;
+                
             if (!newCurrentDashboardId) {
                 newCurrentDashboardId = currentDashboard.id;
-            }
+            };
 
             let currentDashboardInfo;
             let currentDashboardCharts;

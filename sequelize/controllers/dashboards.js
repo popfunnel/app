@@ -47,7 +47,12 @@ module.exports = {
   },
   list(req, res) {
     return Dashboard
-        .findAll({attributes: ['id', 'name']})
+        .findAll({
+          attributes: ['id', 'name'],
+          order: [
+            ['id', 'ASC']
+          ]
+        })
         .then(dashboards => {
             console.log('dashboard', dashboards)
             res.status(201).send(dashboards)

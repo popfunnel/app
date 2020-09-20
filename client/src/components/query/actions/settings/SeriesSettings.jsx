@@ -48,17 +48,6 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, saveChart,
         },
         expanded: {},
     })(Accordion);
-
-    React.useEffect(() => {
-        let fetchDashboardOptions = async () => {
-            try {
-                await refreshDashboardInfo();
-            } catch (error) {
-                openSnackbarWithMessage(`${error}`);
-            };
-        };
-        fetchDashboardOptions();
-    }, [refreshDashboardInfo, openSnackbarWithMessage]);
     
     // TODO: add ability to render table inside dashboard page
     return (
