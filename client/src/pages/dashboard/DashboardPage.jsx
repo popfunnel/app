@@ -1,12 +1,14 @@
 import React from 'react';
 import { ConnectedDashboard } from  '../../components/dashboard/Dashboard';
+// import { ConnectedNewDashboardModal } from  '../../components/dashboard/NewDashboardModal';
+
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import {setCurrentDashboard, refreshDashboardInfo, createNewDashboard} from '../../actions/dashboard';
+import {refreshDashboardInfo, createNewDashboard} from '../../actions/dashboard';
 import {openSnackbarWithMessage} from '../../actions/snackbar';
 import { v4 as uuidv4 } from 'uuid';
 import TextField from '@material-ui/core/TextField';
@@ -15,7 +17,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import SaveIcon from '@material-ui/icons/Save';
 
-export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentDashboardLayout, refreshDashboardInfo, createNewDashboard,
+export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refreshDashboardInfo, createNewDashboard,
     openSnackbarWithMessage, dashboardOptions, location, history}) => {
     
     // TODO: read about MUI component customization
@@ -67,8 +69,8 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
     const createDashboard = () =>  {
         // TODO: add validation on entered dashboardname
         createNewDashboard(dashboardName)
-        .then(() => {
-            setDashboardName('');
+        .then(newDashboardId => {
+            history.push(`/dashboard/${newDashboardId}`);
             closeDashboardDialog();
             openSnackbarWithMessage('Dashboard created succesfully!');
         })
@@ -207,7 +209,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-    setCurrentDashboard,
     createNewDashboard,
     openSnackbarWithMessage,
     refreshDashboardInfo

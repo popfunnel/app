@@ -75,7 +75,6 @@ export const refreshDashboardInfo = (refreshDashboardId) => async (dispatch, get
                 }
                 currentDashboardCharts = []
             } else {
-                console.log('here is the refreshdashboardid', refreshDashboardId);
                 [currentDashboardInfo, currentDashboardCharts] = 
                     await Promise.all([fetchDashboardById(refreshDashboardId),
                         fetchChartsByDashboardId(refreshDashboardId)]);
@@ -85,7 +84,7 @@ export const refreshDashboardInfo = (refreshDashboardId) => async (dispatch, get
             dispatch({type: REFRESH_DASHBOARD_INFO, currentDashboardInfo, currentDashboardCharts, dashboardOptions});
             persistCurrentDashboardId(currentDashboardInfo.id);
 
-            return refreshDashboardId;  
+            return dashboardOptions;  
         } else {
             dispatch({type: RESET_DASHBOARD_INFO});
         }
@@ -112,13 +111,14 @@ export const createNewDashboard = dashboardName => (dispatch, getState) => {
     })
     .then(response => {
         if (response.status === 201) {
-            return dispatch(refreshDashboardInfo());
+            let currentDashboardId = getCurrentDashboardId(getState());
+            return dispatch(refreshDashboardInfo(currentDashboardId));
         } else {
             throw new Error('Bad response from server.');
         };
     })
     .then(data => {
-        let newCurrentDashboard = data.find(dashboardInfo => dashboardInfo.name === dashboardName);
-        return dispatch(setCurrentDashboard(newCurrentDashboard.id));
+        let newCurrentDashboardInfo = data.find(dashboardInfo => dashboardInfo.name === dashboardName);
+        return newCurrentDashboardInfo.id;
     });
 } 

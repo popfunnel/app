@@ -12,8 +12,6 @@ import { ColumnSelector } from './ColumnSelections';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 
 import { setSeriesType, saveChart } from '../../../../actions/queryTool';
-import { refreshDashboardInfo } from '../../../../actions/dashboard';
-
 import { openSnackbarWithMessage } from '../../../../actions/snackbar';
 import { connect } from 'react-redux'
 
@@ -28,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SeriesSettings = ({seriesType, setSeriesType, queryResults, saveChart,
-    openSnackbarWithMessage, refreshDashboardInfo}) => {
+    openSnackbarWithMessage}) => {
     const classes = useStyles();
     
     const StyledAccordion = withStyles({
@@ -108,8 +106,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     setSeriesType,
     saveChart,
-    openSnackbarWithMessage,
-    refreshDashboardInfo
+    openSnackbarWithMessage
 };
 
 export const ConnectedSeriesSettings = connect(mapStateToProps, mapDispatchToProps)(SeriesSettings);

@@ -52,11 +52,29 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
         }
     };
 
+    const getPathName = () => {
+        let dashboardId;
+        if (currentDashboardId === 'default') {
+            dashboardId = 'No Dashboard';
+        } else {
+            dashboardId = currentDashboardId;
+        }
+
+        let chartPathName;
+        if (!chartName.length) {
+            chartPathName = 'Untitled Chart';
+        } else {
+            chartPathName = chartName;
+        };
+
+        return `[popfunnel demo] / ${dashboardId} / ${chartPathName}`
+    }
+
     return (
         <div style={{height: '60px', boxShadow: '0 4px 5px -2px black', fontSize: '12px'}}>
             <div style={{height: '100%', display:'flex', flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
                 <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px'}}>    
-                    <div>[popfunnel demo] / Query Editor</div>
+                    <div>{getPathName()}</div>
                     <InputBase
                         id='chart-name'
                         className={classes.inputBase}
