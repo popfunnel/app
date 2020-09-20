@@ -75,6 +75,7 @@ export const refreshDashboardInfo = (refreshDashboardId) => async (dispatch, get
                 }
                 currentDashboardCharts = []
             } else {
+                console.log('here is the refreshdashboardid', refreshDashboardId);
                 [currentDashboardInfo, currentDashboardCharts] = 
                     await Promise.all([fetchDashboardById(refreshDashboardId),
                         fetchChartsByDashboardId(refreshDashboardId)]);

@@ -149,9 +149,14 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
                     <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={() => {handleAddChart()}}
+                        onClick={() => {
+                            // TODO: if current dashboard is 'default' prompt to create new 
+                            // dashboard?
+                            handleAddChart();
+                        }}
                         endIcon={<AddIcon/>}
                         disableRipple
+                        disabled={currentDashboardId === 'default'}
                     >
                         Add chart
                     </Button>
@@ -161,6 +166,7 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
                         onClick={() => {saveChartLayout()}}
                         endIcon={<SaveIcon/>}
                         disableRipple
+                        disabled={currentDashboardId === 'default'}
                     >
                         Save
                     </Button>

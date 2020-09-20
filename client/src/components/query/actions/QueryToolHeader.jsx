@@ -90,7 +90,7 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
                     <Button
                         color='secondary'
                         onClick={() => {
-                            // prompt user to create a new dashboard if current is 'default'
+                            // TODO: prompt user to create a new dashboard if current is 'default'
                             if (validateChartName()) {
                                 saveChart(chartName)
                                 .then(() => {
