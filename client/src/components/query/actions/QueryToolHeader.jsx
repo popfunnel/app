@@ -102,6 +102,7 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
                             }
                         }}
                         disableRipple
+                        disabled={!chartName.length ? true : false}
                     >
                         Save
                     </Button>
