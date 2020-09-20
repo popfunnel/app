@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {setCurrentDashboard, refreshDashboardInfo, createNewDashboard} from '../../../actions/dashboard';
+import {setCurrentDashboard, refreshDashboardInfo, createNewDashboard, getCurrentDashboardId} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
 import { saveChart, resetForm } from '../../../actions/queryTool';
 import Button from '@material-ui/core/Button';
@@ -28,12 +28,7 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
         let fetchDashboardOptions = async () => {
             try {
                 // TODO: should dashboard id be in chart url?
-                let persistedCurrentDashboardId = sessionStorage.getItem('currentDashboardId');
-                if (persistedCurrentDashboardId) {
-                    await refreshDashboardInfo(persistedCurrentDashboardId);
-                } else {
-                    await refreshDashboardInfo('default');
-                };
+                await refreshDashboardInfo(currentDashboardId);
             } catch (error) {
                 openSnackbarWithMessage(`${error}`);
             };
@@ -118,7 +113,7 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
 
 const mapStateToProps = state => {
     return {
-        currentDashboardId: state.dashboard.currentDashboard.id,
+        currentDashboardId: getCurrentDashboardId(state),
         rawResults: state.query.rawResults,
         seriesType: state.chart.seriesType
     };
