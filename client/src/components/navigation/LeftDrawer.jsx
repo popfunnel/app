@@ -41,11 +41,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
     const getDashboardRoute = () => {
         if (currentDashboardId === 'default') {
             let persistedCurrentDashboardId = sessionStorage.getItem('currentDashboardId');
-            // if (persistedCurrentDashboardId === 'default') {
-            //     history.push(`/dashboard`);
-            // } else {
-                history.push(`/dashboard/${persistedCurrentDashboardId}`)
-            // }
+            history.push(`/dashboard/${persistedCurrentDashboardId}`)
         } else {
             history.push(`/dashboard/${currentDashboardId}`)
         };

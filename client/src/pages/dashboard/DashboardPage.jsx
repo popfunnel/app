@@ -43,9 +43,6 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
             // if not in session, use first retrieved option and then place in url
             try {
                 let currentDashboardId = await refreshDashboardInfo(locationDashboardId);
-                // if (!locationDashboardId && currentDashboardId !== 'default') {
-                    // history.push(`/dashboard/${currentDashboardId}`);
-                // }
             } catch (error) {
                 console.log('here is the error', error)
                 openSnackbarWithMessage(`${error}`);
@@ -82,15 +79,11 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
     };
 
     const getDashboardMenuItems = () => {
-        let dashboardMenuItems = dashboardOptions.map(dashboard => {
-            return (
-                <MenuItem key={uuidv4()} id={dashboard.id} value={dashboard.id}>{dashboard.name}</MenuItem>        
-            );
+        let dashboardMenuItems = [];
+        dashboardMenuItems.push(<MenuItem key={uuidv4()} id={'default'} value={'default'}>None</MenuItem>)
+        dashboardOptions.forEach(dashboard => {
+            dashboardMenuItems.push(<MenuItem key={uuidv4()} id={dashboard.id} value={dashboard.id}>{dashboard.name}</MenuItem>)
         });
-        // if (!dashboardMenuItems.length) {
-            dashboardMenuItems.push(<MenuItem key={uuidv4()} id={'default'} value={'default'}>None</MenuItem>)
-        // };
-        
         return dashboardMenuItems;
     };
 
@@ -134,12 +127,7 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
                             id="dashboard-select"
                             value={currentDashboardId}
                             onChange={e => {
-                                // if (e.target.value === 'default') {
-                                //     history.push('/dashboard')
-                                // } else {
-
-                                    history.push(`/dashboard/${e.target.value}`);
-                                // }
+                                history.push(`/dashboard/${e.target.value}`);
                             }}
                             variant='outlined'
                         >

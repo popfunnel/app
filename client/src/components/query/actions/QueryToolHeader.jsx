@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const QueryToolHeader = ({saveChart, openSnackbarWithMessage, rawResults, seriesType}) => {
+export const QueryToolHeader = ({currentDashboardId, saveChart, openSnackbarWithMessage, rawResults, seriesType}) => {
     const classes = useStyles();
     let history = useHistory();
     const [chartName, setChartName] = React.useState('');
@@ -68,7 +68,7 @@ export const QueryToolHeader = ({saveChart, openSnackbarWithMessage, rawResults,
                         color='secondary'
                         onClick={() => {
                             resetForm();
-                            history.push('/dashboard');
+                            history.push(`/dashboard/${currentDashboardId}`);
                         }}
                         disableRipple
                     >
@@ -99,6 +99,7 @@ export const QueryToolHeader = ({saveChart, openSnackbarWithMessage, rawResults,
 
 const mapStateToProps = state => {
     return {
+        currentDashboardId: state.dashboard.currentDashboard.id,
         rawResults: state.query.rawResults,
         seriesType: state.chart.seriesType
     };

@@ -44,23 +44,6 @@ const fetchDashboardIds = () => {
     });
 }
 
-
-
-const getNewCurrentDashboardId = (dashboardOptions, currentDashboard) => {
-    // let newCurrentDashboardId;
-    // let persistedCurrentDashboardId = sessionStorage.getItem('currentDashboardId');
-    // if (persistedCurrentDashboardId &&
-    //     dashboardOptions.find(option => option.id.toString() === persistedCurrentDashboardId)) {
-    //         newCurrentDashboardId = persistedCurrentDashboardId;
-    // } else {
-    let newCurrentDashboardId = currentDashboard.id === 'default' ?
-            dashboardOptions[0].id :
-            currentDashboard.id;
-    // };
-    console.log('here is newCurrentDashboardId', newCurrentDashboardId)
-    return newCurrentDashboardId;
-};
-
 export const persistCurrentDashboardId = (currentDashboardId) => {
     sessionStorage.setItem('currentDashboardId', `${currentDashboardId}`);
 }
