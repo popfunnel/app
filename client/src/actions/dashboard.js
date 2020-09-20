@@ -44,9 +44,21 @@ const fetchDashboardIds = () => {
     });
 }
 
+
+export const getCurrentDashboardId = (state) => {
+    let currentDashboardId = state.dashboard.currentDashboard.id;
+    if (currentDashboardId === 'default' &&
+        sessionStorage.getItem('currentDashboardId')) {
+        currentDashboardId = sessionStorage.getItem('currentDashboardId');
+    };
+    
+    return currentDashboardId;
+};
+
 export const persistCurrentDashboardId = (currentDashboardId) => {
     sessionStorage.setItem('currentDashboardId', `${currentDashboardId}`);
-}
+};
+
 
 export const REFRESH_DASHBOARD_INFO = 'REFRESH_DASHBOARD_INFO';
 export const RESET_DASHBOARD_INFO = 'RESET_DASHBOARD_INFO';
