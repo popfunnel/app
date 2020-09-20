@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {setCurrentDashboard, refreshDashboardInfo, createNewDashboard, getCurrentDashboardId} from '../../../actions/dashboard';
+import {refreshDashboardInfo, createNewDashboard, getCurrentDashboardId} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
 import { saveChart, resetForm } from '../../../actions/queryTool';
 import Button from '@material-ui/core/Button';

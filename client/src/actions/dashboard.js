@@ -20,20 +20,6 @@ const fetchChartsByDashboardId = dashboardId => {
         })
 };
 
-export const SET_CURRENT_DASHBOARD = 'SET_CURRENT_DASHBOARD';
-export const setCurrentDashboard = dashboardId => async (dispatch, getState) => {
-    try {
-        // TODO: there is a bit of latency in the ui when changing current dashboard
-        const [dashboardInfo, currentDashboardCharts] = 
-            await Promise.all([fetchDashboardById(dashboardId), fetchChartsByDashboardId(dashboardId)])
-        dispatch({type: SET_CURRENT_DASHBOARD, dashboardInfo, currentDashboardCharts});
-        persistCurrentDashboardId(dashboardId);
-        return dashboardInfo;
-    } catch(error) {
-        throw error;
-    };
-};
-
 const fetchDashboardIds = () => {
     return fetch('/dashboard/list').then(response => {
         if (response.status === 201) {
