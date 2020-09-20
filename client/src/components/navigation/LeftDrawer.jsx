@@ -39,16 +39,16 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
     // TODO: add profile button with dropdown
 
     const getDashboardRoute = () => {
-        if (currentDashboardId === 'default') {
+        // if (currentDashboardId === 'default') {
             let persistedCurrentDashboardId = sessionStorage.getItem('currentDashboardId');
             if (persistedCurrentDashboardId) {
                 history.push(`/dashboard/${persistedCurrentDashboardId}`);
             } else {
                 history.push('dashboard/default');
             }
-        } else {
-            history.push(`/dashboard/${currentDashboardId}`)
-        };
+        // } else {
+        //     history.push(`/dashboard/${currentDashboardId}`)
+        // };
     };
     
     return (

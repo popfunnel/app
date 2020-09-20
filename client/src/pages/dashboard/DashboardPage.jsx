@@ -36,17 +36,18 @@ export const DashboardPage = ({currentDashboardId, setCurrentDashboard, currentD
     React.useEffect(() => {
         let fetchDashboardOptions = async () => {
             let locationDashboardId = location.pathname.split('/')[2];
-
-            // 
-            console.log('here is locaiondashboardid', locationDashboardId)
+            if (!locationDashboardId) {
+                history.push('/dashboard/default');
+            } else {
+                try {
+                    await refreshDashboardInfo(locationDashboardId);
+                } catch (error) {
+                    console.log('here is the error', error)
+                    openSnackbarWithMessage(`${error}`);
+                };
+            };
             // If defined, use to get information. if not defined, grab from session and place in url
             // if not in session, use first retrieved option and then place in url
-            try {
-                let currentDashboardId = await refreshDashboardInfo(locationDashboardId);
-            } catch (error) {
-                console.log('here is the error', error)
-                openSnackbarWithMessage(`${error}`);
-            };
         };
         fetchDashboardOptions();
     }, [refreshDashboardInfo, openSnackbarWithMessage, history, location.pathname]);

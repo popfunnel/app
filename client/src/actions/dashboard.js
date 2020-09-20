@@ -50,35 +50,29 @@ export const persistCurrentDashboardId = (currentDashboardId) => {
 
 export const REFRESH_DASHBOARD_INFO = 'REFRESH_DASHBOARD_INFO';
 export const RESET_DASHBOARD_INFO = 'RESET_DASHBOARD_INFO';
-export const refreshDashboardInfo = (locationDashboardId) => async (dispatch, getState) => {
+export const refreshDashboardInfo = (refreshDashboardId) => async (dispatch, getState) => {
     try {
         let dashboardOptions = await fetchDashboardIds();
-        let currentDashboard = getState().dashboard.currentDashboard;
         if (dashboardOptions.length) {
-            let newCurrentDashboardId = locationDashboardId;
-                
-            if (!newCurrentDashboardId) {
-                newCurrentDashboardId = currentDashboard.id;
-            };
 
             let currentDashboardInfo;
             let currentDashboardCharts;
-            if (newCurrentDashboardId === 'default') {
+            if (refreshDashboardId === 'default') {
                 currentDashboardInfo = {
                     id: 'default'
                 }
                 currentDashboardCharts = []
             } else {
                 [currentDashboardInfo, currentDashboardCharts] = 
-                    await Promise.all([fetchDashboardById(newCurrentDashboardId),
-                        fetchChartsByDashboardId(newCurrentDashboardId)]);
+                    await Promise.all([fetchDashboardById(refreshDashboardId),
+                        fetchChartsByDashboardId(refreshDashboardId)]);
             }
 
 
             dispatch({type: REFRESH_DASHBOARD_INFO, currentDashboardInfo, currentDashboardCharts, dashboardOptions});
             persistCurrentDashboardId(currentDashboardInfo.id);
 
-            return newCurrentDashboardId;  
+            return refreshDashboardId;  
         } else {
             dispatch({type: RESET_DASHBOARD_INFO});
         }
