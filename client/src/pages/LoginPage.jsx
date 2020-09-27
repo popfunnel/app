@@ -8,7 +8,7 @@ import Link from '@material-ui/core/Link';
 import { useDispatch } from 'react-redux';
 import { openSnackbarWithMessage } from '../actions/snackbar';
 import { setUsername as setUsernameInStore } from '../actions/user';
-import { refreshDashboardInfo, getCurrentDashboardId } from '../actions/dashboard';
+import { refreshDashboardInfo } from '../actions/dashboard';
 
 const useStyles = makeStyles((theme) => ({
     root: {

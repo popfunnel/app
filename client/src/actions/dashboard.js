@@ -28,8 +28,7 @@ const fetchDashboardIds = () => {
             throw new Error('Bad response from server.');
         };
     });
-}
-
+};
 
 export const getCurrentDashboardId = (state) => {
     let currentDashboardId = state.dashboard.currentDashboard.id;
@@ -76,10 +75,9 @@ export const refreshDashboardInfo = (refreshDashboardId) => async (dispatch, get
         }
 
     } catch (error) {
-
         throw error;
     }
-}
+};
 
 export const createNewDashboard = dashboardName => (dispatch, getState) => {
     let data = {
@@ -107,4 +105,4 @@ export const createNewDashboard = dashboardName => (dispatch, getState) => {
         let newCurrentDashboardInfo = data.find(dashboardInfo => dashboardInfo.name === dashboardName);
         return newCurrentDashboardInfo.id;
     });
-} 
+};

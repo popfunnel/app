@@ -1,11 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {refreshDashboardInfo, createNewDashboard, getCurrentDashboardId} from '../../../actions/dashboard';
+import {refreshDashboardInfo, getCurrentDashboardId} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
 import { saveChart, resetForm } from '../../../actions/queryTool';
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
 import InputBase from '@material-ui/core/InputBase';
+import { ConnectedNewDashboardModal } from  '../../../components/dashboard/NewDashboardModal';
 
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -23,7 +24,8 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
     let history = useHistory();
     const [chartName, setChartName] = React.useState('');
     const [chartNameHasError, setChartNameHasError] = React.useState(false);
-    
+    const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
+
     React.useEffect(() => {
         let fetchDashboardOptions = async () => {
             try {
@@ -34,7 +36,7 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
             };
         };
         fetchDashboardOptions();
-    }, [refreshDashboardInfo, openSnackbarWithMessage]);
+    }, [refreshDashboardInfo, openSnackbarWithMessage, currentDashboardId]);
 
     const validateChartName = () => {
         // TODO: ensure a chart has been created
@@ -69,6 +71,16 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
 
         return `[popfunnel demo] / ${dashboardId} / ${chartPathName}`
     }
+
+    // TODO: use async/await?
+    const newDashboardCallback = newDashboardId => {
+        saveChart(chartName, newDashboardId)
+        .then(() => {
+            history.push(`/dashboard/${newDashboardId}`);
+        }).catch(error => {
+            openSnackbarWithMessage(`${error}`);
+        })
+    };
 
     return (
         <div style={{height: '60px', boxShadow: '0 4px 5px -2px black', fontSize: '12px'}}>
@@ -108,24 +120,32 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
                     <Button
                         color='secondary'
                         onClick={() => {
-                            // TODO: prompt user to create a new dashboard if current is 'default'
                             if (validateChartName()) {
-                                saveChart(chartName)
-                                .then(() => {
-                                    history.push(`/dashboard/${currentDashboardId}`);
-                                })
-                                .catch(error => {
-                                    openSnackbarWithMessage(`${error}`);
-                                });
+                                if (currentDashboardId === 'default') {
+                                    setIsDashboardDialogOpen(true);
+                                } else {
+                                    saveChart(chartName)
+                                    .then(() => {
+                                        history.push(`/dashboard/${currentDashboardId}`);
+                                    })
+                                    .catch(error => {
+                                        openSnackbarWithMessage(`${error}`);
+                                    });
+                                }
                             }
                         }}
                         disableRipple
-                        disabled={!chartName.length ? true : false}
+                        disabled={!chartName.length}
                     >
                         Save
                     </Button>
                 </div>
             </div>
+            <ConnectedNewDashboardModal
+                isOpen={isDashboardDialogOpen}
+                setIsOpen={setIsDashboardDialogOpen}
+                next={newDashboardCallback}
+            />
         </div>
     );
 }

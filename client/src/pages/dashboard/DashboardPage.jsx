@@ -1,6 +1,6 @@
 import React from 'react';
 import { ConnectedDashboard } from  '../../components/dashboard/Dashboard';
-// import { ConnectedNewDashboardModal } from  '../../components/dashboard/NewDashboardModal';
+import { ConnectedNewDashboardModal } from  '../../components/dashboard/NewDashboardModal';
 
 import AddIcon from '@material-ui/icons/Add';
 import Button from '@material-ui/core/Button';
@@ -11,10 +11,6 @@ import { connect } from 'react-redux';
 import {refreshDashboardInfo, createNewDashboard} from '../../actions/dashboard';
 import {openSnackbarWithMessage} from '../../actions/snackbar';
 import { v4 as uuidv4 } from 'uuid';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
 import SaveIcon from '@material-ui/icons/Save';
 
 export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refreshDashboardInfo, createNewDashboard,
@@ -31,7 +27,6 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
         }
     }))(Select);
     const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
-    const [dashboardName, setDashboardName] = React.useState('');
     const [currentLayout, setCurrentLayout] = React.useState(currentDashboardLayout);
     // TODO: read about async effects: https://www.robinwieruch.de/react-hooks-fetch-data
     // TODO: fine for now
@@ -44,7 +39,6 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
                 try {
                     await refreshDashboardInfo(locationDashboardId);
                 } catch (error) {
-                    console.log('here is the error', error)
                     openSnackbarWithMessage(`${error}`);
                 };
             };
@@ -60,25 +54,6 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
 
     const openDashboardDialog = () => {
         setIsDashboardDialogOpen(true);
-    };
-    
-    const closeDashboardDialog = () => {
-        setIsDashboardDialogOpen(false);
-    };
-
-    const createDashboard = () =>  {
-        // TODO: add validation on entered dashboardname
-        createNewDashboard(dashboardName)
-        .then(newDashboardId => {
-            history.push(`/dashboard/${newDashboardId}`);
-            closeDashboardDialog();
-            openSnackbarWithMessage('Dashboard created succesfully!');
-        })
-        .catch(error => {
-            setDashboardName('');
-            closeDashboardDialog();
-            openSnackbarWithMessage(`${error}`);
-        });
     };
 
     const getDashboardMenuItems = () => {
@@ -151,11 +126,7 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
                     <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={() => {
-                            // TODO: if current dashboard is 'default' prompt to create new 
-                            // dashboard?
-                            handleAddChart();
-                        }}
+                        onClick={() => handleAddChart()}
                         endIcon={<AddIcon/>}
                         disableRipple
                         disabled={currentDashboardId === 'default'}
@@ -175,27 +146,10 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
                 </div>
             </div>
             <ConnectedDashboard currentLayout={currentLayout} setCurrentLayout={setCurrentLayout}/>
-            <Dialog open={isDashboardDialogOpen} onClose={closeDashboardDialog} aria-labelledby="dashboard-form-dialog">
-                <DialogContent>
-                    <TextField
-                        value={dashboardName}
-                        onChange={e => setDashboardName(e.target.value)}
-                        autoFocus
-                        margin="dense"
-                        id="dashboard-name"
-                        label="Dashboard Name"
-                        fullWidth
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={closeDashboardDialog} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={createDashboard} color="primary">
-                        Create
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <ConnectedNewDashboardModal
+                isOpen={isDashboardDialogOpen}
+                setIsOpen={setIsDashboardDialogOpen}
+            />
         </div>
     );
 };

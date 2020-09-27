@@ -7,17 +7,23 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import Button from '@material-ui/core/Button';
+import { useHistory } from "react-router-dom";
 
-const NewDashboardModal = ({isOpen, createNewDashboar, openSnackbarWithMessage}) => {
-    // TODO: think about whehter isOpen should be in store
+
+const NewDashboardModal = ({isOpen, setIsOpen, createNewDashboard, openSnackbarWithMessage, next}) => {
+    // TODO: think about whether isOpen should be in store
+    let history = useHistory();
     const [dashboardName, setDashboardName] = React.useState('');
     const createDashboard = () =>  {
-        // TODO: add validation on entered dashboardname
         createNewDashboard(dashboardName)
-        .then(() => {
-            setDashboardName('');
-            closeDashboardDialog();
-            openSnackbarWithMessage('Dashboard created succesfully!');
+        .then(newDashboardId => {
+            if (next) {
+                next(newDashboardId);
+            } else {
+                history.push(`/dashboard/${newDashboardId}`);
+                closeDashboardDialog();
+                openSnackbarWithMessage('Dashboard created succesfully!');
+            }
         })
         .catch(error => {
             setDashboardName('');
@@ -25,6 +31,10 @@ const NewDashboardModal = ({isOpen, createNewDashboar, openSnackbarWithMessage})
             openSnackbarWithMessage(`${error}`);
         });
     };
+
+    const closeDashboardDialog = () => {
+        setIsOpen(false);
+    }
 
     return (
         <Dialog open={isOpen} onClose={closeDashboardDialog} aria-labelledby="dashboard-form-dialog">

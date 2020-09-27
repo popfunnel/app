@@ -97,7 +97,7 @@ export const resetChart = () => {
 }
 
 export const SAVE_CHART = 'SAVE_CHART';
-export const saveChart = name => (dispatch, getState) => {
+export const saveChart = (name, dashboardId) => (dispatch, getState) => {
     let state = getState()
 
     let data = {
@@ -106,7 +106,7 @@ export const saveChart = name => (dispatch, getState) => {
         config: state.chart.config,
         rawQuery: state.query.userInput,
         rawResults: state.query.rawResults,
-        dashboardId: state.dashboard.currentDashboard.id
+        dashboardId: dashboardId || state.dashboard.currentDashboard.id
     };
 
     return fetch('/chart/create', {
@@ -124,14 +124,6 @@ export const saveChart = name => (dispatch, getState) => {
             throw new Error('Bad response from server.');
         };
     });
-}
-
-export const SAVE_CHART_CONFIG = 'SAVE_CHART_CONFIG';
-export const saveChartConfig = chartConfig => {
-    return {
-        type: SAVE_CHART_CONFIG,
-        chartConfig
-    }
 }
 
 // TODO: reset should also reset chart config
