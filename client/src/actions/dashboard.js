@@ -1,5 +1,5 @@
 const fetchDashboardById = dashboardId => {
-    return fetch(`/dashboard/${dashboardId}`)
+    return fetch(`/dashboard/info/${dashboardId}`)
         .then(response => {
             if (response.status === 201) {
                 return response.json();

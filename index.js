@@ -20,7 +20,6 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 
-
 const initializePassport = require('./passportConfig');
 initializePassport(passport);
 
