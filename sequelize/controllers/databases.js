@@ -4,8 +4,13 @@ module.exports = {
   create(req, res) {
     return Database
       .create({
+        host: req.body.host,
+        port: req.body.port,
+        username: req.body.username,
+        password: req.body.password,
+        database_type: req.body.database_type,
         name: req.body.name,
-        // add user meta
+        customer_id: req.body.customer_id,
       })
       .then(database => {
         console.log('database', database)
@@ -32,7 +37,15 @@ module.exports = {
   list(req, res) {
     return Database
         .findAll({
-          attributes: ['id', 'name'],
+          attributes: [
+              'id',
+              'host',
+              'port',
+              'username',
+              'password',
+              'database_type',
+              'name'
+            ],
           order: [
             ['id', 'ASC']
           ]
