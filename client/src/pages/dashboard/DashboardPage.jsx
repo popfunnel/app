@@ -8,12 +8,12 @@ import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
-import {refreshDashboardInfo, createNewDashboard} from '../../actions/dashboard';
+import { refreshDashboardInfo } from '../../actions/dashboard';
 import {openSnackbarWithMessage} from '../../actions/snackbar';
 import { v4 as uuidv4 } from 'uuid';
 import SaveIcon from '@material-ui/icons/Save';
 
-export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refreshDashboardInfo, createNewDashboard,
+export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refreshDashboardInfo,
     openSnackbarWithMessage, dashboardOptions, location, history}) => {
     
     // TODO: read about MUI component customization
@@ -100,13 +100,12 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
         <div style={{height:'100%'}}>
             <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width:'100%', height: '60px', boxShadow: '0 4px 5px -2px black', fontSize: '12px'}}>
                 <div style={{display:'flex', flexDirection: 'column', marginLeft: '10px'}}>
-                    {/* <div>[popfunnel demo] / </div> */}
                     <div style={{display: 'flex', height: '36px'}}>
                         <StyledSelect
                             id="dashboard-select"
                             value={currentDashboardId}
-                            onChange={e => {
-                                history.push(`/dashboard/${e.target.value}`);
+                            onChange={(e,v) => {
+                                history.push(`/dashboard/${e.target.value}/${v.props.children}`);
                             }}
                             variant='outlined'
                         >
@@ -163,7 +162,6 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = {
-    createNewDashboard,
     openSnackbarWithMessage,
     refreshDashboardInfo
 };

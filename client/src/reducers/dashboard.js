@@ -2,7 +2,8 @@ import * as actions from '../actions/dashboard';
 
 const initialState = {
     currentDashboard: {
-        id: 'default'
+        id: 'default',
+        name: ''
     },
     currentDashboardCharts: [],
     dashboardOptions: []

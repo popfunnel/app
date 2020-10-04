@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {refreshDashboardInfo, getCurrentDashboardId} from '../../../actions/dashboard';
+import {refreshDashboardInfo, getCurrentDashboardInfo} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
 import { saveChart, resetForm } from '../../../actions/queryTool';
 import Button from '@material-ui/core/Button';
@@ -19,12 +19,18 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveChart, openSnackbarWithMessage, rawResults, seriesType}) => {
+export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, saveChart,
+    openSnackbarWithMessage, rawResults, seriesType}) => {
     const classes = useStyles();
     let history = useHistory();
     const [chartName, setChartName] = React.useState('');
     const [chartNameHasError, setChartNameHasError] = React.useState(false);
     const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
+
+    let {
+        id: currentDashboardId,
+        name: currentDashboardName
+    } = currentDashboardInfo;
 
     React.useEffect(() => {
         let fetchDashboardOptions = async () => {
@@ -55,11 +61,11 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
     };
 
     const getPathName = () => {
-        let dashboardId;
-        if (currentDashboardId === 'default') {
-            dashboardId = 'No Dashboard';
+        let dashboardName;
+        if (!currentDashboardName.length) {
+            dashboardName = 'No Dashboard';
         } else {
-            dashboardId = currentDashboardId;
+            dashboardName = currentDashboardName;
         }
 
         let chartPathName;
@@ -69,14 +75,15 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
             chartPathName = chartName;
         };
 
-        return `[popfunnel demo] / ${dashboardId} / ${chartPathName}`
+        return `[popfunnel demo] / ${dashboardName} / ${chartPathName}`
     }
 
     // TODO: use async/await?
-    const newDashboardCallback = newDashboardId => {
-        saveChart(chartName, newDashboardId)
+    const newDashboardCallback = newDashboardInfo => {
+        saveChart(chartName, newDashboardInfo.id)
         .then(() => {
-            history.push(`/dashboard/${newDashboardId}`);
+            // TODO: this needs to have the dashboardname in
+            history.push(`/dashboard/${newDashboardInfo.id}/${newDashboardInfo.name}`);
         }).catch(error => {
             openSnackbarWithMessage(`${error}`);
         })
@@ -111,7 +118,7 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
                         color='secondary'
                         onClick={() => {
                             resetForm();
-                            history.push(`/dashboard/${currentDashboardId}`);
+                            history.push(`/dashboard/${currentDashboardId}/${currentDashboardName}`);
                         }}
                         disableRipple
                     >
@@ -126,7 +133,7 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
                                 } else {
                                     saveChart(chartName)
                                     .then(() => {
-                                        history.push(`/dashboard/${currentDashboardId}`);
+                                        history.push(`/dashboard/${currentDashboardId}/${currentDashboardName}`);
                                     })
                                     .catch(error => {
                                         openSnackbarWithMessage(`${error}`);
@@ -152,7 +159,7 @@ export const QueryToolHeader = ({currentDashboardId, refreshDashboardInfo, saveC
 
 const mapStateToProps = state => {
     return {
-        currentDashboardId: getCurrentDashboardId(state),
+        currentDashboardInfo: getCurrentDashboardInfo(state),
         rawResults: state.query.rawResults,
         seriesType: state.chart.seriesType
     };

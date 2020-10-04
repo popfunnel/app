@@ -28,19 +28,25 @@ import { setSchemaDropdownStatus } from '../../actions/nav';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
-import { getCurrentDashboardId } from '../../actions/dashboard';
+import { getCurrentDashboardInfo } from '../../actions/dashboard';
 
 const useStyles = makeStyles(NavStyles);
 
-export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownOpen, setSchemaDropdownStatus, currentDashboardId}) => {
+export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, setSchemaDropdownStatus,
+    currentDashboardInfo}) => {
     const classes = useStyles();
     const theme = useTheme();
     let history = useHistory();
 
+    let {
+        id: currentDashboardId,
+        name: currentDashboardName
+    } = currentDashboardInfo;
+
     // TODO: add schema tree view in additional drawer expansion
     // TODO: add profile button with dropdown
     const getDashboardRoute = () => {
-        history.push(`/dashboard/${currentDashboardId}`);
+        history.push(`/dashboard/${currentDashboardId}/${currentDashboardName}`);
     };
     
     return (
@@ -119,7 +125,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, isSchemaDropdownO
 
 const mapStateToProps = state => {
     return {
-        currentDashboardId: getCurrentDashboardId(state),
+        currentDashboardInfo: getCurrentDashboardInfo(state),
         isDrawerOpen: state.nav.isDrawerOpen,
         isSchemaDropdownOpen: state.nav.isSchemaDropdownOpen
     }

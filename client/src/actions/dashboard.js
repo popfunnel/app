@@ -30,18 +30,18 @@ const fetchDashboardIds = () => {
     });
 };
 
-export const getCurrentDashboardId = (state) => {
-    let currentDashboardId = state.dashboard.currentDashboard.id;
-    if (currentDashboardId === 'default' &&
-        sessionStorage.getItem('currentDashboardId')) {
-        currentDashboardId = sessionStorage.getItem('currentDashboardId');
+export const getCurrentDashboardInfo = (state) => {
+    let currentDashboardInfo = state.dashboard.currentDashboard;
+    if (currentDashboardInfo.id === 'default' &&
+        sessionStorage.getItem('currentDashboardInfo')) {
+        currentDashboardInfo = JSON.parse(sessionStorage.getItem('currentDashboardInfo'));
     };
     
-    return currentDashboardId;
+    return currentDashboardInfo;
 };
 
-export const persistCurrentDashboardId = (currentDashboardId) => {
-    sessionStorage.setItem('currentDashboardId', `${currentDashboardId}`);
+export const persistCurrentDashboardId = (currentDashboardInfo) => {
+    sessionStorage.setItem('currentDashboardInfo', JSON.stringify(currentDashboardInfo));
 };
 
 
@@ -56,7 +56,8 @@ export const refreshDashboardInfo = (refreshDashboardId) => async (dispatch, get
             let currentDashboardCharts;
             if (refreshDashboardId === 'default') {
                 currentDashboardInfo = {
-                    id: 'default'
+                    id: 'default',
+                    name: ''
                 }
                 currentDashboardCharts = []
             } else {
@@ -67,7 +68,7 @@ export const refreshDashboardInfo = (refreshDashboardId) => async (dispatch, get
 
 
             dispatch({type: REFRESH_DASHBOARD_INFO, currentDashboardInfo, currentDashboardCharts, dashboardOptions});
-            persistCurrentDashboardId(currentDashboardInfo.id);
+            persistCurrentDashboardId(currentDashboardInfo);
 
             return dashboardOptions;  
         } else {
@@ -95,14 +96,15 @@ export const createNewDashboard = dashboardName => (dispatch, getState) => {
     })
     .then(response => {
         if (response.status === 201) {
-            let currentDashboardId = getCurrentDashboardId(getState());
-            return dispatch(refreshDashboardInfo(currentDashboardId));
+            let currentDashboardInfo = getCurrentDashboardInfo(getState());
+            return dispatch(refreshDashboardInfo(currentDashboardInfo.id));
         } else {
             throw new Error('Bad response from server.');
         };
     })
     .then(data => {
         let newCurrentDashboardInfo = data.find(dashboardInfo => dashboardInfo.name === dashboardName);
-        return newCurrentDashboardInfo.id;
+        console.log('here is newCurrentDashboardInfo', newCurrentDashboardInfo)
+        return newCurrentDashboardInfo;
     });
 };
