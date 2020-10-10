@@ -5,13 +5,42 @@ import {BarChart, Bar, XAxis,
     YAxis, CartesianGrid, Tooltip,
     Legend, ResponsiveContainer} from 'recharts';
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+
+import { withStyles } from '@material-ui/core/styles';
+
+const StyledMenuItem = withStyles((theme) => ({
+    root: {
+        fontSize: '15px',
+    },
+}))(MenuItem);
+
+const initialState = {
+    mouseX: null,
+    mouseY: null,
+};
+
 export const CustomBarChart = ({config}) => {
-    
+      
+    const [mousePosition, setMousePosition] = React.useState(initialState);
+
+    const handleConsoleMenu = (event) => {
+        event.preventDefault();
+        setMousePosition({
+            mouseX: event.clientX - 2,
+            mouseY: event.clientY - 4,
+        });
+    };
+
+  const handleClose = () => {
+    setMousePosition(initialState);
+  };
+
     // TODO: Create color selector
     let defaultColors = ['#96ceb4', '#ffeead', '#ff6f69', '#ffcc5c', '#88d8b0']
     let colors = defaultColors;
 
-    // TODO: rename datakey to 'xaxis datakey'
     let {
         xAxisKey,
         yAxisKeys,
@@ -19,7 +48,7 @@ export const CustomBarChart = ({config}) => {
     } = config;
 
     return (
-        <Paper style={{height:'100%', width:'100%'}}>
+        <Paper style={{height:'100%', width:'100%', cursor: 'context-menu'}} onContextMenu={handleConsoleMenu}>
             <ResponsiveContainer>
                 <BarChart
                     data={formattedData}
@@ -38,6 +67,20 @@ export const CustomBarChart = ({config}) => {
                     })}
                 </BarChart>
             </ResponsiveContainer>
+            <Menu
+                keepMounted
+                open={mousePosition.mouseY !== null}
+                onClose={handleClose}
+                anchorReference="anchorPosition"
+                anchorPosition={
+                    mousePosition.mouseY !== null && mousePosition.mouseX !== null
+                    ? { top: mousePosition.mouseY, left: mousePosition.mouseX }
+                    : undefined
+                }
+            >
+                <StyledMenuItem onClick={handleClose}>Edit</StyledMenuItem>
+                <StyledMenuItem onClick={handleClose}>Delete</StyledMenuItem>
+            </Menu>
         </Paper>
     );
 };
@@ -51,25 +94,3 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {};
 
 export const ConnectedCustomBarChart = connect(mapStateToProps, mapDispatchToProps)(CustomBarChart);
-
-// let testData = [{
-//     "rental_date": "2005-07-08",
-//     "Action": 10,
-//     "Foreign": 8,
-//     "Sports": 8
-// }, {
-//     "rental_date": "2005-07-09",
-//     "Action": 1,
-//     "Foreign": 13,
-//     "Sports": 7
-// }, {
-//     "rental_date": "2005-07-08",
-//     "Action": 30,
-//     "Foreign": 40,
-//     "Sports": 50
-// }, {
-//     "rental_date": "2005-07-09",
-//     "Action": 10,
-//     "Foreign": 20,
-//     "Sports": 50
-// }];

@@ -46,7 +46,6 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
     const getGridItems = () => {
         return dashboardCharts.map((chartInfo, index) => {
             let {id, name, config, type} = chartInfo;
-            // console.log(`${id}-${name}-${type}`)
             if (type === 'Bar') {
                 return (
                     <div key={`${id}-${name}-${type}`} data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><CustomBarChart config={config}/></div>
