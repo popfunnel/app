@@ -29,7 +29,6 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
     const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
     const [currentLayout, setCurrentLayout] = React.useState(currentDashboardLayout);
     // TODO: read about async effects: https://www.robinwieruch.de/react-hooks-fetch-data
-    // TODO: fine for now
     React.useEffect(() => {
         let fetchDashboardOptions = async () => {
             let locationDashboardId = location.pathname.split('/')[2];

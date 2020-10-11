@@ -3,7 +3,7 @@ import GridLayout from 'react-grid-layout';
 import '../../../node_modules/react-grid-layout/css/styles.css'
 import '../../../node_modules/react-resizable/css/styles.css'
 import { connect } from 'react-redux';
-import { CustomBarChart } from '../query/display/Bar';
+import { ConnectedCustomBarChart } from '../query/display/Bar';
 import { CustomLineChart } from '../query/display/Line';
 import {openSnackbarWithMessage} from '../../actions/snackbar';
 
@@ -48,7 +48,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
             let {id, name, config, type} = chartInfo;
             if (type === 'Bar') {
                 return (
-                    <div key={`${id}-${name}-${type}`} data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><CustomBarChart config={config}/></div>
+                    <div key={`${id}-${name}-${type}`} data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><ConnectedCustomBarChart chartId={id} config={config}/></div>
                 );
             } else if (type === 'Line') {
                 return (

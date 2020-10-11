@@ -42,7 +42,7 @@ export const OutputContainer = (Component) =>
             <Paper style={{height: '40vh', overflowY: 'auto'}}>
                 {!queryResults.length ?
                 <NoResults/> :
-                <Component/>}
+                <Component {...props}/>}
             </Paper>
         );
     };

@@ -6,6 +6,8 @@ const router = new express.Router();
 
 router.post('/create', chartsController.create);
 
+router.post('/destroy', chartsController.destroy);
+
 router.get('/:dashboard_id', chartsController.getAllByDashboardId);
 
 module.exports = router;

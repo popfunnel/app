@@ -30,6 +30,30 @@ const fetchDashboardIds = () => {
     });
 };
 
+export const destroyChart = (chartId) => {
+    let data = {
+        chartId: chartId
+    };
+
+    return fetch('/chart/destroy', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        console.log('enter here', response.status)
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            console.log('server error', response.status)
+            throw new Error('Bad response from server.');
+        };
+    });
+}
+
 export const getCurrentDashboardInfo = (state) => {
     let currentDashboardInfo = state.dashboard.currentDashboard;
     if (currentDashboardInfo.id === 'default' &&

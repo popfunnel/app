@@ -7,7 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
 import { withOutputContainer }  from './OutputContainer';
 
+// TODO: ConnectedResultsTable does not config passed down
 const ChartContainer = ({queryResults, seriesType, config}) => {
+    console.log('here is the config ', config)
     const getChart = () => {
         let ChartComponent = ConnectedResultsTable;
         if (seriesType === 'Table') {
@@ -18,7 +20,7 @@ const ChartContainer = ({queryResults, seriesType, config}) => {
             ChartComponent = ConnectedCustomLineChart;
         }
         let Chart = withOutputContainer(ChartComponent);
-        return <Chart noResultsMsg={'Start by running a query using the editor!'}/>
+        return <Chart config={config} noResultsMsg={'Start by running a query using the editor!'}/>
     };
 
     return (

@@ -20,6 +20,21 @@ module.exports = {
         res.status(400).send(error)
       });
   },
+  destroy(req, res) {
+    return Chart
+      .destroy({
+        where: {
+          id: req.body.chartId
+        }
+      })
+      .then(rowsDeleted => {
+        res.status(200).send(JSON.stringify(rowsDeleted));
+      })
+      .catch(error => {
+        console.log('error', error)
+        res.status(400).send(error)
+      });
+  },
   getAllByDashboardId(req, res) {
     return Chart
       .findAll({

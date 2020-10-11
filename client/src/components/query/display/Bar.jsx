@@ -9,6 +9,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { withStyles } from '@material-ui/core/styles';
+import {destroyChart, refreshDashboardInfo} from '../../../actions/dashboard';
+import { openSnackbarWithMessage } from '../../../actions/snackbar';
 
 const StyledMenuItem = withStyles((theme) => ({
     root: {
@@ -21,8 +23,8 @@ const initialState = {
     mouseY: null,
 };
 
-export const CustomBarChart = ({config}) => {
-      
+export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage}) => {
+
     const [mousePosition, setMousePosition] = React.useState(initialState);
 
     const handleConsoleMenu = (event) => {
@@ -33,9 +35,26 @@ export const CustomBarChart = ({config}) => {
         });
     };
 
-  const handleClose = () => {
-    setMousePosition(initialState);
-  };
+    const handleClose = () => {
+        setMousePosition(initialState);
+    };
+
+    // TODO: use await for these?
+    const handleDelete = async () => {
+        destroyChart(chartId)
+        .then(() => {
+            refreshDashboardInfo(currentDashboardId)
+            .then(() => {
+                openSnackbarWithMessage('Chart deleted.');
+            })
+            .catch(error => {
+                openSnackbarWithMessage(`${error}`);
+            })
+        })
+        .catch(error => {
+            openSnackbarWithMessage(`${error}`);
+        })
+    }
 
     // TODO: Create color selector
     let defaultColors = ['#96ceb4', '#ffeead', '#ff6f69', '#ffcc5c', '#88d8b0']
@@ -47,6 +66,7 @@ export const CustomBarChart = ({config}) => {
         formattedData
     } = config;
 
+    // TODO: Separate out contextmenu into component/HOC
     return (
         <Paper style={{height:'100%', width:'100%', cursor: 'context-menu'}} onContextMenu={handleConsoleMenu}>
             <ResponsiveContainer>
@@ -67,6 +87,7 @@ export const CustomBarChart = ({config}) => {
                     })}
                 </BarChart>
             </ResponsiveContainer>
+            {chartId &&
             <Menu
                 keepMounted
                 open={mousePosition.mouseY !== null}
@@ -79,18 +100,21 @@ export const CustomBarChart = ({config}) => {
                 }
             >
                 <StyledMenuItem onClick={handleClose}>Edit</StyledMenuItem>
-                <StyledMenuItem onClick={handleClose}>Delete</StyledMenuItem>
-            </Menu>
+                <StyledMenuItem onClick={handleDelete}>Delete</StyledMenuItem>
+            </Menu>}
         </Paper>
     );
 };
 
 const mapStateToProps = (state) => {
     return {
-        config: state.chart.config
+        currentDashboardId: state.dashboard.currentDashboard.id,
     };
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    refreshDashboardInfo, 
+    openSnackbarWithMessage
+};
 
 export const ConnectedCustomBarChart = connect(mapStateToProps, mapDispatchToProps)(CustomBarChart);
