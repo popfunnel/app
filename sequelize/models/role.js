@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    static associate({customer, user_role}) {
+    static associate({customer, user, user_role}) {
       role.belongsTo(customer);
-      role.hasMany(user_role);
+      role.belongsToMany(user, { through: user_role });
     }
   };
   role.init({
