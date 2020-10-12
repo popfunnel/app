@@ -29,11 +29,12 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
 import { getCurrentDashboardInfo } from '../../actions/dashboard';
+import { setIsDatabaseModalOpenStatus } from '../../actions/database';
 
 const useStyles = makeStyles(NavStyles);
 
 export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, setSchemaDropdownStatus,
-    currentDashboardInfo}) => {
+    currentDashboardInfo, setIsDatabaseModalOpenStatus}) => {
     const classes = useStyles();
     const theme = useTheme();
     let history = useHistory();
@@ -109,7 +110,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, setSchemaDropdown
                 </List>
                 <Divider/>
                 <List>
-                    <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/info')}}>
+                    <ListItem key={uuidv4()} button disableRipple onClick={() => setIsDatabaseModalOpenStatus(true)}>
                         <ListItemIcon><SettingsIcon/></ListItemIcon>
                         <ListItemText classes={{primary: classes.listItemText}} primary={'Settings'} />
                     </ListItem>
@@ -134,7 +135,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
     setDrawerOpenStatus,
-    setSchemaDropdownStatus
+    setSchemaDropdownStatus,
+    setIsDatabaseModalOpenStatus
 };
 
 export const ConnectedLeftDrawer = connect(mapStateToProps, mapDispatchToProps)(LeftDrawer);

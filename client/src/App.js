@@ -7,10 +7,12 @@ import { ConnectedDashboardPage } from './pages/dashboard/DashboardPage';
 import { LoginPage } from './pages/LoginPage';
 import { LogoutPage } from './pages/LogoutPage';
 import { RegisterPage } from './pages/RegisterPage';
+import { DatabasePage } from './pages/DatabasePage';
 import { InfoPage } from './pages/InfoPage';
 
 import { ConnectedNavBar } from './components/navigation/NavBar';
 import { ConnectedCustomSnackbar } from './components/snackbar/CustomSnackbar';
+import { ConnectedNewDatabaseModal } from './components/database/NewDatabaseModal'
 import { theme } from './AppTheme';
 import Cookies from 'js-cookie';
 import jwt_decode from 'jwt-decode';
@@ -53,10 +55,12 @@ function App() {
                 <PrivateRoute exact path='/' component={QueryPage}/>
                 <PrivateRoute path='/queryTool' component={QueryPage}/>
                 <PrivateRoute path='/dashboard' component={ConnectedDashboardPage}/>
+                <PrivateRoute path='/database' component={DatabasePage}/>
                 <PrivateRoute path='/info' component={InfoPage}/>
             </ConnectedNavBar>
         </Switch>
         <ConnectedCustomSnackbar/>
+        <ConnectedNewDatabaseModal/>
     </ThemeProvider>
   )
 }

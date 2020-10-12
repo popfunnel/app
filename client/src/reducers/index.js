@@ -5,6 +5,7 @@ import nav from './nav';
 import dashboard from './dashboard';
 import user from './user';
 import snackbar from './snackbar';
+import database from './database';
 
 export default combineReducers({
     query,
@@ -12,5 +13,6 @@ export default combineReducers({
     nav,
     dashboard,
     user,
-    snackbar
+    snackbar,
+    database
 })
