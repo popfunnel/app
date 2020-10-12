@@ -15,6 +15,8 @@ const dashboard = require('./routes/dashboard');
 const chart = require('./routes/chart');
 const database = require('./routes/database');
 const customer = require('./routes/customer');
+const role = require('./routes/role');
+const userRole = require('./routes/user_role');
 
 const app = express();
 const passport = require('passport');
@@ -39,6 +41,9 @@ app.use('/dashboard', dashboard);
 app.use('/chart', chart);
 app.use('/database', database);
 app.use('/customer', customer);
+app.use('/role', role);
+app.use('/user_role', userRole);
+
 
 // app.get('/protected',
 //   passport.authenticate('jwt', {session: false}),
