@@ -1,12 +1,18 @@
 const User = require('../models').user;
 
 module.exports = {
-  create(userInfo) {
+  create(req, res) {
     return User
       .create({
-        email: userInfo.email,
-        name: userInfo.name,
-        passwordHash: userInfo.passwordHash
+          email: req.body.email,
+          name: req.body.name,
+          passwordHash: req.body.password,
+      })
+      .then(user => {
+        res.status(201).send(user)
+      })
+      .catch(error => {
+        res.status(400).send(error)
       });
   },
   find(userEmail) {

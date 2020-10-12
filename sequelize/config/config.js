@@ -9,7 +9,8 @@ module.exports = {
     database: 'popfunnel_development',
     host: '127.0.0.1',
     port: 5432,
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: console.log
   },
   test: {
     username: 'root',

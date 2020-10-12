@@ -1,7 +1,6 @@
 const express = require('express');
 const usersController = require('../sequelize/controllers').users;
 const router = new express.Router();
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 
@@ -10,6 +9,7 @@ router.get('/', (req, res) => res.status(200).send({
 }));
 
 router.post('/create', usersController.create);
+router.post('/register', usersController.create);
 
 router.post('/login', (req, res) => {
   passport.authenticate(
@@ -44,36 +44,6 @@ router.post('/login', (req, res) => {
       });
     }
   ) (req, res);
-});
-
-router.post('/register', async (req, res) => {
-  const {email, password} = req.body;
-  try {
-    const isUserCreated = await usersController.find(email);
-    if (isUserCreated) {
-      return res.status(400).send({
-        error: 'There is already a user with this email.'
-      })
-    }
-    
-    const hashedPassword = await bcrypt.hash(password, 10);
-    let userInfo = {
-      email: email,
-      name: email,
-      passwordHash: hashedPassword
-    };
-
-    const newUser = await usersController.create(userInfo);
-
-    console.log('-----Create User Result-----')
-    console.log(JSON.stringify(newUser));
-
-    res.status(200).send({email});
-  } catch (error) {
-      res.status(400).send({
-          error: 'Error registering user.'
-      });
-  };
 });
 
 router.get('/protected',
