@@ -53,6 +53,16 @@ to rollback a migration:
 sequelize db:migrate:undo
 ```
 
+to run seeds:
+```
+npx sequelize-cli db:seed:all
+```
+
+to undo a seed:
+```
+npx sequelize-cli db:seed:undo
+```
+
 to create a model:
 ```
 sequelize model:generate --name dashboard --underscored --attributes created_by:integer,updated_by:integer,owned_by:integer,name:string,customer_id:integer,charts:array:integer
