@@ -22,7 +22,8 @@ function resetDashboardInfo(state) {
     return {
         ...state,
         currentDashboard: {
-            id: 'default'
+            id: 'default',
+            name: ''
         },
         currentDashboardCharts: [],
         dashboardOptions: []
