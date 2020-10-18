@@ -73,7 +73,7 @@ export const RegisterPage = () => {
                 body: JSON.stringify(data)
             })
             .then(response => {
-                if (response.status === 200) {
+                if (response.status === 201) {
                     dispatch(openSnackbarWithMessage('Registration successful!'));
                     history.push('/login');
                 } else if (response.status === 400 || response.status === 500) {
