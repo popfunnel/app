@@ -16,11 +16,11 @@ const NewDashboardModal = ({isOpen, setIsOpen, createNewDashboard, openSnackbarW
     const [dashboardName, setDashboardName] = React.useState('');
     const createDashboard = () =>  {
         createNewDashboard(dashboardName)
-        .then(newCurrentDashboardInfo => {
+        .then(newDashboardId => {
             if (next) {
-                next(newCurrentDashboardInfo);
+                next(newDashboardId);
             } else {
-                history.push(`/dashboard/${newCurrentDashboardInfo.id}/${newCurrentDashboardInfo.name}`);
+                history.push(`/dashboard/${newDashboardId}`);
                 closeDashboardDialog();
                 openSnackbarWithMessage('Dashboard created succesfully!');
             }

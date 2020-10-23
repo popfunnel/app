@@ -110,7 +110,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, setSchemaDropdown
                 </List>
                 <Divider/>
                 <List>
-                    <ListItem key={uuidv4()} button disableRipple onClick={() => setIsDatabaseModalOpenStatus(true)}>
+                    <ListItem key={uuidv4()} button disableRipple onClick={() => {history.push('/settings')}}>
                         <ListItemIcon><SettingsIcon/></ListItemIcon>
                         <ListItemText classes={{primary: classes.listItemText}} primary={'Settings'} />
                     </ListItem>

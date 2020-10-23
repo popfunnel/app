@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { refreshDashboardInfo } from '../../actions/dashboard';
-import {openSnackbarWithMessage} from '../../actions/snackbar';
+import { openSnackbarWithMessage } from '../../actions/snackbar';
 import { v4 as uuidv4 } from 'uuid';
 import SaveIcon from '@material-ui/icons/Save';
 
