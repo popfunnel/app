@@ -9,7 +9,6 @@ import { withOutputContainer }  from './OutputContainer';
 
 // TODO: ConnectedResultsTable does not config passed down
 const ChartContainer = ({queryResults, seriesType, config}) => {
-    console.log('here is the config ', config)
     const getChart = () => {
         let ChartComponent = ConnectedResultsTable;
         if (seriesType === 'Table') {
