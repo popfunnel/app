@@ -12,15 +12,15 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     textField: {
-        margin: '8px',
+        margin: '10px',
         width: '25ch',
     },
     fullWidthField: {
-        width: 'calc(100% - 16px)',
-        margin: '8px',
+        width: 'calc(100% - 20px)',
+        margin: '10px',
     },
     selectField: {
-        margin: '8px',
+        margin: '10px',
         width: '25ch',
     },
 }));
@@ -85,8 +85,8 @@ export const SettingsPage = () => {
                     </StyledSelect>
                 </div>
                 <Paper style={{display: 'flex', flexDirection: 'row'}}>
-                    <form noValidate onSubmit={handleSubmit} autoComplete="off">
-                        <div style={{margin: '8px'}}><Typography variant="h6" display="block">Credentials</Typography></div>
+                    <form noValidate onSubmit={handleSubmit} autoComplete="off" style={{margin: '10px'}}>
+                        <div style={{margin: '10px'}}><Typography variant="h6" display="block">Credentials</Typography></div>
                         <div>
                             <TextField
                                 id={DB_DISPLAY_NAME}
@@ -203,7 +203,7 @@ export const SettingsPage = () => {
                         </div>
                         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button
-                                style={{margin: '8px'}}
+                                style={{margin: '10px'}}
                                 type='submit'
                                 variant='contained'
                                 color='primary'
@@ -214,9 +214,9 @@ export const SettingsPage = () => {
                         </div>
                     </form>
                     <div style={{width: '400px'}}>
-                        <div style={{margin: '8px'}}><Typography variant="h6" display="block">Status</Typography></div>
-                        <div style={{margin: '8px'}}><Typography variant="body2" display="block">Connection Healthy</Typography></div>
-                        <div style={{margin: '8px'}}><Typography variant="body2" display="block">Schemas Updated</Typography></div>
+                        <div style={{margin: '20px'}}><Typography variant="h6" display="block">Status</Typography></div>
+                        <div style={{margin: '8px', marginLeft: '20px', marginRight: '20px'}}><Typography variant="body2" display="block">Connection Healthy</Typography></div>
+                        <div style={{margin: '8px', marginLeft: '20px', marginRight: '20px'}}><Typography variant="body2" display="block">Schemas Updated</Typography></div>
                     </div>
                 </Paper>
             </div>
