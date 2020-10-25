@@ -7,7 +7,6 @@ import { ConnectedDashboardPage } from './pages/dashboard/DashboardPage';
 import { LoginPage } from './pages/LoginPage';
 import { LogoutPage } from './pages/LogoutPage';
 import { RegisterPage } from './pages/RegisterPage';
-import { DatabasePage } from './pages/DatabasePage';
 import { InfoPage } from './pages/InfoPage';
 import { ConnectedSettingsPage } from './pages/SettingsPage';
 
@@ -55,7 +54,6 @@ function App() {
                 <PrivateRoute exact path='/' component={QueryPage}/>
                 <PrivateRoute path='/queryTool' component={QueryPage}/>
                 <PrivateRoute path='/dashboard' component={ConnectedDashboardPage}/>
-                <PrivateRoute path='/database' component={DatabasePage}/>
                 <PrivateRoute path='/settings' component={ConnectedSettingsPage}/>
                 <PrivateRoute path='/info' component={InfoPage}/>
             </ConnectedNavBar>
