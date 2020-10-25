@@ -72,7 +72,7 @@ export const DB_SSH_HOST = 'sshHost';
 export const DB_SSH_USERNAME = 'sshUsername';
 export const DB_SSH_PORT = 'sshPort';
 
-export const SettingsPage = () => {
+export const DbSettingsPage = () => {
     const classes = useStyles();
 
     const StyledSelect = withStyles((theme) => ({
@@ -286,4 +286,4 @@ let mapStateToProps = state => {
 let mapDispatchToProps;
 
 
-export const ConnectedSettingsPage = connect(mapStateToProps, mapDispatchToProps)(SettingsPage);
+export const ConnectedDbSettingsPage = connect(mapStateToProps, mapDispatchToProps)(DbSettingsPage);

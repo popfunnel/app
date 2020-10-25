@@ -8,7 +8,7 @@ import { LoginPage } from './pages/LoginPage';
 import { LogoutPage } from './pages/LogoutPage';
 import { RegisterPage } from './pages/RegisterPage';
 import { InfoPage } from './pages/InfoPage';
-import { ConnectedSettingsPage } from './pages/SettingsPage';
+import { ConnectedDbSettingsPage } from './pages/DbSettingsPage';
 
 import { ConnectedNavBar } from './components/navigation/NavBar';
 import { ConnectedCustomSnackbar } from './components/snackbar/CustomSnackbar';
@@ -54,7 +54,7 @@ function App() {
                 <PrivateRoute exact path='/' component={QueryPage}/>
                 <PrivateRoute path='/queryTool' component={QueryPage}/>
                 <PrivateRoute path='/dashboard' component={ConnectedDashboardPage}/>
-                <PrivateRoute path='/settings' component={ConnectedSettingsPage}/>
+                <PrivateRoute path='/settings' component={ConnectedDbSettingsPage}/>
                 <PrivateRoute path='/info' component={InfoPage}/>
             </ConnectedNavBar>
         </Switch>
