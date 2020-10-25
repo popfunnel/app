@@ -20,7 +20,7 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
     // https://material-ui.com/customization/components/
     const StyledSelect = withStyles((theme) => ({
         root: {
-            fontSize: '15px',
+            fontSize: '15px'
         },
         outlined: {
             padding: '10px'

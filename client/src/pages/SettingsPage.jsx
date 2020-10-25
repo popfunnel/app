@@ -10,18 +10,55 @@ import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
+// TODO: check if you can pull shared styles into form style
 const useStyles = makeStyles((theme) => ({
     textField: {
         margin: '10px',
         width: '25ch',
+        '& .MuiFormLabel-root': {
+            color: 'black'
+        },
+        '& label.Mui-focused': {
+            color: 'black',
+        },
+        '& .MuiInput-underline:before': {
+            borderBottomColor: 'black',
+        },
+        '& 	.MuiInput-underline:after': {
+           transitionDuration: '0ms',
+        }
     },
     fullWidthField: {
         width: 'calc(100% - 20px)',
         margin: '10px',
+        '& .MuiFormLabel-root': {
+            color: 'black'
+        },
+        '& label.Mui-focused': {
+            color: 'black',
+        },
+        '& .MuiInput-underline:before': {
+            borderBottomColor: 'black',
+        },
+        '& 	.MuiInput-underline:after': {
+            transitionDuration: '0ms',
+        }
     },
     selectField: {
         margin: '10px',
         width: '25ch',
+        '& .MuiFormLabel-root': {
+            color: 'black'
+        },
+        '& label.Mui-focused': {
+            color: 'black',
+        },
+        '& .MuiInput-underline:before': {
+            borderBottomColor: 'black',
+        },
+        '& 	.MuiInput-underline:after': {
+            transitionDuration: '0ms',
+        }
     },
 }));
 
@@ -40,7 +77,7 @@ export const SettingsPage = () => {
 
     const StyledSelect = withStyles((theme) => ({
         root: {
-            fontSize: '15px'
+            fontSize: '15px',
         },
         outlined: {
             padding: '10px'
@@ -152,7 +189,7 @@ export const SettingsPage = () => {
                             />
                         </div>
                         <div>
-                            <FormControl className={classes.selectField}>
+                            <FormControl className={classes.selectField} disabled>
                                 <InputLabel shrink>Replica Of</InputLabel>
                                 <Select
                                     id={DB_REPLICA_OF}
@@ -175,6 +212,7 @@ export const SettingsPage = () => {
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                                disabled
                             />
                         </div>
                         <div>
@@ -188,6 +226,7 @@ export const SettingsPage = () => {
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                                disabled
                             />
                             <TextField
                                 id={DB_SSH_PORT}
@@ -199,6 +238,7 @@ export const SettingsPage = () => {
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
+                                disabled
                             />
                         </div>
                         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
