@@ -1,6 +1,7 @@
 const Database = require('../models').database;
 
 module.exports = {
+  // TODO: add display name
   create(req, res) {
     return Database
       .create({
@@ -8,13 +9,34 @@ module.exports = {
         port: req.body.port,
         username: req.body.username,
         password: req.body.password,
-        database_type: req.body.database_type,
+        database_type: req.body.type,
         name: req.body.name,
-        customer_id: req.body.customer_id,
+        // customer_id: req.body.customer_id,
       })
       .then(database => {
         console.log('database', database)
         res.status(201).send(database)
+      })
+      .catch(error => {
+        console.log('error', error)
+        res.status(400).send(error)
+      });
+  },
+  updateDatabase(req, res) {
+    return Database
+      .update(
+        { 
+          host: req.body.host,
+          port: req.body.port,
+          username: req.body.username,
+          password: req.body.password,
+          database_type: req.body.type,
+          name: req.body.name
+        },
+        { where: { id: req.body.dbId } }
+      )
+      .then(database => {
+        res.status(200).send(database);
       })
       .catch(error => {
         console.log('error', error)

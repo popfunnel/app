@@ -9,8 +9,10 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
+import { openSnackbarWithMessage } from '../actions/snackbar';
+import {getDbCreds, setCurrentDbId} from '../actions/database';
 // TODO: check if you can pull shared styles into form style
+// TODO: put current db into query tool page?
 const useStyles = makeStyles((theme) => ({
     textField: {
         margin: '10px',
@@ -60,6 +62,16 @@ const useStyles = makeStyles((theme) => ({
             transitionDuration: '0ms',
         }
     },
+    buttonRoot: {
+        backgroundColor: 'black',
+        "&:hover": {
+            backgroundColor: 'black'
+        }
+    },
+    buttonLabel: {
+        fontSize:'12px',
+        textTransform: "none"
+    }
 }));
 
 export const DB_DISPLAY_NAME = 'displayName';
@@ -67,12 +79,27 @@ export const DB_TYPE = 'type';
 export const DB_HOST = 'host';
 export const DB_PORT = 'port';
 export const DB_NAME = 'name';
+export const DB_USERNAME = 'username';
+export const DB_PASSWORD = 'password';
 export const DB_REPLICA_OF = 'replicaOf';
 export const DB_SSH_HOST = 'sshHost';
 export const DB_SSH_USERNAME = 'sshUsername';
 export const DB_SSH_PORT = 'sshPort';
+const blankCredentials = {
+    [DB_DISPLAY_NAME]: '',
+    [DB_TYPE]: '',
+    [DB_HOST]: '',
+    [DB_PORT]: '',
+    [DB_NAME]: '',
+    [DB_USERNAME]: '',
+    [DB_PASSWORD]: '',
+    [DB_REPLICA_OF]: '',
+    [DB_SSH_HOST]: '',
+    [DB_SSH_USERNAME]: '',
+    [DB_SSH_PORT]: ''
+}
 
-export const DbSettingsPage = () => {
+export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId, openSnackbarWithMessage}) => {
     const classes = useStyles();
 
     const StyledSelect = withStyles((theme) => ({
@@ -84,17 +111,106 @@ export const DbSettingsPage = () => {
         }
     }))(Select);
 
-    const [form, setForm] = React.useState({
-        [DB_DISPLAY_NAME]: '',
-        [DB_TYPE]: '',
-        [DB_HOST]: '',
-        [DB_PORT]: '',
-        [DB_NAME]: '',
-        [DB_REPLICA_OF]: '',
-        [DB_SSH_HOST]: '',
-        [DB_SSH_USERNAME]: '',
-        [DB_SSH_PORT]: ''        
-    });
+    // TODO: this might need to be pulled into redux?
+    
+
+    const [form, setForm] = React.useState({...blankCredentials});
+
+    
+    React.useEffect(() => {
+        getDbCreds()
+        .catch(error => {
+            openSnackbarWithMessage('Error retrieving database credentials.');
+        })
+
+    }, [getDbCreds, openSnackbarWithMessage]);
+
+    React.useEffect(() => {
+        const setFields = () => {
+            if (currentDbId !== 'newDatabase') {
+                const currentDbInfo = dbCreds.find(cred => cred.id === currentDbId);
+                if (currentDbInfo) {
+    
+                    const {
+                        database_type,
+                        host,
+                        name,
+                        password,
+                        port,
+                        username
+                    } = currentDbInfo;
+    
+                    setForm(prevState => ({
+                        ...blankCredentials,
+                        [DB_DISPLAY_NAME]: name,
+                        [DB_TYPE]: database_type,
+                        [DB_HOST]: host,
+                        [DB_PORT]: port,
+                        [DB_NAME]: name,
+                        [DB_USERNAME]: username,
+                        [DB_PASSWORD]: password
+                    }));
+                }
+            } else {
+                setForm({...blankCredentials});
+            }
+        }
+    
+        setFields();
+    }, [currentDbId, dbCreds])
+
+    const submitDbCredentials = () => {
+        let data = form;
+        if (currentDbId === 'newDatabase') {
+            return fetch('/database/create', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.status === 201) {
+                    return response.json();
+                } else {
+                    throw new Error('Bad response from server.');
+                };
+            })
+            .then(data => {
+                getDbCreds()
+                .then(() => setCurrentDbId(data.id));
+                openSnackbarWithMessage('Database credentials submitted!');
+            })
+            .catch(error => {
+                openSnackbarWithMessage(`${error}`);
+            });
+        } else {
+            data = {
+                ...data,
+                dbId: currentDbId
+            }
+            return fetch('/database/update', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    getDbCreds();
+                    openSnackbarWithMessage('Database credentials updated!');
+                } else {
+                    throw new Error('Bad response from server.');
+                };
+            })
+            .catch(error => {
+                openSnackbarWithMessage(`${error}`);
+            });
+        }
+    }
 
     const handleChange = (e) => {
         const {name, value} = e.target;
@@ -107,6 +223,7 @@ export const DbSettingsPage = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        submitDbCredentials();
     }
 
     return (
@@ -116,9 +233,14 @@ export const DbSettingsPage = () => {
                     <StyledSelect
                         id="dashboard-select"
                         variant='outlined'
-                        value={'newDatabase'}
+                        value={currentDbId}
+                        onChange={e => {
+                            setCurrentDbId(e.target.value);
+                            // setFields(e.target.value);
+                        }}
                     >
                         <MenuItem value={'newDatabase'}>New Database</MenuItem>
+                        {dbCreds.map(cred => <MenuItem key={cred.id} value={cred.id}>{cred.name}</MenuItem>)}
                     </StyledSelect>
                 </div>
                 <Paper style={{display: 'flex', flexDirection: 'row'}}>
@@ -189,7 +311,31 @@ export const DbSettingsPage = () => {
                             />
                         </div>
                         <div>
-                            <FormControl className={classes.selectField} disabled>
+                            <TextField
+                                id={DB_USERNAME}
+                                name={DB_USERNAME}
+                                value={form[DB_USERNAME]}
+                                onChange={handleChange}
+                                className={classes.textField}
+                                label="Database Username"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                            <TextField
+                                id={DB_PASSWORD}
+                                name={DB_PASSWORD}
+                                value={form[DB_PASSWORD]}
+                                onChange={handleChange}
+                                className={classes.textField}
+                                label="Database Password"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </div>
+                        {/* <div>
+                            <FormControl className={classes.selectField}>
                                 <InputLabel shrink>Replica Of</InputLabel>
                                 <Select
                                     id={DB_REPLICA_OF}
@@ -212,7 +358,6 @@ export const DbSettingsPage = () => {
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
-                                disabled
                             />
                         </div>
                         <div>
@@ -226,7 +371,6 @@ export const DbSettingsPage = () => {
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
-                                disabled
                             />
                             <TextField
                                 id={DB_SSH_PORT}
@@ -238,16 +382,22 @@ export const DbSettingsPage = () => {
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
-                                disabled
                             />
-                        </div>
+                        </div> */}
                         <div style={{display: 'flex', justifyContent: 'flex-end'}}>
                             <Button
-                                style={{margin: '10px'}}
+                                style={{margin: '20px'}}
                                 type='submit'
                                 variant='contained'
                                 color='primary'
                                 disableRipple
+                                classes={{
+                                    root: classes.buttonRoot,
+                                    label: classes.buttonLabel
+                                }}
+                                onClick={() => {
+                                    
+                                }}
                             >
                                 Submit
                             </Button>
@@ -257,6 +407,21 @@ export const DbSettingsPage = () => {
                         <div style={{margin: '20px'}}><Typography variant="h6" display="block">Status</Typography></div>
                         <div style={{margin: '8px', marginLeft: '20px', marginRight: '20px'}}><Typography variant="body2" display="block">Connection Healthy</Typography></div>
                         <div style={{margin: '8px', marginLeft: '20px', marginRight: '20px'}}><Typography variant="body2" display="block">Schemas Updated</Typography></div>
+                        <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                            <Button
+                                style={{margin: '20px'}}
+                                type='submit'
+                                variant='contained'
+                                color='primary'
+                                disableRipple
+                                classes={{
+                                    root: classes.buttonRoot,
+                                    label: classes.buttonLabel
+                                }}
+                            >
+                                Disconnect Database
+                            </Button>
+                        </div>
                     </div>
                 </Paper>
             </div>
@@ -264,26 +429,18 @@ export const DbSettingsPage = () => {
     )
 };
 
-
-  export default function BasicTextFields() {
-    const classes = useStyles();
-  
-    return (
-      <form className={classes.root} noValidate autoComplete="off">
-        <TextField id="standard-basic" label="Standard" />
-        <TextField id="filled-basic" label="Filled" variant="filled" />
-        <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-      </form>
-    );
-  }
-
 let mapStateToProps = state => {
     return {
-        
+        dbCreds: state.database.dbCreds,
+        currentDbId: state.database.currentDbId
     }
 };
 
-let mapDispatchToProps;
+let mapDispatchToProps = {
+    openSnackbarWithMessage,
+    getDbCreds,
+    setCurrentDbId
+};
 
 
 export const ConnectedDbSettingsPage = connect(mapStateToProps, mapDispatchToProps)(DbSettingsPage);
