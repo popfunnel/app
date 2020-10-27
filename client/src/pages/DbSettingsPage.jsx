@@ -13,12 +13,17 @@ import { openSnackbarWithMessage } from '../actions/snackbar';
 import {getDbCreds, setCurrentDbId} from '../actions/database';
 // TODO: check if you can pull shared styles into form style
 // TODO: put current db into query tool page?
+// TODO: add validations to fields (port must be numeric)
+
 const useStyles = makeStyles((theme) => ({
     textField: {
         margin: '10px',
         width: '25ch',
         '& .MuiFormLabel-root': {
             color: 'black'
+        },
+        '& .MuiFormLabel-root.Mui-error': {
+            color: '#f44336'
         },
         '& label.Mui-focused': {
             color: 'black',
@@ -36,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
         '& .MuiFormLabel-root': {
             color: 'black'
         },
+        '& .MuiFormLabel-root.Mui-error': {
+            color: '#f44336'
+        },
         '& label.Mui-focused': {
             color: 'black',
         },
@@ -51,6 +59,9 @@ const useStyles = makeStyles((theme) => ({
         width: '25ch',
         '& .MuiFormLabel-root': {
             color: 'black'
+        },
+        '& .MuiFormLabel-root.Mui-error': {
+            color: '#f44336'
         },
         '& label.Mui-focused': {
             color: 'black',
@@ -85,6 +96,7 @@ export const DB_REPLICA_OF = 'replicaOf';
 export const DB_SSH_HOST = 'sshHost';
 export const DB_SSH_USERNAME = 'sshUsername';
 export const DB_SSH_PORT = 'sshPort';
+
 const blankCredentials = {
     [DB_DISPLAY_NAME]: '',
     [DB_TYPE]: '',
@@ -99,6 +111,20 @@ const blankCredentials = {
     [DB_SSH_PORT]: ''
 }
 
+const formErrors = {
+    [DB_DISPLAY_NAME]: false,
+    [DB_TYPE]: false,
+    [DB_HOST]: false,
+    [DB_PORT]: false,
+    [DB_NAME]: false,
+    [DB_USERNAME]: false,
+    [DB_PASSWORD]: false,
+    [DB_REPLICA_OF]: false,
+    [DB_SSH_HOST]: false,
+    [DB_SSH_USERNAME]: false,
+    [DB_SSH_PORT]: false
+}
+
 export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId, openSnackbarWithMessage}) => {
     const classes = useStyles();
 
@@ -111,11 +137,10 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
         }
     }))(Select);
 
-    // TODO: this might need to be pulled into redux?
-    
 
     const [form, setForm] = React.useState({...blankCredentials});
 
+    const [errors, setErrors] = React.useState({...formErrors});
     
     React.useEffect(() => {
         getDbCreds()
@@ -157,58 +182,99 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
         }
     
         setFields();
-    }, [currentDbId, dbCreds])
+    }, [currentDbId, dbCreds]);
+
+    const validate = () => {
+        let newErrors = {};
+        if (!form[DB_DISPLAY_NAME].length) {
+            newErrors[DB_DISPLAY_NAME] = true;
+        };
+
+        if (!form[DB_TYPE].length) {
+            newErrors[DB_TYPE] = true;
+        };
+
+        if (!form[DB_HOST].length) {
+            newErrors[DB_HOST] = true;
+        };
+
+        if (!form[DB_PORT].length || isNaN(form[DB_PORT])) {
+            newErrors[DB_PORT] = true;
+        };
+
+        if (!form[DB_NAME].length) {
+            newErrors[DB_NAME] = true;
+        };
+
+        if (!form[DB_USERNAME].length) {
+            newErrors[DB_USERNAME] = true;
+        };
+
+        if (!form[DB_PASSWORD].length) {
+            newErrors[DB_PASSWORD] = true;
+        };
+
+        if (Object.keys(newErrors).length === 0) {
+            return true;
+        } else {
+            setErrors({...formErrors, ...newErrors});
+            return false;
+        };
+
+    }
 
     const submitDbCredentials = () => {
-        let data = form;
-        if (currentDbId === 'newDatabase') {
-            return fetch('/database/create', {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (response.status === 201) {
-                    return response.json();
-                } else {
-                    throw new Error('Bad response from server.');
-                };
-            })
-            .then(data => {
-                getDbCreds()
-                .then(() => setCurrentDbId(data.id));
-                openSnackbarWithMessage('Database credentials submitted!');
-            })
-            .catch(error => {
-                openSnackbarWithMessage(`${error}`);
-            });
-        } else {
-            data = {
-                ...data,
-                dbId: currentDbId
+        if (validate()) {
+            let data = form;
+            if (currentDbId === 'newDatabase') {
+                return fetch('/database/create', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (response.status === 201) {
+                        return response.json();
+                    } else {
+                        throw new Error('Bad response from server.');
+                    };
+                })
+                .then(data => {
+                    getDbCreds()
+                    .then(() => setCurrentDbId(data.id));
+                    openSnackbarWithMessage('Database credentials submitted!');
+                })
+                .catch(error => {
+                    openSnackbarWithMessage(`${error}`);
+                });
+            } else {
+                data = {
+                    ...data,
+                    dbId: currentDbId
+                }
+                return fetch('/database/update', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => {
+                    if (response.status === 200) {
+                        getDbCreds();
+                        openSnackbarWithMessage('Database credentials updated!');
+                    } else {
+                        throw new Error('Bad response from server.');
+                    };
+                })
+                .catch(error => {
+                    openSnackbarWithMessage(`${error}`);
+                });
             }
-            return fetch('/database/update', {
-                method: 'post',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(data)
-            })
-            .then(response => {
-                if (response.status === 200) {
-                    getDbCreds();
-                    openSnackbarWithMessage('Database credentials updated!');
-                } else {
-                    throw new Error('Bad response from server.');
-                };
-            })
-            .catch(error => {
-                openSnackbarWithMessage(`${error}`);
-            });
         }
     }
 
@@ -236,7 +302,6 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
                         value={currentDbId}
                         onChange={e => {
                             setCurrentDbId(e.target.value);
-                            // setFields(e.target.value);
                         }}
                     >
                         <MenuItem value={'newDatabase'}>New Database</MenuItem>
@@ -244,13 +309,14 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
                     </StyledSelect>
                 </div>
                 <Paper style={{display: 'flex', flexDirection: 'row'}}>
-                    <form noValidate onSubmit={handleSubmit} autoComplete="off" style={{margin: '10px'}}>
+                    <form onSubmit={handleSubmit} autoComplete="off" style={{margin: '10px'}}>
                         <div style={{margin: '10px'}}><Typography variant="h6" display="block">Credentials</Typography></div>
                         <div>
                             <TextField
                                 id={DB_DISPLAY_NAME}
                                 name={DB_DISPLAY_NAME}
                                 value={form[DB_DISPLAY_NAME]}
+                                error={errors[DB_DISPLAY_NAME]}
                                 onChange={handleChange}
                                 className={classes.textField}
                                 label="Display Name"
@@ -258,7 +324,10 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
                                     shrink: true,
                                 }}
                             />
-                            <FormControl className={classes.selectField}>
+                            <FormControl
+                                error={errors[DB_TYPE]}
+                                className={classes.selectField}
+                            >
                                 <InputLabel shrink>Database Type</InputLabel>
                                 <Select
                                     id={DB_TYPE}
@@ -278,6 +347,7 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
                                 id={DB_HOST}
                                 name={DB_HOST}
                                 value={form[DB_HOST]}
+                                error={errors[DB_HOST]}
                                 onChange={handleChange}
                                 className={classes.fullWidthField}
                                 label="Database Host"
@@ -291,6 +361,7 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
                                 id={DB_PORT}
                                 name={DB_PORT}
                                 value={form[DB_PORT]}
+                                error={errors[DB_PORT]}
                                 onChange={handleChange}
                                 className={classes.textField}
                                 label="Database Port"
@@ -302,6 +373,7 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
                                 id={DB_NAME}
                                 name={DB_NAME}
                                 value={form[DB_NAME]}
+                                error={errors[DB_NAME]}
                                 onChange={handleChange}
                                 className={classes.textField}
                                 label="Database Name"
@@ -315,6 +387,7 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
                                 id={DB_USERNAME}
                                 name={DB_USERNAME}
                                 value={form[DB_USERNAME]}
+                                error={errors[DB_USERNAME]}
                                 onChange={handleChange}
                                 className={classes.textField}
                                 label="Database Username"
@@ -326,6 +399,7 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
                                 id={DB_PASSWORD}
                                 name={DB_PASSWORD}
                                 value={form[DB_PASSWORD]}
+                                error={errors[DB_PASSWORD]}
                                 onChange={handleChange}
                                 className={classes.textField}
                                 label="Database Password"
