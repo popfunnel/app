@@ -197,8 +197,8 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
         if (!form[DB_HOST].length) {
             newErrors[DB_HOST] = true;
         };
-
-        if (!form[DB_PORT].length || isNaN(form[DB_PORT])) {
+        
+        if (!form[DB_PORT] || isNaN(form[DB_PORT])) {
             newErrors[DB_PORT] = true;
         };
 
