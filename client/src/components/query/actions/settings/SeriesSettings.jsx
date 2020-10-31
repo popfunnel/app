@@ -58,7 +58,6 @@ const SeriesSettings = ({seriesType, setSeriesType, queryResults, openSnackbarWi
                     value={seriesType}
                     onChange={(e) => {
                         setSeriesType(e.target.value)}}
-                    inputProps={{ 'aria-label': 'Without label' }}
                 >
                     <MenuItem className={classes.chartSelectItem} value={'Table'}>Table</MenuItem>
                     <MenuItem className={classes.chartSelectItem} value={'Bar'}>Bar</MenuItem>

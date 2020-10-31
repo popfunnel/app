@@ -25,7 +25,7 @@ const ChartContainer = ({queryResults, seriesType, config}) => {
     return (
         <div style={{flex: 1, marginTop: '5px'}}>
             <div style={{marginLeft: '10px'}}>
-                <Typography variant="h5" display="block">Chart</Typography>
+                <Typography variant="subtitle1" display="block">Chart</Typography>
             </div>
             {getChart()}
         </div>
