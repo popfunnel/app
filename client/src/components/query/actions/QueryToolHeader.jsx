@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import {refreshDashboardInfo, getCurrentDashboardInfo} from '../../../actions/dashboard';
+import {refreshDashboardInfo } from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
 import { saveChart, resetForm } from '../../../actions/queryTool';
 import Button from '@material-ui/core/Button';
@@ -159,7 +159,7 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
 
 const mapStateToProps = state => {
     return {
-        currentDashboardInfo: getCurrentDashboardInfo(state),
+        currentDashboardInfo: state.dashboard.currentDashboard,
         rawResults: state.query.rawResults,
         seriesType: state.chart.seriesType
     };

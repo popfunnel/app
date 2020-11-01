@@ -28,7 +28,6 @@ import { setSchemaDropdownStatus } from '../../actions/nav';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
-import { getCurrentDashboardInfo } from '../../actions/dashboard';
 import { setIsDatabaseModalOpenStatus } from '../../actions/database';
 
 const useStyles = makeStyles(NavStyles);
@@ -126,7 +125,7 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, setSchemaDropdown
 
 const mapStateToProps = state => {
     return {
-        currentDashboardInfo: getCurrentDashboardInfo(state),
+        currentDashboardInfo: state.dashboard.currentDashboard,
         isDrawerOpen: state.nav.isDrawerOpen,
         isSchemaDropdownOpen: state.nav.isSchemaDropdownOpen
     }

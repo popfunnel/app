@@ -10,7 +10,7 @@ import Select from '@material-ui/core/Select';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { openSnackbarWithMessage } from '../actions/snackbar';
-import {getDbCreds, setCurrentDbId} from '../actions/database';
+import { getDbCreds, setCurrentDbId } from '../actions/database';
 // TODO: check if you can pull shared styles into form style
 // TODO: put current db into query tool page?
 // TODO: add validations to fields (port must be numeric)
@@ -506,7 +506,7 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
 let mapStateToProps = state => {
     return {
         dbCreds: state.database.dbCreds,
-        currentDbId: state.database.currentDbId
+        currentDbId: state.database.currentDbId || 'newDatabase'
     }
 };
 

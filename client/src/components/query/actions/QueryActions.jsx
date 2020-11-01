@@ -20,6 +20,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+const StyledTab = withStyles((theme) => ({
+    root: {
+        maxWidth: 60,
+        width: 45,
+        [theme.breakpoints.up('sm')]: {
+            minWidth: 40,
+        },
+    }
+}))(Tab);
+
 export const QueryActions = () => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
@@ -44,18 +54,9 @@ export const QueryActions = () => {
                 </div>
             );
         }
-  };
+    };
 
-  const StyledTab = withStyles((theme) => ({
-    root: {
-        maxWidth: 60,
-        width: 45,
-        [theme.breakpoints.up('sm')]: {
-            minWidth: 40,
-        },
-    }
-  }))(Tab);
-  
+
   return (
     <div style={{height: 'calc(100vh - 108px)'}}>
         <div className={classes.tabContainer}>

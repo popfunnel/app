@@ -2,8 +2,9 @@ import * as actions from '../actions/database'
 
 const initialState = {
     isModalOpen: false,
-    currentDbId: 'newDatabase',
-    dbCreds: []
+    currentDbId: '',
+    dbCreds: [],
+    dbOptions: []
 }
 
 
@@ -27,6 +28,9 @@ function setDbCreds(state, dbCreds) {
         dbCreds: dbCreds
     }
 }
+
+// Note: should db options be db connections?
+// TODO: create setDbOptions
 
 export default function database(state = initialState, action) {
     switch (action.type) {

@@ -81,4 +81,24 @@ module.exports = {
             res.status(400).send(error)
         });
   },
+  listOptions(req, res) {
+    return Database
+        .findAll({
+          attributes: [
+              'id',
+              'name'
+            ],
+          order: [
+            ['id', 'ASC']
+          ]
+        })
+        .then(databases => {
+            console.log('database', databases)
+            res.status(201).send(databases)
+        })
+        .catch(error => {
+            console.log('error', error)
+            res.status(400).send(error)
+        });
+  },
 };
