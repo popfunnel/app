@@ -72,7 +72,7 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
             dashboard_id: currentDashboardId,
             chartLayout: currentLayout
         }
-
+        console.log('manual savechart', data)
         return fetch('/dashboard/update-layout', {
             method: 'post',
             headers: {
@@ -84,7 +84,7 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
         .then(response => {
             if (response.status === 200) {
                 openSnackbarWithMessage('Chart layout saved!');
-                return refreshDashboardInfo();
+                return refreshDashboardInfo(currentDashboardId);
             } else if (response.status === 500 || response.status === 400) {
                 openSnackbarWithMessage('Bad response from server.');
                 return false;
@@ -143,7 +143,10 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
                     </Button>
                 </div>
             </div>
-            <ConnectedDashboard currentLayout={currentLayout} setCurrentLayout={setCurrentLayout}/>
+            <ConnectedDashboard
+                currentLayout={currentLayout}
+                setCurrentLayout={setCurrentLayout}
+            />
             <ConnectedNewDashboardModal
                 isOpen={isDashboardDialogOpen}
                 setIsOpen={setIsDashboardDialogOpen}

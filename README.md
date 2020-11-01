@@ -55,7 +55,7 @@ sequelize db:migrate:undo
 
 to run seeds:
 ```
-npx sequelize-cli db:seed:all
+sequelize db:seed:all
 ```
 
 to undo a seed:
