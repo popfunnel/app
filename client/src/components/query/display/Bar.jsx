@@ -3,7 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux'
 import {BarChart, Bar, XAxis,
     YAxis, CartesianGrid, Tooltip,
-    Legend, ResponsiveContainer} from 'recharts';
+    ResponsiveContainer} from 'recharts';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -92,10 +92,9 @@ export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDash
                         <XAxis dataKey={xAxisKey}/>
                         <YAxis width={20}/>
                         <Tooltip />
-                        {/* <Legend /> */}
                         {yAxisKeys.map((key, index) => {
                             let colorIndex = index%5;
-                            return <Bar key={key} dataKey={key} fill={colors[colorIndex]}/>
+                            return <Bar isAnimationActive={false} key={key} dataKey={key} fill={colors[colorIndex]}/>
                         })}
                     </BarChart>
                 </ResponsiveContainer>
