@@ -8,9 +8,10 @@ import {BarChart, Bar, XAxis,
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {destroyChart, refreshDashboardInfo} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
+import Typography from '@material-ui/core/Typography';
 
 const StyledMenuItem = withStyles((theme) => ({
     root: {
@@ -23,8 +24,15 @@ const initialState = {
     mouseY: null,
 };
 
-export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage}) => {
+const useStyles = makeStyles((theme) => ({
+    test: {
+        padding: '10px'
+    }
+}));
 
+
+export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage}) => {
+    const classes = useStyles();
     const [mousePosition, setMousePosition] = React.useState(initialState);
 
     const handleConsoleMenu = (event) => {
@@ -69,24 +77,29 @@ export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDash
     // TODO: Separate out contextmenu into component/HOC
     return (
         <Paper style={{height:'100%', width:'100%', cursor: 'context-menu'}} onContextMenu={handleConsoleMenu}>
-            <ResponsiveContainer>
-                <BarChart
-                    data={formattedData}
-                    margin={{
-                        top: 5, right: 30, left: 20, bottom: 5,
-                    }}
-                >
-                    <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis dataKey={xAxisKey}/>
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    {yAxisKeys.map((key, index) => {
-                        let colorIndex = index%5;
-                        return <Bar key={key} dataKey={key} fill={colors[colorIndex]}/>
-                    })}
-                </BarChart>
-            </ResponsiveContainer>
+            <div className={classes.test}>
+                <Typography variant="subtitle2" display="block">Untitled Chart</Typography>
+            </div>
+            <div style={{height: '85%'}}>
+                <ResponsiveContainer>
+                    <BarChart
+                        data={formattedData}
+                        margin={{
+                            top: 5, right: 30, left: 20, bottom: 5,
+                        }}
+                    >
+                        <CartesianGrid strokeDasharray="3 3"/>
+                        <XAxis dataKey={xAxisKey}/>
+                        <YAxis width={20}/>
+                        <Tooltip />
+                        {/* <Legend /> */}
+                        {yAxisKeys.map((key, index) => {
+                            let colorIndex = index%5;
+                            return <Bar key={key} dataKey={key} fill={colors[colorIndex]}/>
+                        })}
+                    </BarChart>
+                </ResponsiveContainer>
+            </div>
             {chartId &&
             <Menu
                 keepMounted

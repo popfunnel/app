@@ -1,5 +1,4 @@
 import React from 'react';
-// TODO create index.js file to import all these guys
 import { ConnectedResultsTable } from './Table'
 import { ConnectedCustomBarChart } from './Bar'
 import { ConnectedCustomLineChart } from './Line'
@@ -7,8 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
 import { withOutputContainer }  from './OutputContainer';
 
-// TODO: ConnectedResultsTable does not config passed down
-const ChartContainer = ({queryResults, seriesType, config}) => {
+const ChartContainer = ({seriesType, config}) => {
     const getChart = () => {
         let ChartComponent = ConnectedResultsTable;
         if (seriesType === 'Table') {
@@ -24,7 +22,7 @@ const ChartContainer = ({queryResults, seriesType, config}) => {
 
     return (
         <div style={{flex: 1, marginTop: '5px'}}>
-            <div style={{marginLeft: '10px'}}>
+            <div>
                 <Typography variant="subtitle1" display="block">Chart</Typography>
             </div>
             {getChart()}
@@ -34,7 +32,6 @@ const ChartContainer = ({queryResults, seriesType, config}) => {
 
 const mapStateToProps = (state) => {
     return {
-        queryResults: state.query.rawResults,
         seriesType: state.chart.seriesType,
         config: state.chart.config
     }

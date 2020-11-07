@@ -48,11 +48,11 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
             let {id, name, config, type} = chartInfo;
             if (type === 'Bar') {
                 return (
-                    <div key={`${id}-${name}-${type}`} data-grid={{x: 0, y: 0, w: 5, h: 10, autoSize:true}}><ConnectedCustomBarChart chartId={id} config={config}/></div>
+                    <div key={`${id}-${name}-${type}`} data-grid={{i: `${id}-${name}-${type}`, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><ConnectedCustomBarChart chartId={id} config={config}/></div>
                 );
             } else if (type === 'Line') {
                 return (
-                    <div key={`${id}-${name}-${type}`} data-grid={{x: 0, y: 0, w: 3, h: 6, autoSize:true}}><CustomLineChart config={config}/></div>
+                    <div key={`${id}-${name}-${type}`} data-grid={{x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><CustomLineChart config={config}/></div>
                 );
             } else {
                 throw new Error('Bad Chart config!')
@@ -65,6 +65,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
     // TODO: add multiple y axis series 
 
     // context menu for grids https://material-ui.com/components/menus/
+
     return (
         <GridLayout
             className="layout"
@@ -73,7 +74,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
             rowHeight={30}
             width={1800}
             onLayoutChange={(layout) => {
-                // TODO: save chart layout in dashboard action?
+                console.log('here is the layout', layout)
                 setCurrentLayout(layout);
                 autoSaveChartLayout(layout);
             }}
