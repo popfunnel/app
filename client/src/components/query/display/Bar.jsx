@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage}) => {
+export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage, isAnimated=false}) => {
     const classes = useStyles();
     const [mousePosition, setMousePosition] = React.useState(initialState);
 
@@ -94,7 +94,7 @@ export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDash
                         <Tooltip />
                         {yAxisKeys.map((key, index) => {
                             let colorIndex = index%5;
-                            return <Bar isAnimationActive={false} key={key} dataKey={key} fill={colors[colorIndex]}/>
+                            return <Bar isAnimationActive={isAnimated} key={key} dataKey={key} fill={colors[colorIndex]}/>
                         })}
                     </BarChart>
                 </ResponsiveContainer>
