@@ -43,7 +43,7 @@ const DatabaseActions = ({currentDbId, setCurrentDbId}) => {
                 <>
                     <Select
                         className={classes.dbSelect}
-                        value={currentDbId}
+                        value={dbConnections.length ? currentDbId : 'None'}
                         onChange={e => setCurrentDbId(e.target.value)}
                     >
                         <MenuItem className={classes.dbMenuItem} value={'None'}>None Selected</MenuItem>

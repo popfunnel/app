@@ -46,13 +46,14 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
     const getGridItems = () => {
         return dashboardCharts.map((chartInfo, index) => {
             let {id, name, config, type} = chartInfo;
+            let chartGridItemId=`${id}-${name}-${type}`;
             if (type === 'Bar') {
                 return (
-                    <div key={`${id}-${name}-${type}`} data-grid={{i: `${id}-${name}-${type}`, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><ConnectedCustomBarChart chartId={id} config={config}/></div>
+                    <div key={chartGridItemId} data-grid={{i: chartGridItemId, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><ConnectedCustomBarChart chartId={id} name={name} config={config}/></div>
                 );
             } else if (type === 'Line') {
                 return (
-                    <div key={`${id}-${name}-${type}`} data-grid={{x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><CustomLineChart config={config}/></div>
+                    <div key={chartGridItemId} data-grid={{i: chartGridItemId, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><CustomLineChart config={config}/></div>
                 );
             } else {
                 throw new Error('Bad Chart config!')

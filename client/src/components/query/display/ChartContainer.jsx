@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
 import { withOutputContainer }  from './OutputContainer';
 
-const ChartContainer = ({seriesType, config}) => {
+const ChartContainer = ({seriesType, config, name}) => {
     const getChart = () => {
         let ChartComponent = ConnectedResultsTable;
         if (seriesType === 'Table') {
@@ -17,7 +17,7 @@ const ChartContainer = ({seriesType, config}) => {
             ChartComponent = ConnectedCustomLineChart;
         }
         let Chart = withOutputContainer(ChartComponent);
-        return <Chart config={config} isAnimated={true} noResultsMsg={'Start by running a query using the editor!'}/>
+        return <Chart name={name} config={config} isAnimated={false} noResultsMsg={'Start by running a query using the editor!'}/>
     };
 
     return (
@@ -33,7 +33,8 @@ const ChartContainer = ({seriesType, config}) => {
 const mapStateToProps = (state) => {
     return {
         seriesType: state.chart.seriesType,
-        config: state.chart.config
+        config: state.chart.config,
+        name: state.chart.name
     }
 }
 

@@ -1,6 +1,7 @@
 import * as actions from '../actions/queryTool';
 
 const initialState = {
+    name: '',
     seriesType: 'Table',
     columnSelections: {
         byColumnName: {},
@@ -12,6 +13,13 @@ const initialState = {
         yAxisKeys: [],
         formattedData: []
     }
+};
+
+function setChartName(state, name) {
+    return {
+        ...state,
+        name
+    };
 };
 
 function setSeriesType(state, seriesType) {
@@ -242,6 +250,7 @@ export function setChartConfig(state, rawResults) {
 
 function resetChart() {
     return {
+        name: '',
         seriesType: 'Table',
         columnSelections: {
             byColumnName: {},
@@ -258,6 +267,8 @@ function resetChart() {
 
 export default function chart(state = initialState, action) {
     switch (action.type) {
+        case actions.SET_CHART_NAME:
+            return setChartName(state, action.name);
         case actions.SET_SERIES_TYPE:
             return setSeriesType(state, action.seriesType);
         case actions.CREATE_COLUMN_SELECTIONS:

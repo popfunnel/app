@@ -96,6 +96,14 @@ export const resetChart = () => {
     }
 }
 
+export const SET_CHART_NAME = 'SET_CHART_NAME';
+export const setChartName = (name) => {
+    return {
+        type: SET_CHART_NAME,
+        name
+    }
+}
+
 export const SAVE_CHART = 'SAVE_CHART';
 export const saveChart = (name, dashboardId) => (dispatch, getState) => {
     let state = getState()

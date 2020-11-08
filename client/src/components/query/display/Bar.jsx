@@ -26,12 +26,13 @@ const initialState = {
 
 const useStyles = makeStyles((theme) => ({
     test: {
-        padding: '10px'
+        padding: '10px',
+        paddingLeft: '20px'
     }
 }));
 
-
-export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage, isAnimated=false}) => {
+//BUG: Right click directly into another right click results in the initial chart being deleted
+export const CustomBarChart = ({chartId, name, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage, isAnimated = false}) => {
     const classes = useStyles();
     const [mousePosition, setMousePosition] = React.useState(initialState);
 
@@ -78,7 +79,7 @@ export const CustomBarChart = ({chartId, config, currentDashboardId, refreshDash
     return (
         <Paper style={{height:'100%', width:'100%', cursor: 'context-menu'}} onContextMenu={handleConsoleMenu}>
             <div className={classes.test}>
-                <Typography variant="subtitle2" display="block">Untitled Chart</Typography>
+                <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography>
             </div>
             <div style={{height: '85%'}}>
                 <ResponsiveContainer>

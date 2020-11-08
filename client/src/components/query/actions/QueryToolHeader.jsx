@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux'
 import {refreshDashboardInfo } from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
+import { setChartName } from '../../../actions/queryTool';
 import { saveChart, resetForm } from '../../../actions/queryTool';
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
@@ -20,10 +21,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, saveChart,
-    openSnackbarWithMessage, rawResults, seriesType}) => {
+    openSnackbarWithMessage, rawResults, seriesType, chartName, setChartName}) => {
+
     const classes = useStyles();
     let history = useHistory();
-    const [chartName, setChartName] = React.useState('');
+    // const [chartName, setChartName] = React.useState('');
     const [chartNameHasError, setChartNameHasError] = React.useState(false);
     const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
 
@@ -158,17 +160,20 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
 }
 
 const mapStateToProps = state => {
+    console.log('state.chart.name', state.chart)
     return {
         currentDashboardInfo: state.dashboard.currentDashboard,
         rawResults: state.query.rawResults,
-        seriesType: state.chart.seriesType
+        seriesType: state.chart.seriesType,
+        chartName: state.chart.name
     };
 };
 
 const mapDispatchToProps = {
     openSnackbarWithMessage,
     saveChart,
-    refreshDashboardInfo
+    refreshDashboardInfo,
+    setChartName
 };
 
 
