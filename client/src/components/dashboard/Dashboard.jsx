@@ -74,7 +74,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
             cols={12}
             rowHeight={30}
             width={1800}
-            onLayoutChange={(layout) => {
+            onLayoutChange={layout => {
                 setCurrentLayout(layout);
                 autoSaveChartLayout(layout);
             }}

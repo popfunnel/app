@@ -160,7 +160,6 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
 }
 
 const mapStateToProps = state => {
-    console.log('state.chart.name', state.chart)
     return {
         currentDashboardInfo: state.dashboard.currentDashboard,
         rawResults: state.query.rawResults,

@@ -4,7 +4,7 @@ const initialState = {
     isModalOpen: false,
     currentDbId: '',
     dbCreds: [],
-    dbOptions: []
+    dbConnections: []
 }
 
 
@@ -29,6 +29,13 @@ function setDbCreds(state, dbCreds) {
     }
 }
 
+function setDbConnections(state, dbConnections) {
+    return {
+        ...state,
+        dbConnections: dbConnections
+    }
+}
+
 // Note: should db options be db connections?
 // TODO: create setDbOptions
 
@@ -40,6 +47,8 @@ export default function database(state = initialState, action) {
             return setCurrentDbId(state, action.databaseId);
         case actions.SET_DB_CREDS:
             return setDbCreds(state, action.dbCreds);
+        case actions.SET_DB_CONNECTIONS:
+            return setDbConnections(state, action.dbConnections);
         default:
             return state
     }

@@ -8,9 +8,8 @@ export default function configureStore() {
     const middlewares = [loggerMiddleware, thunkMiddleware]
     const store = createStore(rootReducer, persistedState, applyMiddleware(...middlewares))
 
-    store.subscribe(() => {
-        saveState(store.getState());
-    })
+    store.subscribe(() => saveState(store.getState()));
+    
     return store
 }
 

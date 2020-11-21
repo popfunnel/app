@@ -27,9 +27,30 @@ const fetchDbOptions = () => {
 export const SET_DB_CREDS = 'SET_DB_CREDS';
 export const getDbCreds = () => async (dispatch, getState) => {
     try {
-        let dbCreds = await fetchDbOptions();
+        const dbCreds = await fetchDbOptions();
         dispatch({type: SET_DB_CREDS, dbCreds});
-    } catch (error) {
+    } catch(error) {
+        throw error;
+    }
+};
+
+const fetchDbConnections= () => {
+    return fetch('/database/list-options').then(response => {
+        if (response.status === 201) {
+            return response.json();
+        } else {
+            throw new Error('Bad response from server.'); 
+        }
+    })
+};
+
+export const SET_DB_CONNECTIONS = 'SET_DB_CONNECTIONS';
+export const setDbConnections = dbConnections => async (dispatch, getState) => {
+    try {
+        const dbConnections = await fetchDbConnections();
+        dispatch({type: SET_DB_CONNECTIONS, dbConnections})
+    } catch(error) {
+        console.log('error is caught')
         throw error;
     }
 };

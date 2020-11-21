@@ -6,7 +6,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import { makeStyles } from '@material-ui/core/styles';
 
-import { setCurrentDbId } from '../../../actions/database';
+import { setCurrentDbId, setDbConnections } from '../../../actions/database';
+import { openSnackbarWithMessage } from '../../../actions/snackbar';
 
 const useStyles = makeStyles((theme) => ({
     dbSelect: {
@@ -18,21 +19,14 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const DatabaseActions = ({currentDbId, setCurrentDbId}) => {
+const DatabaseActions = ({currentDbId, setCurrentDbId, dbConnections, setDbConnections, openSnackbarWithMessage}) => {
     const classes = useStyles();
 
-    // TODO: should dbConnections be in global state?
-    // const [currentDbConnection, setCurrentDbConnection] = React.useState('');
-    const [dbConnections, setDbConnections] = React.useState([]);
-
     React.useEffect(() => {
-        const getDbConnections = () => fetch('/database/list-options')
-            .then(response => response.json())
-            .then(data => {
-                setDbConnections(data);
-            })
-        getDbConnections();
-    }, [])
+        setDbConnections().catch(error => {
+            openSnackbarWithMessage(`${error}`);
+        })
+    }, [setDbConnections, openSnackbarWithMessage])
 
     return (
         <div style={{height: 'calc(100vh - 108px)'}}>
@@ -43,7 +37,7 @@ const DatabaseActions = ({currentDbId, setCurrentDbId}) => {
                 <>
                     <Select
                         className={classes.dbSelect}
-                        value={dbConnections.length ? currentDbId : 'None'}
+                        value={currentDbId}
                         onChange={e => setCurrentDbId(e.target.value)}
                     >
                         <MenuItem className={classes.dbMenuItem} value={'None'}>None Selected</MenuItem>
@@ -58,12 +52,15 @@ const DatabaseActions = ({currentDbId, setCurrentDbId}) => {
 const mapStateToProps = state => {
     
     return {
-        currentDbId: state.database.currentDbId || 'None'
+        currentDbId: state.database.currentDbId || 'None',
+        dbConnections: state.database.dbConnections
     };
 }
 
 const mapDispatchToProps = {
-    setCurrentDbId
+    setCurrentDbId,
+    setDbConnections,
+    openSnackbarWithMessage
 };
 
 export const ConnectedDatabaseActions = connect(mapStateToProps, mapDispatchToProps)(DatabaseActions);
