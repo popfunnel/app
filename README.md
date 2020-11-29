@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/popfunnel/db-visuals/blob/master/client/public/android-chrome-192x192.png" alt="popfunnel logo"/>
+  <img src="https://github.com/popfunnel/db-visuals/blob/master/docs/images/popfunnel_logo.png" alt="popfunnel logo" width="150"/>
 </p>
 <h1 align="center">appfunnel</h1>
 
