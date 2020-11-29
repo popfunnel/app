@@ -1,8 +1,7 @@
 <p align="center">
   <img src="https://github.com/popfunnel/db-visuals/blob/master/client/public/android-chrome-192x192.png" alt="popfunnel logo"/>
-  <title>db-visuals</title>
 </p>
-
+<h1 align="center">appfunnel</h1>
 
 Visualize your data with SQL
 
