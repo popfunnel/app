@@ -1,6 +1,11 @@
 # db-visuals
 Visualize your data with SQL
 
+<p align="center">
+  <img src="https://github.com/popfunnel/db-visuals/blob/master/client/public/android-chrome-192x192.png" alt="popfunnel logo"/>
+</p>
+
+
 ## Local Development
 
 node ~12.18.0  
