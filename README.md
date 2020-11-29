@@ -1,9 +1,9 @@
 <p align="center">
   <img src="https://github.com/popfunnel/db-visuals/blob/master/docs/images/popfunnel_logo.png" alt="popfunnel logo" width="150"/>
 </p>
-<h1 align="center">appfunnel</h1>
+<h1 align="center">app</h1>
 
-Visualize your data with SQL
+Main platform for popfunnel.
 
 ## Local Development
 
