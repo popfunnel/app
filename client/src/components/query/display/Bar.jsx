@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //BUG: Right click directly into another right click results in the initial chart being deleted
-export const CustomBarChart = ({chartId, name, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage, isAnimated = false}) => {
+export const CustomBarChart = ({chartId, name, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage}) => {
     const classes = useStyles();
     const [mousePosition, setMousePosition] = React.useState(initialState);
 
@@ -95,7 +95,7 @@ export const CustomBarChart = ({chartId, name, config, currentDashboardId, refre
                         <Tooltip />
                         {yAxisKeys.map((key, index) => {
                             let colorIndex = index%5;
-                            return <Bar isAnimationActive={isAnimated} key={key} dataKey={key} fill={colors[colorIndex]}/>
+                            return <Bar key={key} dataKey={key} fill={colors[colorIndex]}/>
                         })}
                     </BarChart>
                 </ResponsiveContainer>

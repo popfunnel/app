@@ -17,7 +17,7 @@ const ChartContainer = ({seriesType, config, name}) => {
             ChartComponent = ConnectedCustomLineChart;
         }
         let Chart = withOutputContainer(ChartComponent);
-        return <Chart name={name} config={config} isAnimated={false} noResultsMsg={'Start by running a query using the editor!'}/>
+        return <Chart name={name} config={config} noResultsMsg={'Start by running a query using the editor!'}/>
     };
 
     return (

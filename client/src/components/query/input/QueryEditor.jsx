@@ -95,7 +95,7 @@ const QueryEditor = ({queryDatabase, resetForm}) => {
     };
 
     return (
-        <Paper style={{marginTop:'5px', width:'100%'}}>
+        <Paper style={{marginTop:'5px', width:'100%', resize: 'vertical'}}>
             <CodeMirror
                 value={queryInput}
                 options={{

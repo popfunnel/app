@@ -11,7 +11,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
 
     if (!dashboardCharts.length) {
         return (
-            <div style={{margin: '10px', textAlign: 'center'}}>
+            <div style={{margin: '10px'}}>
                 Created charts will appear here.
             </div>
         );
