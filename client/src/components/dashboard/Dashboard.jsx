@@ -5,7 +5,7 @@ import '../../../node_modules/react-resizable/css/styles.css'
 import { connect } from 'react-redux';
 import { ConnectedCustomBarChart } from '../query/display/Bar';
 import { CustomLineChart } from '../query/display/Line';
-import {openSnackbarWithMessage} from '../../actions/snackbar';
+import { openSnackbarWithMessage } from '../../actions/snackbar';
 
 const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout, setCurrentLayout, openSnackbarWithMessage}) => {
 

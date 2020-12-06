@@ -74,7 +74,7 @@ export const CustomBarChart = ({chartId, name, config, currentDashboardId, refre
         yAxisKeys,
         formattedData
     } = config;
-
+    
     // TODO: Separate out contextmenu into component/HOC
     return (
         <Paper style={{height:'100%', width:'100%', cursor: 'context-menu'}} onContextMenu={handleConsoleMenu}>

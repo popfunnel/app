@@ -4,20 +4,51 @@ import { ConnectedCustomBarChart } from './Bar'
 import { ConnectedCustomLineChart } from './Line'
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux'
-import { withOutputContainer }  from './OutputContainer';
+import Paper from '@material-ui/core/Paper';
+import { makeStyles } from '@material-ui/core/styles';
 
-const ChartContainer = ({seriesType, config, name}) => {
+const useStyles = makeStyles((theme) => ({
+    noResults: {
+        height: '100%',
+        display:'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        color: '#C0C0C0'
+    },
+    control: {
+      padding: theme.spacing(2),
+    }
+}));
+
+const ChartContainer = ({seriesType, config, name, queryResults}) => {
+    const classes = useStyles();
+
+    const NoResults = () => {
+        return (
+            <>
+                <div className={classes.noResults}>
+                    {'Start by running a query using the editor!'}
+                </div>
+            </>
+        );
+    }
+
     const getChart = () => {
-        let ChartComponent = ConnectedResultsTable;
+        let Chart = ConnectedResultsTable;
         if (seriesType === 'Table') {
-            ChartComponent = ConnectedResultsTable;
+            Chart = ConnectedResultsTable;
         } else if (seriesType === 'Bar') {
-            ChartComponent = ConnectedCustomBarChart;
+            Chart = ConnectedCustomBarChart;
         } else if (seriesType === 'Line') {
-            ChartComponent = ConnectedCustomLineChart;
+            Chart = ConnectedCustomLineChart;
         }
-        let Chart = withOutputContainer(ChartComponent);
-        return <Chart name={name} config={config} noResultsMsg={'Start by running a query using the editor!'}/>
+        return (
+            <Paper style={{height: '40vh', overflowY: 'auto'}}>
+                {!queryResults.length ?
+                <NoResults/> :
+                <Chart name={name} config={config} noResultsMsg={'Start by running a query using the editor!'}/>}
+            </Paper>
+        )
     };
 
     return (
@@ -32,6 +63,7 @@ const ChartContainer = ({seriesType, config, name}) => {
 
 const mapStateToProps = (state) => {
     return {
+        queryResults: state.query.rawResults,
         seriesType: state.chart.seriesType,
         config: state.chart.config,
         name: state.chart.name
