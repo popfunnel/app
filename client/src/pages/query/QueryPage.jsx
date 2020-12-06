@@ -19,8 +19,7 @@ export const QueryPage = () => {
                     <ConnectedQueryEditor/>
                     <ConnectedChartContainer/>
                 </div>
-                {/* TODO: use breakpoints to determine QueryActions width */}
-                <div style={{minWidth:'25vw'}}>
+                <div style={{width:'350px'}}>
                     <QueryActions/>
                 </div>
             </div>
