@@ -10,6 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {destroyChart, refreshDashboardInfo} from '../../../actions/dashboard';
 import Typography from '@material-ui/core/Typography';
+import { openSnackbarWithMessage } from '../../../actions/snackbar';
 
 const StyledMenuItem = withStyles((theme) => ({
     root: {
@@ -112,10 +113,13 @@ export const CustomLineChart = ({chartId, name, config, currentDashboardId, refr
 
 const mapStateToProps = (state) => {
     return {
-        config: state.chart.config
+        currentDashboardId: state.dashboard.currentDashboard.id,
     }
 }
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+    refreshDashboardInfo, 
+    openSnackbarWithMessage
+};
 
 export const ConnectedCustomLineChart = connect(mapStateToProps, mapDispatchToProps)(CustomLineChart);

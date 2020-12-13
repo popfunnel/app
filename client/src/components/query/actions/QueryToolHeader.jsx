@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, saveChart,
-    openSnackbarWithMessage, rawResults, seriesType, chartName, setChartName}) => {
+    openSnackbarWithMessage, rawResults, seriesType, chartName, setChartName, resetForm}) => {
 
     const classes = useStyles();
     let history = useHistory();
-    // const [chartName, setChartName] = React.useState('');
+
     const [chartNameHasError, setChartNameHasError] = React.useState(false);
     const [isDashboardDialogOpen, setIsDashboardDialogOpen] = React.useState(false);
 
@@ -86,6 +86,7 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
         .then(() => {
             // TODO: this needs to have the dashboardname in
             history.push(`/dashboard/${newDashboardInfo.id}/${newDashboardInfo.name}`);
+            resetForm();
         }).catch(error => {
             openSnackbarWithMessage(`${error}`);
         })
@@ -136,6 +137,7 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
                                     saveChart(chartName)
                                     .then(() => {
                                         history.push(`/dashboard/${currentDashboardId}/${currentDashboardName}`);
+                                        resetForm();
                                     })
                                     .catch(error => {
                                         openSnackbarWithMessage(`${error}`);
@@ -171,6 +173,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = {
     openSnackbarWithMessage,
     saveChart,
+    resetForm,
     refreshDashboardInfo,
     setChartName
 };
