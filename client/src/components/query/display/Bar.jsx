@@ -25,9 +25,15 @@ const initialState = {
 };
 
 const useStyles = makeStyles((theme) => ({
-    test: {
+    chartTitle: {
         padding: '10px',
-        paddingLeft: '20px'
+        paddingLeft: '20px',
+        color: 'black'
+    },
+    chartTitlePlaceholder: {
+        padding: '10px',
+        paddingLeft: '20px',
+        color: '#C0C0C0'
     }
 }));
 
@@ -77,8 +83,8 @@ export const CustomBarChart = ({chartId, name, config, currentDashboardId, refre
     
     // TODO: Separate out contextmenu into component/HOC
     return (
-        <Paper style={{height:'100%', width:'100%', cursor: 'context-menu'}} onContextMenu={handleConsoleMenu}>
-            <div className={classes.test}>
+        <Paper style={{height:'100%', width:'100%'}} onContextMenu={handleConsoleMenu}>
+            <div className={name ? classes.chartTitle : classes.chartTitlePlaceholder}>
                 <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography>
             </div>
             <div style={{height: '85%'}}>

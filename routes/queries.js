@@ -3,7 +3,7 @@ const psql_pool = require('../models/psql_pool');
 
 const router = new express.Router();
 
-router.post('/getSchemas', function(req, res, next) {
+router.get('/getSchemas', function(req, res, next) {
     const query = `select table_schema,
     table_name,
     ordinal_position as position,
