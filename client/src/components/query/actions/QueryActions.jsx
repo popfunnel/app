@@ -71,8 +71,8 @@ export const QueryActions = () => {
                     className={classes.tabs}
                 >
                     <StyledTab icon={<BarChartIcon/>}/>
-                    <StyledTab icon={<SettingsIcon/>}/>
-                    <StyledTab icon={<HistoryIcon/>}/>
+                    {/* <StyledTab icon={<SettingsIcon/>}/>
+                    <StyledTab icon={<HistoryIcon/>}/> */}
                 </Tabs>
             </div>
         </div>
