@@ -53,7 +53,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
                 );
             } else if (type === 'Line') {
                 return (
-                    <div key={chartGridItemId} data-grid={{i: chartGridItemId, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><CustomLineChart config={config}/></div>
+                    <div key={chartGridItemId} data-grid={{i: chartGridItemId, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><CustomLineChart config={config} chartId={id} name={name}/></div>
                 );
             } else {
                 throw new Error('Bad Chart config!')
