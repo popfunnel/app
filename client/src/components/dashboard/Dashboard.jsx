@@ -1,11 +1,14 @@
 import React from 'react';
-import GridLayout from 'react-grid-layout';
+// import GridLayout from 'react-grid-layout';
 import '../../../node_modules/react-grid-layout/css/styles.css'
 import '../../../node_modules/react-resizable/css/styles.css'
 import { connect } from 'react-redux';
 import { ConnectedCustomBarChart } from '../query/display/Bar';
 import { ConnectedCustomLineChart } from '../query/display/Line';
 import { openSnackbarWithMessage } from '../../actions/snackbar';
+import { Responsive, WidthProvider } from 'react-grid-layout';
+
+const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout, setCurrentLayout, openSnackbarWithMessage}) => {
 
@@ -63,24 +66,21 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
 
     // TODO: use responsive layout
     // Reference: https://github.com/STRML/react-grid-layout#grid-item-props
-    // TODO: add multiple y axis series 
-
-    // context menu for grids https://material-ui.com/components/menus/
-
     return (
-        <GridLayout
+        <ResponsiveGridLayout
             className="layout"
-            layout={initialDashboardLayout}
-            cols={12}
+            layouts={initialDashboardLayout}
+            isBounded={true}
+            breakpoints={{lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0}}
+            cols={{lg: 12, md: 10, sm: 6, xs: 4, xxs: 2}}
             rowHeight={30}
-            width={1800}
-            onLayoutChange={layout => {
-                setCurrentLayout(layout);
-                autoSaveChartLayout(layout);
+            onLayoutChange={(layout, layouts) => {
+                setCurrentLayout(layouts);
+                autoSaveChartLayout(layouts);
             }}
         >
             {getGridItems()}
-        </GridLayout>
+        </ResponsiveGridLayout>
     )
 }
 
