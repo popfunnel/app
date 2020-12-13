@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">app</h1>
 
-Main platform for popfunnel.
+This is the passion project of Curtis Lin. The main goal of this platform is to turn SQL queries into beautiful presentations. You can visit the platform at app.popfunnel.com.
 
 ## Local Development
 
