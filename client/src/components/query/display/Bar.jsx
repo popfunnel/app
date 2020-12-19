@@ -11,7 +11,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import {destroyChart, refreshDashboardInfo} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
+import { setChartName } from '../../../actions/queryTool';
+
 import Typography from '@material-ui/core/Typography';
+import InputBase from '@material-ui/core/InputBase';
+import { EditableChartTitle } from '../input/EditableChartTitle'
 
 const StyledMenuItem = withStyles((theme) => ({
     root: {
@@ -38,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 //BUG: Right click directly into another right click results in the initial chart being deleted
-export const CustomBarChart = ({chartId, name, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage}) => {
+export const CustomBarChart = ({chartId, name, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage, setChartName}) => {
     const classes = useStyles();
     const [mousePosition, setMousePosition] = React.useState(initialState);
 
@@ -81,11 +85,38 @@ export const CustomBarChart = ({chartId, name, config, currentDashboardId, refre
         formattedData
     } = config;
     
-    // TODO: Separate out contextmenu into component/HOC
     return (
         <Paper style={{height:'100%', width:'100%'}} onContextMenu={handleConsoleMenu}>
             <div className={name ? classes.chartTitle : classes.chartTitlePlaceholder}>
+                {/* 0.875rem */}
                 <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography>
+                {/* <InputBase
+                    id='chart-name'
+                    className={classes.inputBase}
+                    label='Chart Name'
+                    value={name}
+                    placeholder='Untitled Chart'
+                    onChange={e => {
+                        // setChartNameHasError(false);
+                        setChartName(e.target.value)
+                    }}
+                    // error={chartNameHasError}
+                    inputProps={{
+                        style: {
+                            fontSize: '17px',
+                            padding: '0px'
+                        }
+                    }}
+                /> */}
+                {/* <EditableChartTitle
+                    handleChange={e => setChartName(e.target.value)}
+                    error={false}
+                    value={name}
+                    handleBlur={() => {
+                        //
+                        console.log('heyyyyy')
+                    }}
+                /> */}
             </div>
             <div style={{height: '85%'}}>
                 <ResponsiveContainer>
@@ -133,7 +164,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     refreshDashboardInfo, 
-    openSnackbarWithMessage
+    openSnackbarWithMessage,
+    setChartName
 };
 
 export const ConnectedCustomBarChart = connect(mapStateToProps, mapDispatchToProps)(CustomBarChart);

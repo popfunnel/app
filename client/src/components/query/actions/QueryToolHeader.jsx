@@ -9,7 +9,12 @@ import { useHistory } from "react-router-dom";
 import InputBase from '@material-ui/core/InputBase';
 import { ConnectedNewDashboardModal } from  '../../../components/dashboard/NewDashboardModal';
 
+import { EditableChartTitle } from '../input/EditableChartTitle'
+
 import { makeStyles } from '@material-ui/core/styles';
+
+
+
 
 const useStyles = makeStyles((theme) => ({
     button: {
@@ -97,24 +102,14 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
             <div style={{height: '100%', display:'flex', flexDirection:'row', justifyContent: 'space-between', alignItems: 'center'}}>
                 <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px'}}>    
                     <div>{getPathName()}</div>
-                    <InputBase
-                        id='chart-name'
-                        className={classes.inputBase}
-                        label='Chart Name'
-                        value={chartName}
-                        placeholder='Untitled Chart'
-                        onChange={e => {
+                    <EditableChartTitle
+                        handleChange={e => {
                             setChartNameHasError(false);
                             setChartName(e.target.value)
                         }}
                         error={chartNameHasError}
-                        inputProps={{
-                            style: {
-                                fontSize: '17px',
-                                padding: '0px'
-                            }
-                        }}
-                    />  
+                        value={chartName}
+                    />
                 </div>
                 <div style={{marginRight: '24px'}}>
                     <Button
