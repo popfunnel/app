@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export const EditableChartTitle = ({handleChange, error = false, value, handleBlur, size = 'medium'}) => {
+export const EditableChartTitle = ({handleChange, error = false, value, handleClick, handleBlur, size = 'medium'}) => {
     const classes = useStyles();
 
     return (
@@ -29,6 +29,7 @@ export const EditableChartTitle = ({handleChange, error = false, value, handleBl
                     padding: '0px'
                 }
             }}
+            onClick={handleClick}
             onBlur={handleBlur}
         />  
     )

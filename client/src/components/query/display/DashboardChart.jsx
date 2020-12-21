@@ -31,7 +31,7 @@ const initialState = {
 
 const useStyles = makeStyles((theme) => ({
     chartTitle: {
-        padding: '10px',
+        padding: '5px',
         paddingLeft: '20px',
         color: 'black'
     },
@@ -83,16 +83,21 @@ const DashboardChart = ({ seriesType, chartId, name,
 
     const getChartTitle = () => (
         <div className={name ? classes.chartTitle : classes.chartTitlePlaceholder}>
-             <EditableChartTitle
-                handleChange={e => setChartName(e.target.value)}
+            {/* <EditableChartTitle
+                handleChange={e => {
+                    setChartName(e.target.value)
+                }}
                 error={false}
                 value={chartName}
+                handleClick={e => {
+                    e.target.select()
+                }}
                 handleBlur={() => {
                     //save chart
-                    console.log('heyyyyy')
                 }}
                 size={"small"}
-            />
+            /> */}
+            <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography>
         </div>
     )
 
