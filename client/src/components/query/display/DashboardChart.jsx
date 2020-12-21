@@ -42,9 +42,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const DashboardChart = ({ seriesType, chartId, name, config, currentDashboardId, refreshDashboardInfo, openSnackbarWithMessage, setChartName }) => {
+const DashboardChart = ({ seriesType, chartId, name,
+    config, currentDashboardId, refreshDashboardInfo,
+    openSnackbarWithMessage }) => {
+
     const classes = useStyles();
     const [mousePosition, setMousePosition] = React.useState(initialState);
+    const [chartName, setChartName] = React.useState(name);
 
     const handleContextMenu = (event) => {
         event.preventDefault();
@@ -58,7 +62,6 @@ const DashboardChart = ({ seriesType, chartId, name, config, currentDashboardId,
         setMousePosition(initialState);
     };
 
-    // TODO: use await for these?
     const handleDelete = async () => {
         destroyChart(chartId)
         .then(() => {
@@ -78,18 +81,22 @@ const DashboardChart = ({ seriesType, chartId, name, config, currentDashboardId,
     let defaultColors = ['#96ceb4', '#ffeead', '#ff6f69', '#ffcc5c', '#88d8b0']
     let colors = defaultColors;
 
-    const ChartTitle = () => (
+    const getChartTitle = () => (
         <div className={name ? classes.chartTitle : classes.chartTitlePlaceholder}>
-            <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography>
+             <EditableChartTitle
+                handleChange={e => setChartName(e.target.value)}
+                error={false}
+                value={chartName}
+                handleBlur={() => {
+                    //save chart
+                    console.log('heyyyyy')
+                }}
+                size={"small"}
+            />
         </div>
     )
 
-    const Chart = () => {
-        let Chart = getChartComponent()
-        return <Chart config={config} colors={colors}/>
-    }
-
-    const ContextMenu = () => (
+    const getContextMenu = () => (
         <Menu
             keepMounted
             open={mousePosition.mouseY !== null}
@@ -108,17 +115,17 @@ const DashboardChart = ({ seriesType, chartId, name, config, currentDashboardId,
 
     const getChartComponent = () => {
         if (seriesType === 'Bar') {
-            return SimpleBar;
+            return <SimpleBar  config={config} colors={colors}/> ;
         } else if (seriesType === 'Line') {
-            return SimpleLine;
+            return <SimpleLine  config={config} colors={colors}/>;
         }
     }
 
     return (
         <Paper style={{height:'100%', width:'100%'}} onContextMenu={handleContextMenu}>
-            <ChartTitle />
-            <Chart />
-            <ContextMenu />
+            {getChartTitle()}
+            {getChartComponent()}
+            {getContextMenu()}
         </Paper>
     )
 };
@@ -131,8 +138,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     refreshDashboardInfo,
-    openSnackbarWithMessage,
-    setChartName
+    openSnackbarWithMessage
 };
 
 export const ConnectedDashboardChart = connect(mapStateToProps, mapDispatchToProps)(DashboardChart);

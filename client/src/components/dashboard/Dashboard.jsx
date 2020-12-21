@@ -46,32 +46,13 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
         });
     };
 
-    // TODO: figure out why using new component causes rerenders
     const getGridItems = () => {
         return dashboardCharts.map((chartInfo, index) => {
             let {id, name, config, type} = chartInfo;
             let chartGridItemId=`${id}-${name}-${type}`;
-            if (type === 'Bar') {
-                return (
-                    <div key={chartGridItemId} data-grid={{i: chartGridItemId, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><ConnectedCustomBarChart chartId={id} name={name} config={config}/></div>
-                );
-            } else if (type === 'Line') {
-                return (
-                    <div key={chartGridItemId} data-grid={{i: chartGridItemId, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><ConnectedCustomLineChart chartId={id} name={name} config={config}/></div>
-                );
-            } else {
-                throw new Error('Bad Chart config!')
-            }
+            return <div key={chartGridItemId} data-grid={{i: chartGridItemId, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><ConnectedDashboardChart seriesType={type} chartId={id} name={name} config={config} /></div>
         });
     };
-
-    // const getGridItems = () => {
-    //     return dashboardCharts.map((chartInfo, index) => {
-    //         let {id, name, config, type} = chartInfo;
-    //         let chartGridItemId=`${id}-${name}-${type}`;
-    //         return <div key={chartGridItemId} data-grid={{i: chartGridItemId, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><ConnectedDashboardChart seriesType={type} chartId={id} name={name} config={config} /></div>
-    //     });
-    // };
 
     // TODO: use responsive layout
     // Reference: https://github.com/STRML/react-grid-layout#grid-item-props

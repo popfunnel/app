@@ -3,18 +3,21 @@ import InputBase from '@material-ui/core/InputBase';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-    inputBase: {
-        height: '25px'
+    mediumInputBase: {
+        height: '25px',
+    },
+    smallInputBase: {
+        height: '23px',
     }
 }));
 
-export const EditableChartTitle = ({handleChange, error = false, value, handleBlur}) => {
+export const EditableChartTitle = ({handleChange, error = false, value, handleBlur, size = 'medium'}) => {
     const classes = useStyles();
 
     return (
         <InputBase
             id='chart-name'
-            className={classes.inputBase}
+            className={size === 'small' ? classes.smallInputBase : classes.mediumInputBase}
             label='Chart Name'
             value={value}
             placeholder='Untitled Chart'
@@ -22,7 +25,7 @@ export const EditableChartTitle = ({handleChange, error = false, value, handleBl
             error={error}
             inputProps={{
                 style: {
-                    fontSize: '17px',
+                    fontSize: size === 'small' ? '15px' : '17px',
                     padding: '0px'
                 }
             }}
