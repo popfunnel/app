@@ -13,11 +13,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import {destroyChart, refreshDashboardInfo} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
+
 import EditIcon from '@material-ui/icons/Edit';
+import { IconButton } from '@material-ui/core';
 
-import { setChartName } from '../../../actions/queryTool';
-
-import InputBase from '@material-ui/core/InputBase';
 import { EditableChartTitle } from '../input/EditableChartTitle'
     
 const StyledMenuItem = withStyles((theme) => ({
@@ -128,8 +127,27 @@ const DashboardChart = ({ seriesType, chartId, name,
         }
     }
 
+    const [isHovering, setIsHovering] = React.useState(false)
+
+    const getEditButton = () => {
+        return (
+            <>
+                {isHovering &&
+                <IconButton style={{position: 'absolute', top: '4px', right: '12px'}} size='small' disableRipple>
+                    <EditIcon fontSize='small' />
+                </IconButton> }
+            </>
+        )
+    }
+
     return (
-        <Paper style={{height:'100%', width:'100%'}} onContextMenu={handleContextMenu}>
+        <Paper
+            style={{height:'100%', width:'100%', position: 'relative' }}
+            onContextMenu={handleContextMenu}
+            onMouseEnter={() => setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+        >
+            {getEditButton()}
             {getChartTitle()}
             {getChartComponent()}
             {getContextMenu()}

@@ -4,10 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     mediumInputBase: {
-        height: '25px',
+        height: '25px'
     },
     smallInputBase: {
-        height: '23px',
+        height: '23px'
     }
 }));
 
