@@ -13,6 +13,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import {destroyChart, refreshDashboardInfo} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
+import EditIcon from '@material-ui/icons/Edit';
+
 import { setChartName } from '../../../actions/queryTool';
 
 import InputBase from '@material-ui/core/InputBase';
@@ -82,22 +84,22 @@ const DashboardChart = ({ seriesType, chartId, name,
     let colors = defaultColors;
 
     const getChartTitle = () => (
-        <div className={name ? classes.chartTitle : classes.chartTitlePlaceholder}>
-            {/* <EditableChartTitle
+        <div className={`${name ? classes.chartTitle : classes.chartTitlePlaceholder} notDraggable`}>
+            <EditableChartTitle
                 handleChange={e => {
                     setChartName(e.target.value)
                 }}
                 error={false}
                 value={chartName}
                 handleClick={e => {
-                    e.target.select()
+                    // e.target.select()
                 }}
                 handleBlur={() => {
                     //save chart
                 }}
                 size={"small"}
-            /> */}
-            <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography>
+            />
+            {/* <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography> */}
         </div>
     )
 
@@ -120,9 +122,9 @@ const DashboardChart = ({ seriesType, chartId, name,
 
     const getChartComponent = () => {
         if (seriesType === 'Bar') {
-            return <SimpleBar  config={config} colors={colors}/> ;
+            return <SimpleBar config={config} colors={colors}/> ;
         } else if (seriesType === 'Line') {
-            return <SimpleLine  config={config} colors={colors}/>;
+            return <SimpleLine config={config} colors={colors}/>;
         }
     }
 

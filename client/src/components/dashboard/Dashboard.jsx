@@ -3,8 +3,7 @@ import GridLayout from 'react-grid-layout';
 import '../../../node_modules/react-grid-layout/css/styles.css'
 import '../../../node_modules/react-resizable/css/styles.css'
 import { connect } from 'react-redux';
-import { ConnectedCustomBarChart } from '../query/display/Bar';
-import { ConnectedCustomLineChart } from '../query/display/Line';
+
 import { openSnackbarWithMessage } from '../../actions/snackbar';
 import { ConnectedDashboardChart } from '../query/display/DashboardChart'
 
@@ -71,6 +70,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
                 setCurrentLayout(layout);
                 autoSaveChartLayout(layout);
             }}
+            draggableCancel={'.notDraggable'}
         >
             {getGridItems()}
         </GridLayout>
