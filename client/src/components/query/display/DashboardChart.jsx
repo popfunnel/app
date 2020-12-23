@@ -49,6 +49,7 @@ const DashboardChart = ({ seriesType, chartId, name,
 
     const classes = useStyles();
     const [mousePosition, setMousePosition] = React.useState(initialState);
+    const [isHovering, setIsHovering] = React.useState(false)
     const [chartName, setChartName] = React.useState(name);
 
     const handleContextMenu = (event) => {
@@ -84,7 +85,7 @@ const DashboardChart = ({ seriesType, chartId, name,
 
     const getChartTitle = () => (
         <div className={`${name ? classes.chartTitle : classes.chartTitlePlaceholder} notDraggable`}>
-            <EditableChartTitle
+            {/* <EditableChartTitle
                 handleChange={e => {
                     setChartName(e.target.value)
                 }}
@@ -97,8 +98,8 @@ const DashboardChart = ({ seriesType, chartId, name,
                     //save chart
                 }}
                 size={"small"}
-            />
-            {/* <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography> */}
+            /> */}
+            <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography>
         </div>
     )
 
@@ -127,13 +128,11 @@ const DashboardChart = ({ seriesType, chartId, name,
         }
     }
 
-    const [isHovering, setIsHovering] = React.useState(false)
-
     const getEditButton = () => {
         return (
             <>
                 {isHovering &&
-                <IconButton style={{position: 'absolute', top: '4px', right: '12px'}} size='small' disableRipple>
+                <IconButton style={{position: 'absolute', top: '4.5px', right: '10px'}} size='small' disableRipple>
                     <EditIcon fontSize='small' />
                 </IconButton> }
             </>
@@ -147,7 +146,7 @@ const DashboardChart = ({ seriesType, chartId, name,
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
-            {getEditButton()}
+            {/* {getEditButton()} */}
             {getChartTitle()}
             {getChartComponent()}
             {getContextMenu()}
