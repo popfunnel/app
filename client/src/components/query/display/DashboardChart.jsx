@@ -50,7 +50,13 @@ const DashboardChart = ({ seriesType, chartId, name,
     const classes = useStyles();
     const [mousePosition, setMousePosition] = React.useState(initialState);
     const [isHovering, setIsHovering] = React.useState(false)
+    const [isEditing, setIsEditing] = React.useState(false);
     const [chartName, setChartName] = React.useState(name);
+
+    const inputRef = React.useRef(null)
+    React.useEffect(() => {
+        if (isEditing) inputRef.current.select()
+    }, [isEditing])
 
     const handleContextMenu = (event) => {
         event.preventDefault();
@@ -85,7 +91,9 @@ const DashboardChart = ({ seriesType, chartId, name,
 
     const getChartTitle = () => (
         <div className={`${name ? classes.chartTitle : classes.chartTitlePlaceholder} notDraggable`}>
-            {/* <EditableChartTitle
+            {/* {isEditing ?
+            <EditableChartTitle
+                inputRef={inputRef}
                 handleChange={e => {
                     setChartName(e.target.value)
                 }}
@@ -98,8 +106,8 @@ const DashboardChart = ({ seriesType, chartId, name,
                     //save chart
                 }}
                 size={"small"}
-            /> */}
-            <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography>
+            /> : <Typography variant="subtitle2" display="block">{name}</Typography>} */}
+            <Typography variant="subtitle2" display="block">{name}</Typography>
         </div>
     )
 
@@ -128,11 +136,23 @@ const DashboardChart = ({ seriesType, chartId, name,
         }
     }
 
+    const handleEditButton = () => {
+        setIsEditing(true)
+    };
+
+    // TODO: make this edit button functional
+    // TODO: add fade in and out animations
+    // TODO: think about edit button functionality 
+    // TODO: use clsx to add dynamic styles (border around edit input)
     const getEditButton = () => {
         return (
             <>
                 {isHovering &&
-                <IconButton style={{position: 'absolute', top: '4.5px', right: '10px'}} size='small' disableRipple>
+                <IconButton
+                    style={{position: 'absolute', top: '3px', right: '10px'}}
+                    onClick={handleEditButton}
+                    size='small'
+                    disableRipple>
                     <EditIcon fontSize='small' />
                 </IconButton> }
             </>
@@ -146,7 +166,7 @@ const DashboardChart = ({ seriesType, chartId, name,
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
-            {/* {getEditButton()} */}
+            {getEditButton()}
             {getChartTitle()}
             {getChartComponent()}
             {getContextMenu()}
