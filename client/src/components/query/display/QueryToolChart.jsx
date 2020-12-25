@@ -29,12 +29,7 @@ const QueryToolChart = ({ seriesType, config, name }) => {
     let defaultColors = ['#96ceb4', '#ffeead', '#ff6f69', '#ffcc5c', '#88d8b0']
     let colors = defaultColors;
 
-    const Chart = () => {
-        let Chart = getChartComponent()
-        return <Chart config={config} colors={colors}/>
-    }
-
-    const ChartTitle = () => (
+    const getChartTitle = () => (
         <div className={name ? classes.chartTitle : classes.chartTitlePlaceholder}>
             <Typography variant="subtitle2" display="block">{name || 'Untitled Chart'}</Typography>
         </div>
@@ -42,16 +37,16 @@ const QueryToolChart = ({ seriesType, config, name }) => {
 
     const getChartComponent = () => {
         if (seriesType === 'Bar') {
-            return SimpleBar;
+            return <SimpleBar config={config} colors={colors}/>;
         } else if (seriesType === 'Line') {
-            return SimpleLine;
+            return <SimpleLine config={config} colors={colors}/>;
         }
     }
 
     return (
         <Paper style={{height:'100%', width:'100%'}}>
-            <ChartTitle />
-            <Chart />
+            {getChartTitle()}
+            {getChartComponent()}
         </Paper>
     )
 };

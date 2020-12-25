@@ -22,28 +22,28 @@ const useStyles = makeStyles((theme) => ({
 const QueryToolChartContainer = ({seriesType, queryResults}) => {
     const classes = useStyles();
 
-    const ContainerTitle = () => (
+    const getContainerTitle = () => (
         <div>
             <Typography variant="subtitle1" display="block">Chart</Typography>
         </div>
     )
 
-    const Chart = () => (
+    const getChart = () => (
         <Paper style={{height: '40vh', overflowY: 'auto'}}>
             {!queryResults.length ?
-            <NoResults/> :
-            <ContainerOutput/>}
+            getNoResults() :
+            getContainerOutput()}
         </Paper>
     )
 
-    const NoResults = () => (
+    const getNoResults = () => (
         <div className={classes.noResults}>
             {'Start by running a query using the editor!'}
         </div>
     );
 
 
-    const ContainerOutput = () => {
+    const getContainerOutput = () => {
         return seriesType === 'Table' ?
             <ConnectedResultsTable/> :
             <ConnectedQueryToolChart/>
@@ -51,8 +51,8 @@ const QueryToolChartContainer = ({seriesType, queryResults}) => {
 
     return (
         <div style={{flex: 1, marginTop: '5px'}}>
-            <ContainerTitle />
-            <Chart />
+            {getContainerTitle()}
+            {getChart()}
         </div>
     )
 };

@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
         height: '25px'
     },
     smallInputBase: {
-        height: '23px'
+        width: 'auto'
     }
 }));
 
@@ -25,7 +25,9 @@ export const EditableChartTitle = ({handleChange, error = false, value, handleCl
             error={error}
             inputProps={{
                 style: {
-                    fontSize: size === 'small' ? '15px' : '17px',
+                    fontSize: size === 'small' ? '0.875rem' : '17px',
+                    lineHeight: '1.57',
+                    height: '21px',
                     padding: '0px'
                 }
             }}

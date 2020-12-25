@@ -90,8 +90,8 @@ const DashboardChart = ({ seriesType, chartId, name,
     let colors = defaultColors;
 
     const getChartTitle = () => (
-        <div className={`${name ? classes.chartTitle : classes.chartTitlePlaceholder} notDraggable`}>
-            {/* {isEditing ?
+        <div className={`${name ? classes.chartTitle : 'blah'} notDraggable`}>
+            {isEditing ?
             <EditableChartTitle
                 inputRef={inputRef}
                 handleChange={e => {
@@ -100,14 +100,13 @@ const DashboardChart = ({ seriesType, chartId, name,
                 error={false}
                 value={chartName}
                 handleClick={e => {
-                    // e.target.select()
                 }}
                 handleBlur={() => {
                     //save chart
                 }}
                 size={"small"}
-            /> : <Typography variant="subtitle2" display="block">{name}</Typography>} */}
-            <Typography variant="subtitle2" display="block">{name}</Typography>
+            /> : <Typography variant="subtitle2" display="block">{name}</Typography>}
+            {/* <Typography variant="subtitle2" display="block">{name}</Typography> */}
         </div>
     )
 
