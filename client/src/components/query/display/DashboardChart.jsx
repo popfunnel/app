@@ -91,7 +91,7 @@ const DashboardChart = ({ seriesType, chartId, name,
 
     const getChartTitle = () => (
         <div className={`${name ? classes.chartTitle : 'blah'} notDraggable`}>
-            {isEditing ?
+            {/* {isEditing ?
             <EditableChartTitle
                 inputRef={inputRef}
                 handleChange={e => {
@@ -105,8 +105,8 @@ const DashboardChart = ({ seriesType, chartId, name,
                     //save chart
                 }}
                 size={"small"}
-            /> : <Typography variant="subtitle2" display="block">{name}</Typography>}
-            {/* <Typography variant="subtitle2" display="block">{name}</Typography> */}
+            /> : <Typography variant="subtitle2" display="block">{name}</Typography>} */}
+            <Typography variant="subtitle2" display="block">{name}</Typography>
         </div>
     )
 

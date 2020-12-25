@@ -42,7 +42,6 @@ const QueryToolChartContainer = ({seriesType, queryResults}) => {
         </div>
     );
 
-
     const getContainerOutput = () => {
         return seriesType === 'Table' ?
             <ConnectedResultsTable/> :
