@@ -2,22 +2,21 @@ import React from 'react'
 import InputBase from '@material-ui/core/InputBase';
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles((theme) => ({
-    mediumInputBase: {
-        height: '25px'
-    },
-    smallInputBase: {
-        width: 'auto'
-    }
-}));
+// const useStyles = makeStyles((theme) => ({
+//     mediumInputBase: {
+//         height: '25px'
+//     },
+//     smallInputBase: {
+//         width: '175px'
+//     }
+// }));
 
-export const EditableChartTitle = ({handleChange, error = false, value, handleClick, handleBlur, size = 'medium', inputRef}) => {
-    const classes = useStyles();
+export const EditableChartTitle = ({className, handleChange, error = false, value, handleClick, handleBlur, size = 'medium', inputRef}) => {
 
     return (
         <InputBase
             id='chart-name'
-            className={size === 'small' ? classes.smallInputBase : classes.mediumInputBase}
+            className={className}
             label='Chart Name'
             value={value}
             placeholder='Untitled Chart'

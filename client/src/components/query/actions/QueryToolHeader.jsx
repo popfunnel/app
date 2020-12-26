@@ -6,7 +6,6 @@ import { setChartName } from '../../../actions/queryTool';
 import { saveChart, resetForm } from '../../../actions/queryTool';
 import Button from '@material-ui/core/Button';
 import { useHistory } from "react-router-dom";
-import InputBase from '@material-ui/core/InputBase';
 import { ConnectedNewDashboardModal } from  '../../../components/dashboard/NewDashboardModal';
 
 import { EditableChartTitle } from '../input/EditableChartTitle'
@@ -103,6 +102,7 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
                 <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px'}}>    
                     <div>{getPathName()}</div>
                     <EditableChartTitle
+                        className={classes.inputBase}
                         handleChange={e => {
                             setChartNameHasError(false);
                             setChartName(e.target.value)
