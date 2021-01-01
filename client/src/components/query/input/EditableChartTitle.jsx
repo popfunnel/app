@@ -8,12 +8,15 @@ const useStyles = makeStyles({
     },
     smallTitle: inputWidth => ({
         width: `calc(${inputWidth}px + 12px)`,
+        height: '21px',
         maxWidth: '375px',
-        minWidth: '5px'
+        minWidth: '5px',
+        border: '2px solid #1a73e8',
+        borderRadius: '4px'
     })
 });
 
-export const EditableChartTitle = ({className, handleChange, placeholder, error = false, value, handleClick, handleBlur, size = 'large', inputRef}) => {
+export const EditableChartTitle = ({handleChange, placeholder, error = false, value, handleClick, handleBlur, size = 'large', inputRef}) => {
     const [inputWidth, setInputWidth] = React.useState(getTextWidth(value, `500 0.875rem/1.57 "Roboto", "Helvetica", "Arial", sans-serif`));
     const classes = useStyles(inputWidth);
 
@@ -34,7 +37,7 @@ export const EditableChartTitle = ({className, handleChange, placeholder, error 
                     fontSize: size === 'small' ? '0.875rem' : '17px',
                     lineHeight: '1.57',
                     height: '21px',
-                    padding: '0px'
+                    padding: '0px',
                 }
             }}
             inputRef={inputRef}

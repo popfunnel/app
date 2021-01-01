@@ -102,7 +102,6 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
                 <div style={{display: 'flex', flexDirection: 'column', marginLeft: '10px'}}>    
                     <div>{getPathName()}</div>
                     <EditableChartTitle
-                        className={classes.inputBase}
                         handleChange={e => {
                             setChartNameHasError(false);
                             setChartName(e.target.value)

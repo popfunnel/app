@@ -35,19 +35,6 @@ const useStyles = makeStyles((theme) => ({
         padding: '5px',
         paddingLeft: '20px',
         color: 'black'
-    },
-    chartTitlePlaceholder: {
-        padding: '10px',
-        paddingLeft: '20px',
-        color: '#C0C0C0'
-    },
-    inputBase: {
-        width: '175px',
-        height: '21px',
-        letterSpacing: '0.00714em',
-        lineHeight: '1.57',
-        border: '2px solid #1a73e8',
-        borderRadius: '4px'
     }
 }));
 
@@ -98,10 +85,9 @@ const DashboardChart = ({ seriesType, chartId, name,
     let colors = defaultColors;
 
     const getChartTitle = () => (
-        <div className={`${name ? classes.chartTitle : 'blah'} notDraggable`}>
-            {/* {isEditing ?
+        <div className={`${name ? classes.chartTitle : undefined} notDraggable`}>
+            {isEditing ?
             <EditableChartTitle
-                className={classes.inputBase}
                 inputRef={inputRef}
                 handleChange={e => {
                     setChartName(e.target.value)
@@ -115,8 +101,7 @@ const DashboardChart = ({ seriesType, chartId, name,
                 }}
                 size={"small"}
             /> : 
-            <Typography style={{paddingLeft: '2px'}} variant="subtitle2" display="block">{name}</Typography>} */}
-            <Typography variant="subtitle2" display="block">{name}</Typography>
+            <Typography style={{paddingLeft: '2px'}} variant="subtitle2" display="block">{name}</Typography>}
         </div>
     )
 
@@ -175,7 +160,7 @@ const DashboardChart = ({ seriesType, chartId, name,
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
-            {/* {getEditButton()} */}
+            {getEditButton()}
             {getChartTitle()}
             {getChartComponent()}
             {getContextMenu()}
