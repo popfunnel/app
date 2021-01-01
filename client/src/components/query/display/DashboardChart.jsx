@@ -114,7 +114,8 @@ const DashboardChart = ({ seriesType, chartId, name,
                     setIsEditing(false)
                 }}
                 size={"small"}
-            /> : <Typography style={{paddingLeft: '2px'}} variant="subtitle2" display="block">{name}</Typography>} */}
+            /> : 
+            <Typography style={{paddingLeft: '2px'}} variant="subtitle2" display="block">{name}</Typography>} */}
             <Typography variant="subtitle2" display="block">{name}</Typography>
         </div>
     )

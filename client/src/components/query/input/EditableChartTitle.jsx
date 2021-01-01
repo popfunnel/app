@@ -2,25 +2,32 @@ import React from 'react'
 import InputBase from '@material-ui/core/InputBase';
 import { makeStyles } from '@material-ui/core/styles';
 
-// const useStyles = makeStyles((theme) => ({
-//     mediumInputBase: {
-//         height: '25px'
-//     },
-//     smallInputBase: {
-//         width: '175px'
-//     }
-// }));
+const useStyles = makeStyles({
+    largeTitle: {
+        height: '25px'
+    },
+    smallTitle: inputWidth => ({
+        width: `calc(${inputWidth}px + 12px)`,
+        maxWidth: '375px',
+        minWidth: '5px'
+    })
+});
 
-export const EditableChartTitle = ({className, handleChange, error = false, value, handleClick, handleBlur, size = 'medium', inputRef}) => {
+export const EditableChartTitle = ({className, handleChange, placeholder, error = false, value, handleClick, handleBlur, size = 'large', inputRef}) => {
+    const [inputWidth, setInputWidth] = React.useState(getTextWidth(value, `500 0.875rem/1.57 "Roboto", "Helvetica", "Arial", sans-serif`));
+    const classes = useStyles(inputWidth);
 
     return (
         <InputBase
             id='chart-name'
-            className={className}
+            className={size === 'small' ? classes.smallTitle : classes.largeTitle}
             label='Chart Name'
             value={value}
-            placeholder='Untitled Chart'
-            onChange={handleChange}
+            placeholder={placeholder}
+            onChange={e => {
+                handleChange(e)
+                setInputWidth(getTextWidth(e.target.value, `500 0.875rem/1.57 "Roboto", "Helvetica", "Arial", sans-serif`))
+            }}
             error={error}
             inputProps={{
                 style: {
@@ -35,4 +42,12 @@ export const EditableChartTitle = ({className, handleChange, error = false, valu
             onBlur={handleBlur}
         />  
     )
+}
+
+function getTextWidth(text, font) {
+    const canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    const context = canvas.getContext("2d");
+    context.font = font;
+    const textMetrics = context.measureText(text);
+    return textMetrics.width;
 }

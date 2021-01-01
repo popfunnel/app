@@ -109,6 +109,7 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
                         }}
                         error={chartNameHasError}
                         value={chartName}
+                        placeholder={'Untitled Chart'}
                     />
                 </div>
                 <div style={{marginRight: '24px'}}>

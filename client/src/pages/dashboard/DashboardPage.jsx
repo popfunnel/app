@@ -72,7 +72,7 @@ export const DashboardPage = ({currentDashboardId, currentDashboardLayout, refre
             dashboard_id: currentDashboardId,
             chartLayout: currentLayout
         }
-        console.log('manual savechart', data)
+
         return fetch('/dashboard/update-layout', {
             method: 'post',
             headers: {
