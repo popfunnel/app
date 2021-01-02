@@ -139,6 +139,8 @@ export const updateDashboardChart = (chartId, chartTitle) => (dispatch, getState
     }).then(chartInfo => {
         // let dashboardId =  getState().dashboard.currentDashboard.id
         // return dispatch(refreshDashboardInfo(dashboardId));
+        // TODO: update redux store with new chart information
+        // TODO: add snackbar indicating success/failure
     })
 
 }

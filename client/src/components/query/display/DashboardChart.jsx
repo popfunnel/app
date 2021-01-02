@@ -85,7 +85,7 @@ const DashboardChart = ({ seriesType, chartId, name,
     let colors = defaultColors;
 
     const getChartTitle = () => (
-        <div className={`${name ? classes.chartTitle : undefined} notDraggable`}>
+        <div className={`${name ? classes.chartTitle : undefined}`}>
             {isEditing ?
             <EditableChartTitle
                 inputRef={inputRef}

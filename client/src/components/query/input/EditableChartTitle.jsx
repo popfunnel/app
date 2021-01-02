@@ -23,7 +23,7 @@ export const EditableChartTitle = ({handleChange, placeholder, error = false, va
     return (
         <InputBase
             id='chart-name'
-            className={size === 'small' ? classes.smallTitle : classes.largeTitle}
+            className={`${size === 'small' ? classes.smallTitle : classes.largeTitle} notDraggable`}
             label='Chart Name'
             value={value}
             placeholder={placeholder}
