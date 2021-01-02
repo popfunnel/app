@@ -30,7 +30,7 @@ module.exports = {
       })
       .then(chart => {
         console.log('chart', chart)
-        res.status(201).send(chart)
+        res.status(200).send(chart)
       })
       .catch(error => {
         console.log('error', error)

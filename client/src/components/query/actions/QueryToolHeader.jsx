@@ -69,11 +69,9 @@ export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, sav
         return `[popfunnel demo] / ${dashboardName} / ${chartPathName}`
     }
 
-    // TODO: use async/await?
     const newDashboardCallback = newDashboardInfo => {
         saveChart(chartName, newDashboardInfo.id)
         .then(() => {
-            // TODO: this needs to have the dashboardname in
             history.push(`/dashboard/${newDashboardInfo.id}/${newDashboardInfo.name}`);
             resetForm();
         }).catch(error => {

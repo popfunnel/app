@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
-import {destroyChart, refreshDashboardInfo} from '../../../actions/dashboard';
+import {destroyChart, refreshDashboardInfo, updateDashboardChart} from '../../../actions/dashboard';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
 
 import EditIcon from '@material-ui/icons/Edit';
@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DashboardChart = ({ seriesType, chartId, name,
     config, currentDashboardId, refreshDashboardInfo,
-    openSnackbarWithMessage }) => {
+    openSnackbarWithMessage, updateDashboardChart }) => {
 
     const classes = useStyles();
     const [mousePosition, setMousePosition] = React.useState(initialState);
@@ -98,10 +98,11 @@ const DashboardChart = ({ seriesType, chartId, name,
                 }}
                 handleBlur={() => {
                     setIsEditing(false)
+                    updateDashboardChart(chartId, chartName)
                 }}
                 size={"small"}
             /> : 
-            <Typography style={{paddingLeft: '2px'}} variant="subtitle2" display="block">{name}</Typography>}
+            <Typography style={{paddingLeft: '2px'}} variant="subtitle2" display="block">{chartName}</Typography>}
         </div>
     )
 
@@ -172,7 +173,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     refreshDashboardInfo,
-    openSnackbarWithMessage
+    openSnackbarWithMessage,
+    updateDashboardChart
 };
 
 export const ConnectedDashboardChart = connect(mapStateToProps, mapDispatchToProps)(DashboardChart);

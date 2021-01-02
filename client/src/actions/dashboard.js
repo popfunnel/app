@@ -116,3 +116,29 @@ export const createNewDashboard = dashboardName => (dispatch, getState) => {
         return newCurrentDashboardInfo;
     });
 };
+
+export const updateDashboardChart = (chartId, chartTitle) => (dispatch, getState) => {
+    let data = {
+        chartId: chartId,
+        chartTitle: chartTitle
+    }
+
+    return fetch(`/chart/${chartId}`, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify(data)
+    }).then(response => {
+        if (response.status === 200) {
+            return response.json();
+        } else {
+            throw new Error('Bad response from server.');
+        }
+    }).then(chartInfo => {
+        // let dashboardId =  getState().dashboard.currentDashboard.id
+        // return dispatch(refreshDashboardInfo(dashboardId));
+    })
+
+}
