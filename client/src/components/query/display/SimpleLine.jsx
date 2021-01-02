@@ -1,14 +1,9 @@
 import React from 'react';
 import {
-    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+    LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
   } from 'recharts';
 
 export const SimpleLine = ({config, colors}) => {
-    let {
-        xAxisKey,
-        yAxisKeys,
-        formattedData
-    } = config;
 
     return (
         <div style={{height: '85%'}}>

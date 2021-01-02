@@ -10,24 +10,9 @@ import { ConnectedNewDashboardModal } from  '../../../components/dashboard/NewDa
 
 import { EditableChartTitle } from '../input/EditableChartTitle'
 
-import { makeStyles } from '@material-ui/core/styles';
-
-
-
-
-const useStyles = makeStyles((theme) => ({
-    button: {
-        marginRight: '24px'
-    },
-    inputBase: {
-        height: '25px'
-    }
-}));
-
 export const QueryToolHeader = ({currentDashboardInfo, refreshDashboardInfo, saveChart,
     openSnackbarWithMessage, rawResults, seriesType, chartName, setChartName, resetForm}) => {
 
-    const classes = useStyles();
     let history = useHistory();
 
     const [chartNameHasError, setChartNameHasError] = React.useState(false);
