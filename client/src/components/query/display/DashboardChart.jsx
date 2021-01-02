@@ -134,10 +134,6 @@ const DashboardChart = ({ seriesType, chartId, name,
         setIsEditing(true)
     };
 
-    // TODO: make this edit button functional
-    // TODO: add fade in and out animations
-    // TODO: think about edit button functionality 
-    // TODO: use clsx to add dynamic styles (border around edit input)
     const getEditButton = () => {
         return (
             <>

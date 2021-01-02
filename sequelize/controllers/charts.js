@@ -20,6 +20,23 @@ module.exports = {
         res.status(400).send(error)
       });
   },
+  update(req, res) {
+    return Chart
+      .update({ name: req.body.chartTitle }, {
+        returning: true,
+        where: {
+          id: req.body.chartId
+        }
+      })
+      .then(chart => {
+        console.log('chart', chart)
+        res.status(201).send(chart)
+      })
+      .catch(error => {
+        console.log('error', error)
+        res.status(400).send(error)
+      });
+  },
   destroy(req, res) {
     return Chart
       .destroy({
