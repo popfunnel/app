@@ -80,6 +80,17 @@ const DashboardChart = ({ seriesType, chartId, name,
             openSnackbarWithMessage(`${error}`);
         })
     }
+
+    const handleTitleUpdate = async (chartId, chartName) => {
+        updateDashboardChart(chartId, chartName)
+        .then(() => {
+            openSnackbarWithMessage('Chart title updated.');
+        })
+        .catch(error => {
+            openSnackbarWithMessage(`${error}`);
+        })
+    }
+
     // TODO: Create color selector
     let defaultColors = ['#96ceb4', '#ffeead', '#ff6f69', '#ffcc5c', '#88d8b0']
     let colors = defaultColors;
@@ -98,7 +109,7 @@ const DashboardChart = ({ seriesType, chartId, name,
                 }}
                 handleBlur={() => {
                     setIsEditing(false)
-                    updateDashboardChart(chartId, chartName)
+                    handleTitleUpdate(chartId, chartName)
                 }}
                 size={"small"}
             /> : 

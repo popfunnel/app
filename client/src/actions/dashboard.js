@@ -136,7 +136,9 @@ export const updateDashboardChart = (chartId, chartTitle) => (dispatch, getState
         } else {
             throw new Error('Bad response from server.');
         }
-    }).then(chartInfo => {
+    }).catch(error => {
+
+        throw error;
         // let dashboardId =  getState().dashboard.currentDashboard.id
         // return dispatch(refreshDashboardInfo(dashboardId));
         // TODO: update redux store with new chart information
