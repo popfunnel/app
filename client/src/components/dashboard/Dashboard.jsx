@@ -48,7 +48,7 @@ const Dashboard = ({currentDashboardId, dashboardCharts, initialDashboardLayout,
     const getGridItems = () => {
         return dashboardCharts.map((chartInfo, index) => {
             let {id, name, config, type} = chartInfo;
-            let chartGridItemId=`${id}-${name}-${type}`;
+            let chartGridItemId=`${id}-${type}`;
             return <div key={chartGridItemId} data-grid={{i: chartGridItemId, x: 0, y: 0, w: 3, h: 6, minW: 3, minH: 6, autoSize:true}}><ConnectedDashboardChart seriesType={type} chartId={id} name={name} config={config} /></div>
         });
     };

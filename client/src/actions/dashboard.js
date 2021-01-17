@@ -133,7 +133,7 @@ export const updateDashboardChart = (chartId, chartTitle) => (dispatch, getState
         body: JSON.stringify(data)
     }).then(response => {
         if (response.status === 200) {
-            // dispatch({type: UPDATE_DASHBOARD_CHART, chartId, chartTitle});
+            dispatch({type: UPDATE_DASHBOARD_CHART, chartId, chartTitle});
             return response.json();
         } else {
             throw new Error('Bad response from server.');
