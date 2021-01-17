@@ -81,14 +81,24 @@ const DashboardChart = ({ seriesType, chartId, name,
         })
     }
 
+    // TODO: don't update if no change
+    // TODO: set redux store after update
+    // TODO: enter key should result in blur
+    // TODO: double click should enable editable field
+    // BUG: if name change, and then no input, click away resets to original name
     const handleTitleUpdate = async (chartId, chartName) => {
-        updateDashboardChart(chartId, chartName)
-        .then(() => {
-            openSnackbarWithMessage('Chart title updated.');
-        })
-        .catch(error => {
-            openSnackbarWithMessage(`${error}`);
-        })
+        if (!chartName.length) {
+            openSnackbarWithMessage('Chart title cannot be empty.');
+            setChartName(name)
+        } else {
+            updateDashboardChart(chartId, chartName)
+            .then(() => {
+                openSnackbarWithMessage('Chart title updated.');
+            })
+            .catch(error => {
+                openSnackbarWithMessage(`${error}`);
+            })
+        }
     }
 
     // TODO: Create color selector

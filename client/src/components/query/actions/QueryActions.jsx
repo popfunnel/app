@@ -2,9 +2,9 @@ import React from 'react';
 import { ConnectedSeriesSettings } from './settings/SeriesSettings'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import HistoryIcon from '@material-ui/icons/History';
+// import HistoryIcon from '@material-ui/icons/History';
 import BarChartIcon from '@material-ui/icons/BarChart';
-import SettingsIcon from '@material-ui/icons/Settings';
+// import SettingsIcon from '@material-ui/icons/Settings';
 
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 

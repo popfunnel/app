@@ -117,6 +117,7 @@ export const createNewDashboard = dashboardName => (dispatch, getState) => {
     });
 };
 
+export const UPDATE_DASHBOARD_CHART = 'UPDATE_DASHBOARD_CHART';
 export const updateDashboardChart = (chartId, chartTitle) => (dispatch, getState) => {
     let data = {
         chartId: chartId,
@@ -132,17 +133,13 @@ export const updateDashboardChart = (chartId, chartTitle) => (dispatch, getState
         body: JSON.stringify(data)
     }).then(response => {
         if (response.status === 200) {
+            // dispatch({type: UPDATE_DASHBOARD_CHART, chartId, chartTitle});
             return response.json();
         } else {
             throw new Error('Bad response from server.');
         }
     }).catch(error => {
-
         throw error;
-        // let dashboardId =  getState().dashboard.currentDashboard.id
-        // return dispatch(refreshDashboardInfo(dashboardId));
-        // TODO: update redux store with new chart information
-        // TODO: add snackbar indicating success/failure
     })
 
 }
