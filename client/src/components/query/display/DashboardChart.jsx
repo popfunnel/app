@@ -81,11 +81,7 @@ const DashboardChart = ({ seriesType, chartId, name,
         })
     }
 
-    // TODO: enter key should result in blur
-    // TODO: double click should enable editable field
     const handleTitleUpdate = async (chartId, chartName) => {
-        console.log('chartname to be updated is', chartName)
-        console.log('chartname is currently', name)
         if (!chartName.length) {
             openSnackbarWithMessage('Chart title cannot be empty.');
             setChartName(name)
@@ -127,7 +123,7 @@ const DashboardChart = ({ seriesType, chartId, name,
                     }
                 }}
             /> : 
-            <Typography style={{paddingLeft: '2px'}} variant="subtitle2" display="block">{chartName}</Typography>}
+            <Typography onDoubleClick={() => setIsEditing(true)} style={{paddingLeft: '2px'}} variant="subtitle2" display="block">{chartName}</Typography>}
         </div>
     )
 
