@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     })
 });
 
-export const EditableChartTitle = ({handleChange, placeholder, error = false, value, handleClick, handleBlur, size = 'large', inputRef}) => {
+export const EditableChartTitle = ({handleChange, placeholder, error = false, value, handleClick, handleBlur, handleKeyDown, size = 'large', inputRef}) => {
     const [inputWidth, setInputWidth] = React.useState(getTextWidth(value, `500 0.875rem/1.57 "Roboto", "Helvetica", "Arial", sans-serif`));
     const classes = useStyles(inputWidth);
 
@@ -31,6 +31,7 @@ export const EditableChartTitle = ({handleChange, placeholder, error = false, va
                 handleChange(e)
                 setInputWidth(getTextWidth(e.target.value, `500 0.875rem/1.57 "Roboto", "Helvetica", "Arial", sans-serif`))
             }}
+            onKeyDown={handleKeyDown}
             error={error}
             inputProps={{
                 style: {

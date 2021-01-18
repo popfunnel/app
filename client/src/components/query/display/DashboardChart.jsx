@@ -121,6 +121,11 @@ const DashboardChart = ({ seriesType, chartId, name,
                     handleTitleUpdate(chartId, chartName)
                 }}
                 size={"small"}
+                handleKeyDown={e => {
+                    if (e.keyCode === 13) {
+                        inputRef.current.blur()
+                    }
+                }}
             /> : 
             <Typography style={{paddingLeft: '2px'}} variant="subtitle2" display="block">{chartName}</Typography>}
         </div>
