@@ -81,16 +81,15 @@ const DashboardChart = ({ seriesType, chartId, name,
         })
     }
 
-    // TODO: don't update if no change
-    // TODO: set redux store after update
     // TODO: enter key should result in blur
     // TODO: double click should enable editable field
-    // BUG: if name change, and then no input, click away resets to original name
     const handleTitleUpdate = async (chartId, chartName) => {
+        console.log('chartname to be updated is', chartName)
+        console.log('chartname is currently', name)
         if (!chartName.length) {
             openSnackbarWithMessage('Chart title cannot be empty.');
             setChartName(name)
-        } else {
+        } else if (chartName !== name) {
             updateDashboardChart(chartId, chartName)
             .then(() => {
                 openSnackbarWithMessage('Chart title updated.');
