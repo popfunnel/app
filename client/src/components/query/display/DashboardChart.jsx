@@ -15,8 +15,9 @@ import {destroyChart, refreshDashboardInfo, updateDashboardChart} from '../../..
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
 
 import EditIcon from '@material-ui/icons/Edit';
-import { IconButton } from '@material-ui/core';
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 
+import { IconButton } from '@material-ui/core';
 import { EditableChartTitle } from '../input/EditableChartTitle'
     
 const StyledMenuItem = withStyles((theme) => ({
@@ -156,17 +157,26 @@ const DashboardChart = ({ seriesType, chartId, name,
         setIsEditing(true)
     };
 
-    const getEditButton = () => {
+    const getChartButtons = () => {
         return (
             <>
                 {isHovering &&
-                <IconButton
-                    style={{position: 'absolute', top: '3px', right: '10px'}}
-                    onClick={handleEditButton}
-                    size='small'
-                    disableRipple>
-                    <EditIcon fontSize='small' />
-                </IconButton> }
+                <div style={{position: 'absolute', top: '3px', right: '10px'}}>
+                    <IconButton
+                        onClick={handleEditButton}
+                        size='small'
+                        disableRipple
+                    >
+                        <EditIcon fontSize='small' />
+                    </IconButton>
+                    {/* <IconButton
+                        onClick={() => {console.log('dropdown button clicked')}}
+                        size='small'
+                        disableRipple>
+                        <MoreHorizIcon fontSize='small' />
+                    </IconButton> */}
+                </div>
+                }
             </>
         )
     }
@@ -178,7 +188,7 @@ const DashboardChart = ({ seriesType, chartId, name,
             onMouseEnter={() => setIsHovering(true)}
             onMouseLeave={() => setIsHovering(false)}
         >
-            {getEditButton()}
+            {getChartButtons()}
             {getChartTitle()}
             {getChartComponent()}
             {getContextMenu()}
