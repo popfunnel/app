@@ -1180,9 +1180,9 @@ export const SchemaTreeView = () => {
                 {schemaNames.map(schemaName => (
                     <StyledTreeItem key={schemaName} nodeId={schemaName} label={schemaName}>
                         {tableNameBySchemaName[schemaName].map(tableName => (
-                            <StyledTreeItem key={tableName} nodeId={tableName} label={tableName}>
+                            <StyledTreeItem key={tableName} nodeId={`${schemaName}.${tableName}`} label={tableName}>
                                 {columnNameByTableName[tableName].map(columnName => (
-                                    <StyledTreeItem key={columnName} nodeId={columnName} label={columnName}/>
+                                    <StyledTreeItem key={columnName} nodeId={`${schemaName}.${tableName}.${columnName}`} label={columnName}/>
                                 ))}
                             </StyledTreeItem>
                         ))}
