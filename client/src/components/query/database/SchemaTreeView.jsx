@@ -1158,6 +1158,7 @@ const schemasColumnInfo = [{
     "is_nullable": "NO",
     "default_value": "now()"
 }]
+
 const schemaNames = getSchemaNames(schemasColumnInfo)
 const tableNameBySchemaName = getTableNameBySchemaName(schemasColumnInfo)
 const columnNameByTableName = getColumnNamesByTableName(schemasColumnInfo)
@@ -1187,19 +1188,6 @@ export const SchemaTreeView = () => {
                         ))}
                     </StyledTreeItem>
                 ))}
-                {/* <StyledTreeItem nodeId="1" label="Table Name1">
-                    <StyledTreeItem nodeId="column" label="Column"/>
-                    <StyledTreeItem nodeId="3" label="Column"/>
-                    <StyledTreeItem nodeId="4" label="Column"/>
-                </StyledTreeItem>
-                <StyledTreeItem nodeId="5" label="Table Name2">
-                    <StyledTreeItem nodeId="6" label="Actor">
-                        <StyledTreeItem nodeId="7" label="Columns">
-                            <StyledTreeItem nodeId="8" label="Column"/>
-                            <StyledTreeItem nodeId="9" label="Column"/>
-                        </StyledTreeItem>
-                    </StyledTreeItem>
-                </StyledTreeItem> */}
             </TreeView>
         </div>
     );
