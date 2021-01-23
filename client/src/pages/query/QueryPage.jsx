@@ -8,14 +8,6 @@ import { ConnectedDatabaseActions } from '../../components/query/database/Databa
 export const QueryPage = () => {
     // Reference: https://css-tricks.com/snippets/css/css-box-shadow/
     // TODO: add marginTop to ConnectedChartContainer
-    // React.useEffect(() => {
-    //     fetch('/queries/schema').then(response => {
-    //         console.log('fetch successful', response)
-    //         return response.json()
-    //     }).then(data => {
-    //         console.log('here is the data', JSON.stringify(data))
-    //     })
-    // }, [])
     
     return (
         <>

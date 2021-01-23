@@ -1,7 +1,7 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { InputLabel } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -82,6 +82,13 @@ const useStyles = makeStyles((theme) => ({
     buttonLabel: {
         fontSize:'12px',
         textTransform: "none"
+    },
+    dbSelect: {
+        width: '100%',
+        fontSize: '16px'
+    },
+    dbMenuItem: {
+        fontSize: '16px'
     }
 }));
 
@@ -127,17 +134,6 @@ const formErrors = {
 
 export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId, openSnackbarWithMessage}) => {
     const classes = useStyles();
-
-    const StyledSelect = withStyles((theme) => ({
-        root: {
-            fontSize: '15px',
-        },
-        outlined: {
-            padding: '10px'
-        }
-    }))(Select);
-
-
     const [form, setForm] = React.useState({...blankCredentials});
 
     const [errors, setErrors] = React.useState({...formErrors});
@@ -296,7 +292,8 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
         <div style={{display: 'flex', justifyContent: 'left', margin:'30px'}}>
             <div style={{display: 'flex', flexDirection: 'column'}}>
                 <div style={{width: '200px', marginBottom: '20px'}}>
-                    <StyledSelect
+                    <Select
+                        className={classes.dbSelect}
                         id="dashboard-select"
                         variant='outlined'
                         value={currentDbId}
@@ -304,9 +301,9 @@ export const DbSettingsPage = ({dbCreds, getDbCreds, currentDbId, setCurrentDbId
                             setCurrentDbId(e.target.value);
                         }}
                     >
-                        <MenuItem value={'newDatabase'}>New Database</MenuItem>
-                        {dbCreds.map(cred => <MenuItem key={cred.id} value={cred.id}>{cred.name}</MenuItem>)}
-                    </StyledSelect>
+                        <MenuItem className={classes.dbMenuItem} value={'newDatabase'}>New Database</MenuItem>
+                        {dbCreds.map(cred => <MenuItem className={classes.dbMenuItem} key={cred.id} value={cred.id}>{cred.name}</MenuItem>)}
+                    </Select>
                 </div>
                 <Paper style={{display: 'flex', flexDirection: 'row'}}>
                     <form onSubmit={handleSubmit} autoComplete="off" style={{margin: '10px'}}>

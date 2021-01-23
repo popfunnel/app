@@ -16,7 +16,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from "react-router-dom";
 import InfoIcon from '@material-ui/icons/Info';
 import EqualizerIcon from '@material-ui/icons/Equalizer';
-// import StorageIcon from '@material-ui/icons/Storage';
 import { connect } from 'react-redux'
 import { setDrawerOpenStatus } from '../../actions/nav';
 import { setSchemaDropdownStatus } from '../../actions/nav';

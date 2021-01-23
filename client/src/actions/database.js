@@ -48,9 +48,8 @@ export const SET_DB_CONNECTIONS = 'SET_DB_CONNECTIONS';
 export const setDbConnections = dbConnections => async (dispatch, getState) => {
     try {
         const dbConnections = await fetchDbConnections();
-        dispatch({type: SET_DB_CONNECTIONS, dbConnections})
+        return dispatch({type: SET_DB_CONNECTIONS, dbConnections})
     } catch(error) {
-        console.log('error is caught')
         throw error;
     }
 };

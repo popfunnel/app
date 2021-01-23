@@ -24,7 +24,15 @@ const DatabaseActions = ({currentDbId, setCurrentDbId, dbConnections, setDbConne
     const classes = useStyles();
 
     React.useEffect(() => {
-        setDbConnections().catch(error => {
+        setDbConnections()
+        .then(result => {
+            //TODO:
+            // if(result.dbConnections.length &&
+            //     currentDbId === 'None') {
+                    //choose default value
+            // }
+        })
+        .catch(error => {
             openSnackbarWithMessage(`${error}`);
         })
     }, [setDbConnections, openSnackbarWithMessage])
@@ -40,7 +48,7 @@ const DatabaseActions = ({currentDbId, setCurrentDbId, dbConnections, setDbConne
                     value={currentDbId}
                     onChange={e => setCurrentDbId(e.target.value)}
                 >
-                    <MenuItem className={classes.dbMenuItem} value={'None'}>None Selected</MenuItem>
+                    <MenuItem disabled className={classes.dbMenuItem} value={'None'}>None Selected</MenuItem>
                     {dbConnections.map(connection => <MenuItem key={connection.id} className={classes.dbMenuItem} value={connection.id}>{connection.name}</MenuItem>)}
                 </Select>
                 <SchemaTreeView />
@@ -53,7 +61,8 @@ const DatabaseActions = ({currentDbId, setCurrentDbId, dbConnections, setDbConne
 const mapStateToProps = state => {
     
     return {
-        currentDbId: state.database.currentDbId || 'None',
+        currentDbId: state.database.currentDbId && state.database.currentDbId !== 'newDatabase' ?
+            state.database.currentDbId : 'None',
         dbConnections: state.database.dbConnections
     };
 }
