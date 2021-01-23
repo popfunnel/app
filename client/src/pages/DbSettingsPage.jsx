@@ -85,7 +85,10 @@ const useStyles = makeStyles((theme) => ({
     },
     dbSelect: {
         width: '100%',
-        fontSize: '16px'
+        fontSize: '16px',
+        "& .MuiOutlinedInput-input": {
+            padding: '10px'
+        }
     },
     dbMenuItem: {
         fontSize: '16px'
