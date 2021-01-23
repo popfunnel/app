@@ -19,12 +19,7 @@ import EqualizerIcon from '@material-ui/icons/Equalizer';
 // import StorageIcon from '@material-ui/icons/Storage';
 import { connect } from 'react-redux'
 import { setDrawerOpenStatus } from '../../actions/nav';
-// import ExpandLess from '@material-ui/icons/ExpandLess';
-// import ExpandMore from '@material-ui/icons/ExpandMore';
-// import Collapse from '@material-ui/core/Collapse';
-// import { SchemaTreeView } from './SchemaTreeView';
 import { setSchemaDropdownStatus } from '../../actions/nav';
-// import { setSchemaDropdownStatus } from '../../actions/nav';
 import SettingsIcon from '@material-ui/icons/Settings';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import SlideshowIcon from '@material-ui/icons/Slideshow';
@@ -81,23 +76,6 @@ export const LeftDrawer = ({isDrawerOpen, setDrawerOpenStatus, setSchemaDropdown
                         <ListItemIcon><EqualizerIcon/></ListItemIcon>
                         <ListItemText classes={{primary: classes.listItemText}} primary={'Charts'} />
                     </ListItem>
-                    {/* <ListItem
-                        button
-                        disableRipple
-                        onClick={() => {
-                            setDrawerOpenStatus(true);
-                            setSchemaDropdownStatus(!isSchemaDropdownOpen);
-                        }}
-                    >
-                        <ListItemIcon>
-                            <StorageIcon/>
-                        </ListItemIcon>
-                        <ListItemText primary="Schemas" />
-                        {isSchemaDropdownOpen ? <ExpandLess /> : <ExpandMore />}
-                    </ListItem>
-                    <Collapse in={isSchemaDropdownOpen} timeout="auto" unmountOnExit>
-                        <SchemaTreeView/>
-                    </Collapse> */}
                     <ListItem key={uuidv4()} button disableRipple onClick={() => {getDashboardRoute()}}>
                         <ListItemIcon><DashboardIcon/></ListItemIcon>
                         <ListItemText classes={{primary: classes.listItemText}} primary={'Dashboards'} />

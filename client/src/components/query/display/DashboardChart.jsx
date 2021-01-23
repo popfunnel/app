@@ -157,7 +157,7 @@ const DashboardChart = ({ seriesType, chartId, name,
         setIsEditing(true)
     };
 
-    const getChartButtons = () => {
+    const getChartButtons = () => { 
         return (
             <>
                 {isHovering &&
@@ -169,12 +169,12 @@ const DashboardChart = ({ seriesType, chartId, name,
                     >
                         <EditIcon fontSize='small' />
                     </IconButton>
-                    {/* <IconButton
+                    <IconButton
                         onClick={() => {console.log('dropdown button clicked')}}
                         size='small'
                         disableRipple>
                         <MoreHorizIcon fontSize='small' />
-                    </IconButton> */}
+                    </IconButton>
                 </div>
                 }
             </>

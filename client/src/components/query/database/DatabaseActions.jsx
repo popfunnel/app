@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 import { setCurrentDbId, setDbConnections } from '../../../actions/database';
 import { openSnackbarWithMessage } from '../../../actions/snackbar';
+import { SchemaTreeView } from './SchemaTreeView'
 
 const useStyles = makeStyles((theme) => ({
     dbSelect: {
@@ -34,16 +35,16 @@ const DatabaseActions = ({currentDbId, setCurrentDbId, dbConnections, setDbConne
                 <Typography variant="overline" display="block" gutterBottom>
                     Database Connection
                 </Typography>
-                <>
-                    <Select
-                        className={classes.dbSelect}
-                        value={currentDbId}
-                        onChange={e => setCurrentDbId(e.target.value)}
-                    >
-                        <MenuItem className={classes.dbMenuItem} value={'None'}>None Selected</MenuItem>
-                        {dbConnections.map(connection => <MenuItem key={connection.id} className={classes.dbMenuItem} value={connection.id}>{connection.name}</MenuItem>)}
-                    </Select>
-                </>
+                <Select
+                    className={classes.dbSelect}
+                    value={currentDbId}
+                    onChange={e => setCurrentDbId(e.target.value)}
+                >
+                    <MenuItem className={classes.dbMenuItem} value={'None'}>None Selected</MenuItem>
+                    {dbConnections.map(connection => <MenuItem key={connection.id} className={classes.dbMenuItem} value={connection.id}>{connection.name}</MenuItem>)}
+                </Select>
+                <SchemaTreeView />
+
             </div>  
         </div>
     )
