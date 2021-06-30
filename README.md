@@ -3,7 +3,7 @@
 </p>
 <h1 align="center">app</h1>
 
-This is a passion project from the studio of Curtis Lin and Austin Gibbons. The main goal of this platform is to turn SQL queries into beautiful charts, and present those dashboards in beautiful dashboards. You can visit the platform [here](app.popfunnel.com).
+This is a passion project from the studio of Curtis Lin and Austin Gibbons. The main goal of this platform is to turn SQL queries into beautiful charts, and present those dashboards in beautiful dashboards. You can visit the platform [here](https://app.popfunnel.com/).
 
 ## Local Development
 
