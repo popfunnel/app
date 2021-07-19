@@ -23,7 +23,7 @@
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "jdbc": "^0.7.1",
+    "jdbc": "^0.7.6",
     "jsonwebtoken": "^8.5.1",
     "package.json": "^2.0.1",
     "passport": "^0.4.1",
