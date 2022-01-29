@@ -17,7 +17,7 @@ Start the express server with `node index.js` at the root level and `npm start` 
 
 ### Dependencies + Setup for development
 
-```
+``` 
 brew install postgresql
 ```
 
