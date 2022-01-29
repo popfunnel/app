@@ -45,6 +45,7 @@ app.use('/role', role);
 app.use('/user_role', userRole);
 
 
+// Note: example of a jwt protected route
 // app.get('/protected',
 //   passport.authenticate('jwt', {session: false}),
 //   (req, res) => {
