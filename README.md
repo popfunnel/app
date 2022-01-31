@@ -41,6 +41,13 @@ austin=# create user root SUPERUSER;
 CREATE ROLE
 ```
 
+
+create a password for the user 
+```
+\password root
+```
+
+
 ### sequelize
 
 Reference page: https://scotch.io/tutorials/getting-started-with-node-express-and-postgres-using-sequelize
@@ -74,3 +81,5 @@ sequelize model:generate --name dashboard --underscored --attributes created_by:
 ### recharts
 
 Reference: https://recharts.org/en-US/
+
+https://medium.com/@Josylad/how-to-install-postgresql-on-ubuntu-linux-mac-5e08b09b3fb9

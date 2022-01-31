@@ -5,7 +5,7 @@ dotenv.config()
 module.exports = {
   development: {
     username: 'root',
-    password: null,
+    password: 'popfunnel',
     database: 'popfunnel_development',
     host: '127.0.0.1',
     port: 5432,
