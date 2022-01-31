@@ -78,8 +78,17 @@ to create a model:
 ```
 sequelize model:generate --name dashboard --underscored --attributes created_by:integer,updated_by:integer,owned_by:integer,name:string,customer_id:integer,charts:array:integer
 ```
+
+Keep in mind that when connecting to prod, the `postgres` database name should be used (maintenance db). 
+
+https://www.postgresql.org/docs/current/manage-ag-templatedbs.html
+>The postgres database is also created when a database cluster is initialized. This >database is meant as a default database for users and applications to connect to. It >is simply a copy of template1 and can be dropped and recreated if necessary.
+
+
+```
 ### recharts
 
 Reference: https://recharts.org/en-US/
 
 https://medium.com/@Josylad/how-to-install-postgresql-on-ubuntu-linux-mac-5e08b09b3fb9
+
