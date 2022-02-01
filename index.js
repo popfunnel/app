@@ -5,8 +5,8 @@ dotenv.config()
 
 const jinst = require('jdbc/lib/jinst');
 if (!jinst.isJvmCreated()) {
-    jinst.addOption("-Xrs");
-    jinst.setupClasspath(['./drivers/postgresql-42.2.14.jre7.jar']);
+  jinst.addOption("-Xrs");
+  jinst.setupClasspath(['./drivers/postgresql-42.2.14.jre7.jar']);
 }
 
 const queries = require('./routes/queries');
@@ -56,7 +56,7 @@ app.use('/user_role', userRole);
 
 // Default index.html for no matching routes
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname + '/client/build/index.html'));
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
 });
 
 const port = process.env.PORT || 5000;

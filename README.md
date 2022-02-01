@@ -84,6 +84,13 @@ Keep in mind that when connecting to prod, the `postgres` database name should b
 https://www.postgresql.org/docs/current/manage-ag-templatedbs.html
 >The postgres database is also created when a database cluster is initialized. This >database is meant as a default database for users and applications to connect to. It >is simply a copy of template1 and can be dropped and recreated if necessary.
 
+### Lightsail notes
+After coming back to this after a hiatus, it was incredibly painful to get this up and running again. Some callouts:
+1. the example database is called popfunnel_demo and is the same database server that holds our internal app infrastructure (roles, users, etc.). The psql_pool.js file needs to be updated in the live server to reflect this.
+2. The app infrastructure database is called popfunnel_production, but there is an identical database called `postgres` (default maintenance database)
+3. 
+
+
 
 ```
 ### recharts
