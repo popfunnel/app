@@ -88,7 +88,14 @@ https://www.postgresql.org/docs/current/manage-ag-templatedbs.html
 After coming back to this after a hiatus, it was incredibly painful to get this up and running again. Some callouts:
 1. the example database is called popfunnel_demo and is the same database server that holds our internal app infrastructure (roles, users, etc.). The psql_pool.js file needs to be updated in the live server to reflect this.
 2. The app infrastructure database is called popfunnel_production, but there is an identical database called `postgres` (default maintenance database)
-3. 
+3. `dbtartan-production` in prod is unused.
+
+## TODO
+1. Figure out setup for local database (currently using prod credentials)
+2. Figure out setup for local demo database (currently using prod demo credentials)
+3. Figure out how to setup prod databases (and recreate) in an easier fashion
+4. Renew SSL certificate in prod
+5. Figure out wildcard localhost setup
 
 
 
